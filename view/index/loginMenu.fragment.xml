@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Popover title="{Name}" placement="Left" showHeader="false">
+        <IconTabBar expandable="false">
+            <items>
+                <IconTabFilter text="ВХОД">
+                    <VBox alignItems="Center">
+                        <Input id="inputSignInLogin" placeholder="Логин" width="250px" submit="_onButtonSignInPress" value="{/login}"/>
+                        <Input
+                            id="inputSignInPassword"
+                            placeholder="Пароль"
+                            type="Password"
+                            width="250px"
+                            submit="_onButtonSignInPress"
+                            value="{/password}"/>
+                        <Button text="Войти" type="Accept" press="_onButtonSignInPress" width="250px"/>
+                    </VBox>
+                </IconTabFilter>
+                <IconTabFilter text="РЕГИСТРАЦИЯ">
+                    <VBox alignItems="Center">
+                        <Input id="inputSignUpLogin" placeholder="Логин" width="250px" submit="_onButtonSignUpPress" value="{/login}"/>
+                        <Input
+                            id="inputSignUpPassword"
+                            placeholder="Пароль"
+                            type="Password"
+                            width="250px"
+                            submit="_onButtonSignUpPress"
+                            value="{/password}"/>
+                        <Input
+                            id="inputSignUpEmail"
+                            placeholder="Email (не обязательно)"
+                            type="Email"
+                            width="250px"
+                            submit="_onButtonSignUpPress"/>
+                        <Button text="Зарегестрироваться" type="Emphasized" press="_onButtonSignUpPress" width="250px"/>
+                    </VBox>
+                </IconTabFilter>
+            </items>
+        </IconTabBar>
+    </Popover>
+</core:FragmentDefinition>

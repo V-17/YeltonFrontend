@@ -1,0 +1,100 @@
+<mvc:View controllerName="controller.index" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+    <App>
+        <Page>
+            <headerContent>
+                <Toolbar>
+                    <ToolbarSpacer/>
+                    <Title text="¥elton" class="sapMLabel_myMainLogo"/>
+                    <ToolbarSpacer/>
+                    <Button id="buttonLogin" icon="sap-icon://log" type="Reject" press="handlePopoverPress" tooltip="Авторизация"/>
+                </Toolbar>
+            </headerContent>
+            <subHeader>
+                <Toolbar>
+                    <Title text="Ваш личный помощник в планировании выгодных покупок" width="100%" textAlign="Center" class="sapMLabel_myH3"/>
+                </Toolbar>
+            </subHeader>
+
+            <Text/>
+            <Panel>
+                <VBox>
+                    <Text
+                        text="Как часто мы покупаем? Да практически каждый день. Продукты, лекарства, бытовая химия, и прочее. Большинство из этих товаров продаются во многих магазинах. Но цены в каждой торговой точке могут отличаться, иногда очень значительно."/>
+                    <Text/>
+                    <Text
+                        text="— Большая пачка стирального порошка за 320р, это дешево? Или полтора месяца назад я покупал в соседнем магазине за 285р?\n
+                    — Корм для кота я всегда покупала в супермаркете. Но недавно открылся зоомагазин, где этот же корм стоит на 60 рублей дешевле. Надо запомнить и покупать там.\n
+                    — Мне кажется, или за последние пол-года молоко прилично подорожало?\n"/>
+                    <Text/>
+                    <Text
+                        text="Наверняка, у многих возникали в жизни такие ситуации и вопросы. Все это довольно непросто запоминать и отслеживать. А ведь эти мелочи могут сэкономить приличную сумму денег, если покупать там, где выгоднее."/>
+                </VBox>
+            </Panel>
+            <Text/>
+            <Panel>
+                <HBox>
+                    <VBox>
+                        <Image id="imageSlideShow" src="img/android_screen1.png"/>
+                    </VBox>
+                    <VBox width="100%">
+                        <Title text="Всегда под рукой" textAlign="Center" width="100%" class="sapMLabel_myH1"/>
+                        <Title text="Android" textAlign="Center" width="100%" class="sapMLabel_myH2"/>
+                        <Text
+                            text="Телефон всегда с вами, так позвольте же ему стать вашим личным помощником в совершении покупок. Теперь не нужно держать в памяти все выгодные предложения. Ваш смартфон сам подскажет, что и где выгоднее покупать."/>
+                        <Text/>
+                        <Text/>
+                        <Text/>
+                        <Text
+                            text="Возможности:\n
+                        - Ведение истории покупок.\n
+                        - Поиск лучшего предложения.\n
+                        - Фильтр покупок по различным критериям.\n
+                        - Сканер штрих кодов для быстрого поиска товаров\n
+                        - Синхронизация с другими устройствам"/>
+                        <Text/>
+                        <Text/>
+                        <Text/>
+                        <Text/>
+                        <Text/>
+                        <HBox alignItems="Center" justifyContent="Center">
+                            <Image
+                                src="https://play.google.com/intl/en_us/badges/images/apps/ru-play-badge.png"
+                                width="185px"
+                                height="60px"
+                                press="goToGooglePlay"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </Panel>
+            <Text/>
+            <Panel>
+                <HBox>
+                    <VBox>
+                        <Image id="imagePC" src="img/pc_icon.png"/>
+                    </VBox>
+                    <VBox width="100%">
+                        <Title text="Достаточно браузера" textAlign="Center" width="100%" class="sapMLabel_myH1"/>
+                        <Title text="Web-интерфейс" textAlign="Center" width="100%" class="sapMLabel_myH2"/>
+                        <Text
+                            text="Создайте учётную запись, и начинайте планировать покупки прямо сейчас.\n
+                                Для этого необходим лишь доступ в Интернет и любой современный браузер"/>
+                        <Text/>
+                        <Text/>
+                        <Text/>
+                        <Text
+                            text="Начать экономить намного проще, чем кажется. "/>
+                    </VBox>
+                </HBox>
+            </Panel>
+
+            <footer>
+                <Toolbar design="Solid">
+                    <ToolbarSpacer/>
+                    <Link text="© msProduction 2015 – 2016" href="mailto:support@Yelton.ru"/>
+                    <ToolbarSpacer/>
+                </Toolbar>
+            </footer>
+        </Page>
+    </App>
+
+</mvc:View>

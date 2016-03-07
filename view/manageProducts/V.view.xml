@@ -1,0 +1,36 @@
+<mvc:View controllerName="controller.manageProducts" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+    <Page>
+        <headerContent>
+            <Toolbar>
+                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                <ToolbarSpacer/>
+                <!-- <SearchField width="30%" liveChange="onFilterLiveSearch"/> -->
+                <Button id="buttonLogout" icon="sap-icon://log" tooltip="Выход" type="Reject" press="onLogoutButtonPress"/>
+            </Toolbar>
+        </headerContent>
+        <List
+            growing="true"
+            id="listProducts"
+            mode="SingleSelectMaster"
+            items="{
+    			path : '/',
+    			sorter : {
+    				path : 'categoryName',
+    				group : true
+    			}
+    		}">
+            <items>
+                <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
+            </items>
+        </List>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Label text="WEB-ИНТЕРФЕЙС НАХОДИТСЯ В СТАДИИ ТЕСТИРОВАНИЯ!" design="Bold"/>
+                <ToolbarSpacer/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

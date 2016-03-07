@@ -1,0 +1,27 @@
+<mvc:View
+    controllerName="controller.splitApp"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <SplitApp id="splitApp" mode="StretchCompressMode">
+        <masterPages>
+            <Page id="master">
+                <headerContent>
+                    <Toolbar>
+                        <Image src="favicon.ico"/>
+                        <ToolbarSpacer/>
+                        <Title text="¥elton"/>
+                        <ToolbarSpacer/>
+                    </Toolbar>
+                </headerContent>
+                <List id="listMainMenu" mode="SingleSelectMaster" selectionChange="onNavToDetail">
+                    <StandardListItem title="Покупки" type="Active" icon="img/prices.png" selected="true"/>
+                    <StandardListItem title="Категории" type="Active" icon="img/categories.png"/>
+                    <StandardListItem title="Товары" type="Active" icon="img/products.png"/>
+                    <StandardListItem title="Магазины" type="Active" icon="img/stores.png"/>
+                    <StandardListItem title="Единицы измерения" type="Active" icon="img/units.png"/>
+                </List>
+            </Page>
+        </masterPages>
+    </SplitApp>
+</mvc:View>

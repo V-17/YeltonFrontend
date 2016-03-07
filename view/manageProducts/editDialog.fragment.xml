@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="Товар" afterClose="_onEditDialogCancel">
+        <content>
+            <VBox>
+                <Input id="inputName" value="{/name}" placeholder="Введите название" submit="_onEditDialogOK" maxLength="50"/>
+                <Text/>
+                <Label text="Категория:"/>
+                <Select id="selectCategory" items="{categories>/}" width="100%" tooltip="Категория">
+                    <core:Item key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
+                </Select>
+                <Text/>
+                <Label text="Единица измерения:"/>
+                <Select id="selectUnit" items="{units>/}" width="100%" tooltip="Единица измерения">
+                    <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
+                </Select>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="Сохранить" type="Accept" press="_onEditDialogOK"/>
+        </beginButton>
+        <endButton>
+            <Button text="Отмена" press="_onEditDialogCancel"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

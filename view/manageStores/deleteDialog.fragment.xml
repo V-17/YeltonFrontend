@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="Магазин" afterClose="_onDeleteDialogCancel" initialFocus="buttonCancel">
+        <content>
+            <Label text='Удалить "{/name}"?' textAlign="Center" width="100%"/>
+        </content>
+        <beginButton>
+            <Button text="Удалить" type="Reject" press="_onDeleteDialogOK"/>
+        </beginButton>
+        <endButton>
+            <Button id="buttonCancel" text="Отмена" press="_onDeleteDialogCancel"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

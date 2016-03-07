@@ -1,0 +1,31 @@
+<mvc:View
+    controllerName="controller.manageUnits"
+    xmlns:l="sap.ui.layout"
+    xmlns:model="sap.ui.model"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page>
+        <headerContent>
+            <Toolbar>
+                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                <ToolbarSpacer/>
+                <!-- <SearchField width="30%" liveChange="onFilterLiveSearch"/> -->
+                <Button id="buttonLogout" icon="sap-icon://log" tooltip="Выход" type="Reject" press="onLogoutButtonPress"/>
+            </Toolbar>
+        </headerContent>
+        <List id="tableUnits" mode="SingleSelectMaster" items="{/}" growing="true">
+            <items>
+                <StandardListItem type="Active" title="{fullName}"/>
+            </items>
+        </List>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Label text="WEB-ИНТЕРФЕЙС НАХОДИТСЯ В СТАДИИ ТЕСТИРОВАНИЯ!" design="Bold"/>
+                <ToolbarSpacer/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>
