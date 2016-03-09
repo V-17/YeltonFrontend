@@ -1,8 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Категория" afterClose="_onDeleteDialogCancel" initialFocus="buttonCancel">
-        <content>
-            <Label text='Удалить "{/name}"?' textAlign="Center" width="100%"/>
-        </content>
+    <Dialog showHeader="false" afterClose="_onDeleteDialogCancel" initialFocus="buttonCancel">
+        <subHeader>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <core:Icon src="sap-icon://warning2" color="red"/>
+                <Label text='Удалить "{/name}"?'/>
+                <ToolbarSpacer/>
+            </Toolbar>
+        </subHeader>
+        <Text text='Также будут удалены все товары и покупки, связанные с этой категорией'/>
         <beginButton>
             <Button text="Удалить" type="Reject" press="_onDeleteDialogOK"/>
         </beginButton>
