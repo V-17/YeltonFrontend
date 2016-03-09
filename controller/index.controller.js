@@ -23,8 +23,8 @@ sap.ui.define([
         "use strict";
         return Controller.extend("controller.index", {
 
-            onInit: function()
-            {
+            onInit: function() {
+
             },
 
 
@@ -56,16 +56,14 @@ sap.ui.define([
                 var password = sap.ui.getCore().byId("inputSignInPassword").getValue();
 
                 $.post(
-                    "/backend/web/services/signIn.php",
-                    {
+                    "/backend/web/services/signIn.php", {
                         login: login,
                         password: password
                     },
                     onAjaxSuccess
                 );
 
-                function onAjaxSuccess(data)
-                {
+                function onAjaxSuccess(data) {
                     if (data.trim() == "ok") {
                         document.location = '/index.php';
                     } else {
@@ -78,13 +76,25 @@ sap.ui.define([
             {
                 var login = sap.ui.getCore().byId("inputSignUpLogin").getValue();
                 var password = sap.ui.getCore().byId("inputSignUpPassword").getValue();
+                var email = sap.ui.getCore().byId("inputSignUpEmail").getValue();
+
+                var data;
+                if (email.length > 0) {
+                    data = {
+                        login: login,
+                        password: password,
+                        email: email
+                    };
+                } else {
+                    data = {
+                        login: login,
+                        password: password
+                    };
+                }
 
                 $.post(
                     "/backend/web/services/signUp.php",
-                    {
-                        login: login,
-                        password: password
-                    },
+                    data,
                     onAjaxSuccess
                 );
 
