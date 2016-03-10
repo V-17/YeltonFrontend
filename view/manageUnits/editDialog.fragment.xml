@@ -1,24 +1,24 @@
 <core:FragmentDefinition
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
     <Dialog
-		title="Единица измерения"
-		afterClose="_onEditDialogCancel">
+        title="Единица измерения"
+        afterClose="_onEditDialogCancel">
         <content>
-			<VBox>
+            <VBox>
                 <Input
-					id="inputFullName"
-					value="{/fullName}"
-					placeholder="Полное название"
-					submit="_onEditDialogOK"
-					maxLength="50"/>
-					<Input
-						id="inputShortName"
-						value="{/shortName}"
-						placeholder="Краткое название"
-						submit="_onEditDialogOK"
-						maxLength="5"/>
-				</VBox>
+                    id="inputFullName"
+                    value="{/fullName}"
+                    placeholder="Полное название"
+                    submit="_onEditDialogOK"
+                    maxLength="50"/>
+                    <Input
+                        id="inputShortName"
+                        value="{/shortName}"
+                        placeholder="Краткое название"
+                        submit="_onEditDialogOK"
+                        maxLength="5"/>
+                </VBox>
         </content>
         <beginButton>
             <Button text="Сохранить" type="Accept" press="_onEditDialogOK"/>

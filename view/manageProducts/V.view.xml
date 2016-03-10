@@ -15,12 +15,12 @@
             id="listProducts"
             mode="SingleSelectMaster"
             items="{
-    			path : '/',
-    			sorter : {
-    				path : 'categoryName',
-    				group : true
-    			}
-    		}">
+                path : '/',
+                sorter : {
+                    path : 'categoryName',
+                    group : true
+                }
+            }">
             <items>
                 <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
             </items>
