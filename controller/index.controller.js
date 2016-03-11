@@ -107,7 +107,11 @@ sap.ui.define([
                         sap.m.MessageToast.show(data.trim());
                     }
                 }
-            }
+            },
 
+            onDonateButtonPress: function()
+            {
+                sap.m.URLHelper.redirect("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=N5DGX58N6ULQG&lc=RU&item_name=Yelton%2eru&currency_code=RUB&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted", true);
+            }
         });
     });

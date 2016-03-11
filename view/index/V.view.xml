@@ -3,6 +3,7 @@
         <Page>
             <headerContent>
                 <Toolbar>
+                    <Button icon="sap-icon://money-bills" tooltip="Поддержать проект" press="onDonateButtonPress"/>
                     <ToolbarSpacer/>
                     <Title text="¥elton" class="sapMLabel_myMainLogo"/>
                     <ToolbarSpacer/>
