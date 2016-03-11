@@ -145,7 +145,7 @@ sap.ui.define([
                 var productsModel = new JSONModel("backend/web/services/manageProducts.php");
                 this._oEditDialog.setModel(productsModel, "products");
 
-                // грузим список единиц измерения
+                // грузим список мер
                 var storesModel = new JSONModel("backend/web/services/manageStores.php");
                 this._oEditDialog.setModel(storesModel, "stores");
 

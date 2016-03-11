@@ -63,7 +63,7 @@
                     this._oDeleteDialog.setModel(jsonModel);
                     this._oDeleteDialog.open();
                 } else {
-                    MessageToast.show("Выберите ед.измерения");
+                    MessageToast.show("Выберите меру");
                 }
             },
 
@@ -79,7 +79,7 @@
                     this._oEditDialog.setModel(jsonModel);
                     this._oEditDialog.open();
                 } else {
-                    MessageToast.show("Выберите ед.измерения");
+                    MessageToast.show("Выберите меру");
                 }
             },
 

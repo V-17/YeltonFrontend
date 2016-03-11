@@ -8,7 +8,7 @@
                 <ToolbarSpacer/>
             </Toolbar>
         </subHeader>
-        <Text text='Также будут удалены все товары и покупки, связанные с этой единией'/>
+        <Text text='Также будут удалены все товары и покупки, связанные с этой мерой'/>
         <beginButton>
             <Button text="Удалить" type="Reject" press="_onDeleteDialogOK"/>
         </beginButton>

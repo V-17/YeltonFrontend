@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <Dialog
-        title="Единица измерения"
+        title="Мера"
         afterClose="_onEditDialogCancel">
         <content>
             <VBox>

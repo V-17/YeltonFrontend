@@ -9,7 +9,7 @@
                     <core:Item key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
                 </Select>
                 <Text/>
-                <Label text="Единица измерения:"/>
+                <Label text="Мера:"/>
                 <Select id="selectUnit" items="{units>/}" width="100%" tooltip="Единица измерения">
                     <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
                 </Select>

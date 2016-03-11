@@ -19,7 +19,7 @@
                     <StandardListItem title="Категории" type="Active" icon="img/categories.png"/>
                     <StandardListItem title="Товары" type="Active" icon="img/products.png"/>
                     <StandardListItem title="Магазины" type="Active" icon="img/stores.png"/>
-                    <StandardListItem title="Единицы измерения" type="Active" icon="img/units.png"/>
+                    <StandardListItem title="Меры" type="Active" icon="img/units.png"/>
                 </List>
             </Page>
         </masterPages>
