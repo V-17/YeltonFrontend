@@ -3,3 +3,9 @@ backend/
 
 # htaccess
 .htaccess
+
+# idea
+.idea/
+
+# openui5
+openui5/
