@@ -1,21 +1,34 @@
 <mvc:View controllerName="controller.index" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
     <App>
-        <Page>
-            <headerContent>
+        <Page showHeader="false">
+            <subHeader>
+                <Toolbar>
+                    <Title
+                        text="Ваш личный помощник в планировании выгодных покупок"
+                        width="100%"
+                        textAlign="Center"
+                        class="sapMLabel_myH3"/>
+                </Toolbar>
                 <Toolbar>
                     <Button icon="sap-icon://money-bills" tooltip="Поддержать проект" press="onDonateButtonPress"/>
                     <ToolbarSpacer/>
                     <Title text="¥elton" class="sapMLabel_myMainLogo"/>
                     <ToolbarSpacer/>
-                    <Button id="buttonLogin" icon="sap-icon://log" type="Reject" press="handlePopoverPress" tooltip="Авторизация"/>
-                </Toolbar>
-            </headerContent>
-            <subHeader>
-                <Toolbar>
-                    <Title text="Ваш личный помощник в планировании выгодных покупок" width="100%" textAlign="Center" class="sapMLabel_myH3"/>
+                    <Button
+                        id="buttonLogin"
+                        icon="sap-icon://log"
+                        type="Reject"
+                        press="handlePopoverPress"
+                        tooltip="Авторизация"/>
                 </Toolbar>
             </subHeader>
-
+            <Panel>
+                <Title
+                    text="Ваш личный помощник в планировании выгодных покупок"
+                    width="100%"
+                    textAlign="Center"
+                    class="sapMLabel_myH3"/>
+            </Panel>
             <Text/>
             <Panel>
                 <VBox>
@@ -82,8 +95,7 @@
                         <Text/>
                         <Text/>
                         <Text/>
-                        <Text
-                            text="Начать экономить намного проще, чем кажется. "/>
+                        <Text text="Начать экономить намного проще, чем кажется. "/>
                     </VBox>
                 </HBox>
             </Panel>

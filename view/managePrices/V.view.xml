@@ -3,8 +3,8 @@
     xmlns:l="sap.ui.layout"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page>
-        <headerContent>
+    <Page showHeader="false">
+        <subHeader>
             <Toolbar>
                 <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
                 <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
@@ -13,7 +13,7 @@
                 <!-- <SearchField width="30%" liveChange="onFilterLiveSearch"/> -->
                 <Button id="buttonLogout" icon="sap-icon://log" tooltip="Выход" type="Reject" press="onLogoutButtonPress"/>
             </Toolbar>
-        </headerContent>
+        </subHeader>
         <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false">
             <columns>
                 <Column/>
