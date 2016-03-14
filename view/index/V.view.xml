@@ -3,13 +3,6 @@
         <Page showHeader="false">
             <subHeader>
                 <Toolbar>
-                    <Title
-                        text="Ваш личный помощник в планировании выгодных покупок"
-                        width="100%"
-                        textAlign="Center"
-                        class="sapMLabel_myH3"/>
-                </Toolbar>
-                <Toolbar>
                     <Button icon="sap-icon://money-bills" tooltip="Поддержать проект" press="onDonateButtonPress"/>
                     <ToolbarSpacer/>
                     <Title text="¥elton" class="sapMLabel_myMainLogo"/>
