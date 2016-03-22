@@ -87,7 +87,7 @@ sap.ui.define([
                 if (path.length !== 0) {
                     var model = this.getView().getModel().getProperty(path[0].sPath);
                     var jsonModel = new JSONModel(model);
-                    this._oEditDialog = sap.ui.xmlfragment("view.managePrices.editDialog", this);
+                    this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
                     this._oEditDialog.setModel(jsonModel);
 
                     // грузим список товаров
@@ -96,8 +96,7 @@ sap.ui.define([
                     //выбираем в списке текущую
                     var productID = jsonModel.getProperty("/productID");
                     var productClientID = jsonModel.getProperty("/productClientID");
-                    sap.ui.getCore().byId("selectProduct").setSelectedKey(productID + ":" +
-                        productClientID);
+                    sap.ui.core.Fragment.byId("editDialog", "selectProduct").setSelectedKey(productID + ":" + productClientID);
 
                     // грузим список магазов
                     var storesModel = new JSONModel("backend/web/services/manageStores.php");
@@ -105,7 +104,7 @@ sap.ui.define([
                     //выбираем в списке текущую
                     var storeID = jsonModel.getProperty("/storeID");
                     var storeClientID = jsonModel.getProperty("/storeClientID");
-                    sap.ui.getCore().byId("selectStore").setSelectedKey(storeID + ":" + storeClientID);
+                    sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(storeID + ":" + storeClientID);
 
                     //ставим дату
                     // fixme: по идее тоже через модель надо
@@ -113,7 +112,7 @@ sap.ui.define([
                     // а может и не придётся разбираться ))
                     // но все равно пока лень
                     var date = jsonModel.getProperty("/date");
-                    sap.ui.getCore().byId("datePicker").setValue(date);
+                    sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(date);
 
                     this._oEditDialog.open();
                 } else {
@@ -138,7 +137,7 @@ sap.ui.define([
                 }];
                 var jsonModel = new JSONModel(oData);
 
-                this._oEditDialog = sap.ui.xmlfragment("view.managePrices.editDialog", this);
+                this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
                 this._oEditDialog.setModel(jsonModel);
 
                 // грузим список категорий
@@ -153,47 +152,133 @@ sap.ui.define([
                 var dd = new Date().getDate();
                 var mm = new Date().getMonth() + 1;
                 var yyyy = new Date().getFullYear();
-                sap.ui.getCore().byId("datePicker").setValue(dd + "." + mm + "." + yyyy);
+                sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(dd + "." + mm + "." + yyyy);
 
                 this._oEditDialog.open();
+            },
+
+            _onInputPriceLiveChange: function(oEvent)
+            {
+                var inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
+                var price = oEvent.getParameters().value;
+                var lastSymbol = price[price.length - 1];
+
+                // всегда скидываем статус
+                inputPrice.setValueState("None");
+
+                if (!/[\+\-\/\*\,\.\(\)0-9]/.test(lastSymbol)) {
+                    inputPrice.setValue(price.substr(0, price.length - 1));
+                    return;
+                }
+
+                var priceCalc;
+                try {
+                    price = price.replace(",", ".");
+                    priceCalc = parseFloat(eval(price));
+                } catch (err) {
+                    priceCalc = NaN;
+                }
+
+                if (!isNaN(priceCalc)) {
+                    if (priceCalc != price) {
+                        var text = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
+                        text.setText("=" + priceCalc);
+                    }
+                } else {
+                    sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation").setText("");
+                }
+            },
+
+            _onInputAmountLiveChange: function(oEvent)
+            {
+                var inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
+                var amount = oEvent.getParameters().value;
+                var lastSymbol = amount[amount.length - 1];
+
+                // всегда скидываем статус
+                inputAmount.setValueState("None");
+
+                if (!/[\+\-\/\*\,\.\(\)0-9]/.test(lastSymbol)) {
+                    inputAmount.setValue(amount.substr(0, amount.length - 1));
+                    return;
+                }
+
+                var amountCalc;
+                try {
+                    amount = amount.replace(",", ".");
+                    amountCalc = parseFloat(eval(amount));
+                } catch (err) {
+                    amountCalc = NaN;
+                }
+
+                if (!isNaN(amountCalc)) {
+                    if (amountCalc != amount) {
+                        var text = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
+                        text.setText("=" + amountCalc);
+                    }
+                } else {
+                    sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation").setText("");
+                }
             },
 
             _onEditDialogOK: function()
             {
                 var id = this._oEditDialog.getModel().getProperty("/id");
                 var clientID = this._oEditDialog.getModel().getProperty("/clientID");
-                var name = this._oEditDialog.getModel().getProperty("/name");
-                var amount = this._oEditDialog.getModel().getProperty("/amount");
-                var price = this._oEditDialog.getModel().getProperty("/price");
+                var textAmountCalc = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
+                var inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
+                var amount;
+                if (textAmountCalc.getText().length > 0) {
+                    amount = textAmountCalc.getText().substr(1);
+                } else {
+                    amount = this._oEditDialog.getModel().getProperty("/amount");
+                }
+                var textPriceCount = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
+                var inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
+                var price;
+                if (textPriceCount.getText().length > 0) {
+                    price = textPriceCount.getText().substr(1);
+                } else {
+                    price = this._oEditDialog.getModel().getProperty("/price");
+                }
 
-                var selectedKey = sap.ui.getCore().byId("selectProduct").getSelectedKey().split(":");
+                var selectedKey = sap.ui.core.Fragment.byId("editDialog", "selectProduct").getSelectedKey().split(":");
                 var productID = selectedKey[0];
                 var productClientID = selectedKey[1];
-                selectedKey = sap.ui.getCore().byId("selectStore").getSelectedKey().split(":");
+                selectedKey = sap.ui.core.Fragment.byId("editDialog", "selectStore").getSelectedKey().split(":");
                 var storeID = selectedKey[0];
                 var storeClientID = selectedKey[1];
 
                 // тут только дата, а нам бы еще время взять
                 // чтобы сортировалось в порядке добавления
-                var date = sap.ui.getCore().byId("datePicker").getValue();
+                var date = sap.ui.core.Fragment.byId("editDialog", "datePicker").getValue();
                 var hh = new Date().getHours();
                 var mm = new Date().getMinutes();
                 var ss = new Date().getSeconds();
                 date = date + " " + hh + ":" + mm + ":" + ss;
 
-                // проверка
                 var canContinue = true;
-                if (amount > 0 && amount < 999999) {
-                    sap.ui.getCore().byId("inputAmount").setValueState("None");
-                } else {
-                    sap.ui.getCore().byId("inputAmount").setValueState("Error");
+                if (!isNumeric(price)) {
+                    inputPrice.setValueStateText("Вводите числа и простые операции, например (2+2)/4");
+                    inputPrice.setValueState("Error");
                     canContinue = false;
+                } else if (price <= 0 || price > 9999999) {
+                    inputPrice.setValueStateText("Введите число в диапазоне 0 – 9 999 999");
+                    inputPrice.setValueState("Error");
+                    canContinue = false;
+                } else {
+                    inputPrice.setValueState("None");
                 }
-                if (price > 0 && price < 999999) {
-                    sap.ui.getCore().byId("inputPrice").setValueState("None");
-                } else {
-                    sap.ui.getCore().byId("inputPrice").setValueState("Error");
+                if (!isNumeric(amount)) {
+                    inputAmount.setValueStateText("Вводите числа и простые операции, например (2+2)/4");
+                    inputAmount.setValueState("Error");
                     canContinue = false;
+                } else if (amount <= 0 || amount > 9999999) {
+                    inputAmount.setValueStateText("Введите число в диапазоне 0 – 9 999 999");
+                    inputAmount.setValueState("Error");
+                    canContinue = false;
+                } else {
+                    inputAmount.setValueState("None");
                 }
                 if (!canContinue) {
                     return;

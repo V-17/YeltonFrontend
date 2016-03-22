@@ -14,9 +14,10 @@
                 <Text/>
                 <DatePicker id="datePicker" placeholder="Дата" displayFormat="long" valueFormat="dd.MM.yyyy"/>
                 <Text/>
-                <Input id="inputPrice" placeholder="Стоимость" type="Number" value="{/price}"/>
-                <Text/>
-                <Input id="inputAmount" placeholder="Количество" type="Number" value="{/amount}"/>
+                <Input id="inputPrice" placeholder="Стоимость" value="{/price}" liveChange="_onInputPriceLiveChange"/>
+                <Text id="textPriceCalculation"/>
+                <Input id="inputAmount" placeholder="Количество" value="{/amount}" liveChange="_onInputAmountLiveChange"/>
+                <Text id="textAmountCalculation"/>
             </VBox>
         </content>
         <beginButton>

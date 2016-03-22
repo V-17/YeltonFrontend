@@ -35,6 +35,7 @@
 					 "view": "./view",
 					 "controller": "./controller"
 				}'></script>
+        <script src="core/lib.js"></script>
 
 		<?php
             // Провекра логина
