@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- sap.ui.define([
+sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel",
         "sap/ui/model/Filter",
@@ -105,7 +105,6 @@
                 var name = this._oEditDialog.getModel().getProperty("/name");
 
                 var data;
-
                 // создаем или изменяем
                 // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
                 // сервис поймет, создавать ему или обновлять
@@ -138,7 +137,6 @@
                         }
                     }
                 });
-
                 this._oEditDialog.destroy();
             },
 
@@ -146,7 +144,6 @@
             {
                 this._oEditDialog.destroy();
             },
-
 
             _onDeleteDialogOK: function()
             {
@@ -173,7 +170,6 @@
                         }
                     }
                 });
-
                 this._oDeleteDialog.destroy();
             },
 

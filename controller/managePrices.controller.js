@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel",
@@ -29,8 +28,7 @@ sap.ui.define([
         'sap/m/ComboBox',
         'sap/m/DatePicker'
     ],
-    function(Controller, JSONModel, Filter, FilterOperator, Dialog, Button, MessageToast, Text, Input, ComboBox,
-        DatePicker) {
+    function(Controller, JSONModel, Filter, FilterOperator, Dialog, Button, MessageToast, Text, Input, ComboBox, DatePicker) {
         "use strict";
         return Controller.extend("controller.managePrices", {
 
@@ -40,7 +38,6 @@ sap.ui.define([
                 // а потом об этом позаботится splitapp
                 this.getView().setModel(new JSONModel("backend/web/services/managePrices.php"));
             },
-
 
             // Поиск
             onFilterLiveSearch: function(oEvent)
@@ -61,7 +58,6 @@ sap.ui.define([
                 $.post("backend/web/services/signOut.php");
                 window.location.reload();
             },
-
 
             // нажатие нопки "Удалить"
             onDeleteButtonPress: function()
@@ -284,9 +280,7 @@ sap.ui.define([
                     return;
                 }
 
-
                 var data;
-
                 // создаем или изменяем
                 // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
                 // сервис поймет, создавать ему или обновлять
@@ -344,7 +338,6 @@ sap.ui.define([
                 this._oEditDialog.destroy();
             },
 
-
             _onDeleteDialogOK: function()
             {
                 var id = this._oDeleteDialog.getModel().getProperty("/id");
@@ -378,6 +371,5 @@ sap.ui.define([
             {
                 this._oDeleteDialog.destroy();
             }
-
         });
     });

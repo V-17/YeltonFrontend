@@ -24,9 +24,7 @@ sap.ui.define([
         return Controller.extend("controller.index", {
 
             onInit: function() {
-
             },
-
 
             goToGooglePlay: function()
             {

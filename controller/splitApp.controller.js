@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- sap.ui.define([
+sap.ui.define([
         "sap/ui/core/mvc/Controller"
     ],
     function(Controller) {
@@ -89,6 +89,5 @@
                         break;
                 }
             }
-
         });
     });

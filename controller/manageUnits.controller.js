@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- sap.ui.define([
+sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel",
         "sap/ui/model/Filter",
@@ -99,7 +99,6 @@
                 this._oEditDialog.open();
             },
 
-
             _onEditDialogOK: function()
             {
                 var id = this._oEditDialog.getModel().getProperty("/id");
@@ -152,7 +151,6 @@
                 this._oEditDialog.destroy();
             },
 
-
             _onDeleteDialogOK: function()
             {
                 var id = this._oDeleteDialog.getModel().getProperty("/id");
@@ -178,7 +176,6 @@
                         }
                     }
                 });
-
                 this._oDeleteDialog.destroy();
             },
 

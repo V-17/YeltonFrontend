@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- sap.ui.define([
+sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel",
         "sap/ui/model/Filter",
@@ -38,7 +38,7 @@
             // Поиск
             onFilterLiveSearch: function(oEvent) {
                 var sQuery = oEvent.getParameter("newValue");
-                // FIXME: перепиши
+                // FIXME: реализовать
                 // var table = this.getView().byId("tablePrices");
                 // table.getBinding("items").filter(
                 //     new Filter([
@@ -132,7 +132,6 @@
                 this._oEditDialog.open();
             },
 
-
             _onEditDialogOK: function()
             {
                 var id = this._oEditDialog.getModel().getProperty("/id");
@@ -147,7 +146,6 @@
                 var unitClientID = selectedKey[1];
 
                 var data;
-
                 // создаем или изменяем
                 // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
                 // сервис поймет, создавать ему или обновлять
@@ -225,7 +223,6 @@
                         }
                     }
                 });
-
                 this._oDeleteDialog.destroy();
             },
 
@@ -233,7 +230,5 @@
             {
                 this._oDeleteDialog.destroy();
             }
-
-
         });
     });
