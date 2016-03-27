@@ -25,12 +25,5 @@
                 <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
             </items>
         </List>
-        <footer>
-            <Toolbar>
-                <ToolbarSpacer/>
-                <Label text="WEB-ИНТЕРФЕЙС НАХОДИТСЯ В СТАДИИ ТЕСТИРОВАНИЯ!" design="Bold"/>
-                <ToolbarSpacer/>
-            </Toolbar>
-        </footer>
     </Page>
 </mvc:View>
