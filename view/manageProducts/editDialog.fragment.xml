@@ -13,6 +13,17 @@
                 <Select id="selectUnit" items="{units>/}" width="100%" tooltip="Единица измерения">
                     <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
                 </Select>
+                <Text/>
+                <Label text="Штрих-код:"/>
+                <HBox>
+                    <Input id="inputBarcode" value="{/barcode}" maxLength="255" width="100%" liveChange="_onInputBarcodeLiveChange"/>
+                    <Button
+                        id="buttonBarcodeSearch"
+                        icon="sap-icon://globe"
+                        tooltip="Поиск в интернете"
+                        press="_onSearchBarcodeClick"
+                        enabled="false"/>
+                </HBox>
             </VBox>
         </content>
         <beginButton>

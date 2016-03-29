@@ -81,6 +81,9 @@ sap.ui.define([
                     var jsonModel = new JSONModel(model);
                     this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
                     this._oEditDialog.setModel(jsonModel);
+                    if (this._oEditDialog.getModel().getProperty("/barcode")) {
+                        sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
+                    }
 
                     // грузим список категорий
                     var categoriesModel = new JSONModel("backend/web/services/manageCategories.php");
@@ -111,6 +114,7 @@ sap.ui.define([
                     id: null,
                     clientID: null,
                     name: null,
+                    barcode: null,
                     categoryID: null,
                     categoryClientID: null,
                     unitID: null,
@@ -137,6 +141,7 @@ sap.ui.define([
                 var id = this._oEditDialog.getModel().getProperty("/id");
                 var clientID = this._oEditDialog.getModel().getProperty("/clientID");
                 var name = this._oEditDialog.getModel().getProperty("/name");
+                var barcode = this._oEditDialog.getModel().getProperty("/barcode");
 
                 var selectedKey = sap.ui.getCore().byId("selectCategory").getSelectedKey().split(":");
                 var categoryID = selectedKey[0];
@@ -152,22 +157,24 @@ sap.ui.define([
                 if (id === undefined && clientID === undefined) {
                     // создаем
                     data = {
-                        name: name,
-                        categoryID: categoryID,
-                        categoryClientID: categoryClientID,
-                        unitID: unitID,
-                        unitClientID: unitClientID
+                        "name": name,
+                        "barcode": barcode,
+                        "categoryID": categoryID,
+                        "categoryClientID": categoryClientID,
+                        "unitID": unitID,
+                        "unitClientID": unitClientID
                     };
                 } else {
                     // изменяем
                     data = {
-                        id: id,
-                        clientID: clientID,
-                        name: name,
-                        categoryID: categoryID,
-                        categoryClientID: categoryClientID,
-                        unitID: unitID,
-                        unitClientID: unitClientID
+                        "id": id,
+                        "clientID": clientID,
+                        "name": name,
+                        "barcode": barcode,
+                        "categoryID": categoryID,
+                        "categoryClientID": categoryClientID,
+                        "unitID": unitID,
+                        "unitClientID": unitClientID
                     };
                 }
 
@@ -190,6 +197,25 @@ sap.ui.define([
                 });
 
                 this._oEditDialog.destroy();
+            },
+
+            //liveChange на barcode
+            // если не пусто - активируем кнопку поиска
+            _onInputBarcodeLiveChange: function(oEvent)
+            {
+                var value = oEvent.getParameters().value;
+                if (value) {
+                    sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
+                } else {
+                    sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(false);
+                }
+            },
+
+            // поиск штрих-кода в интернете
+            _onSearchBarcodeClick: function()
+            {
+                var barcode = this._oEditDialog.getModel().getProperty("/barcode");
+                sap.m.URLHelper.redirect("https://duckduckgo.com/?q=" + barcode, true);
             },
 
             _onEditDialogCancel: function()
