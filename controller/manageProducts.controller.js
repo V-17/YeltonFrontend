@@ -114,6 +114,7 @@ sap.ui.define([
                     id: null,
                     clientID: null,
                     name: null,
+                    manufacturer: null,
                     barcode: null,
                     categoryID: null,
                     categoryClientID: null,
@@ -141,6 +142,7 @@ sap.ui.define([
                 var id = this._oEditDialog.getModel().getProperty("/id");
                 var clientID = this._oEditDialog.getModel().getProperty("/clientID");
                 var name = this._oEditDialog.getModel().getProperty("/name");
+                var manufacturer = this._oEditDialog.getModel().getProperty("/manufacturer");
                 var barcode = this._oEditDialog.getModel().getProperty("/barcode");
 
                 var selectedKey = sap.ui.getCore().byId("selectCategory").getSelectedKey().split(":");
@@ -158,6 +160,7 @@ sap.ui.define([
                     // создаем
                     data = {
                         "name": name,
+                        "manufacturer": manufacturer,
                         "barcode": barcode,
                         "categoryID": categoryID,
                         "categoryClientID": categoryClientID,
@@ -170,6 +173,7 @@ sap.ui.define([
                         "id": id,
                         "clientID": clientID,
                         "name": name,
+                        "manufacturer": manufacturer,
                         "barcode": barcode,
                         "categoryID": categoryID,
                         "categoryClientID": categoryClientID,

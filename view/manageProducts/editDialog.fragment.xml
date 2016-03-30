@@ -14,6 +14,8 @@
                     <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
                 </Select>
                 <Text/>
+                <Input id="inputManufacturer" value="{/manufacturer}" placeholder="Производитель" maxLength="50"/>
+                <Text/>
                 <Label text="Штрих-код:"/>
                 <HBox>
                     <Input id="inputBarcode" value="{/barcode}" maxLength="255" width="100%" liveChange="_onInputBarcodeLiveChange"/>
