@@ -88,7 +88,8 @@ sap.ui.define([
                 var oData = [{
                     id: null,
                     clientID: null,
-                    name: null
+                    name: null,
+                    address: null
                 }];
                 var jsonModel = new JSONModel(oData);
 
@@ -103,6 +104,7 @@ sap.ui.define([
                 var id = this._oEditDialog.getModel().getProperty("/id");
                 var clientID = this._oEditDialog.getModel().getProperty("/clientID");
                 var name = this._oEditDialog.getModel().getProperty("/name");
+                var address = this._oEditDialog.getModel().getProperty("/address");
 
                 var data;
                 // создаем или изменяем
@@ -110,13 +112,15 @@ sap.ui.define([
                 // сервис поймет, создавать ему или обновлять
                 if (id === undefined && clientID === undefined) {
                     data = {
-                        name: name
+                        "name": name,
+                        "address": address
                     };
                 } else {
                     data = {
-                        id: id,
-                        clientID: clientID,
-                        name: name
+                        "id": id,
+                        "clientID": clientID,
+                        "name": name,
+                        "address": address
                     };
                 }
 
