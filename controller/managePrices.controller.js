@@ -37,6 +37,7 @@ sap.ui.define([
                 // т.к. это первая страница, сразу надо сюда данные грузить
                 // а потом об этом позаботится splitapp
                 this.getView().setModel(new JSONModel("backend/web/services/managePrices.php"));
+                this.getView().setModel(new JSONModel("backend/web/services/user.php"), "user");
             },
 
             // Поиск
@@ -57,6 +58,15 @@ sap.ui.define([
             {
                 $.post("backend/web/services/signOut.php");
                 window.location.reload();
+            },
+
+            onSettingsButtonPress: function()
+            {
+                var oCtrl = sap.ui.controller("controller.settings");
+                var settignsDialog = sap.ui.xmlfragment("view.settings.V", oCtrl);
+                // onInit там не работает, поэтому придется грузить модель тут
+                this.getView().addDependent(settignsDialog);
+                settignsDialog.open();
             },
 
             // нажатие нопки "Удалить"

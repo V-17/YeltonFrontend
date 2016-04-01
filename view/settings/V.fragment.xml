@@ -1,0 +1,26 @@
+<core:FragmentDefinition controllerName="controller.settings" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="dialogSettings" title="Настройки" afterClose="onClose">
+        <content>
+            <VBox>
+                <Panel>
+                    <HBox>
+                        <Label design="Bold" text="Логин: "/>
+                        <Label text="{user>/login}"/>
+                    </HBox>
+                    <HBox>
+                        <Label design="Bold" text="Email: "/>
+                        <Label text="{user>/email}"/>
+                    </HBox>
+                </Panel>
+                <Panel>
+                    <Input id="inputOldPassword" placeholder="Старый пароль" type="Password"/>
+                    <Input id="inputNewPassword" placeholder="Новый пароль" type="Password"/>
+                    <Button text="Сменить" width="100%" press="onChangePasswordPress"/>
+                </Panel>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="Закрыть" press="onClose"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>
