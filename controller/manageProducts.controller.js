@@ -33,7 +33,6 @@ sap.ui.define([
             onInit: function()
             {
                 this.getView().setModel(new JSONModel());
-                this.getView().setModel(new JSONModel("backend/web/services/user.php"), "user");
             },
 
             // Поиск

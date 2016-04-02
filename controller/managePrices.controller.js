@@ -37,7 +37,6 @@ sap.ui.define([
                 // т.к. это первая страница, сразу надо сюда данные грузить
                 // а потом об этом позаботится splitapp
                 this.getView().setModel(new JSONModel("backend/web/services/managePrices.php"));
-                this.getView().setModel(new JSONModel("backend/web/services/user.php"), "user");
             },
 
             // Поиск
