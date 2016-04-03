@@ -50,6 +50,11 @@ sap.ui.define([
                     viewName: "view.manageUnits.V",
                     type: sap.ui.core.mvc.ViewType.XML
                 });
+                var reportsView = sap.ui.view({
+                    id: "pageReports",
+                    viewName: "view.reports.V",
+                    type: sap.ui.core.mvc.ViewType.XML
+                });
 
                 var app = this.byId("splitApp");
                 app.addDetailPage(pricesView);
@@ -57,7 +62,8 @@ sap.ui.define([
                 app.addDetailPage(productsView);
                 app.addDetailPage(storesView);
                 app.addDetailPage(unitsView);
-                
+                app.addDetailPage(reportsView);
+
                 this.getView().setModel(new JSONModel("backend/web/services/user.php"), "user");
             },
 
@@ -66,6 +72,7 @@ sap.ui.define([
                 //FIXME: можно же как то с реальными ID сделать это
                 var id = this.getView().byId("listMainMenu").getSelectedItem().sId;
                 var app = this.byId("splitApp");
+                this.getView().byId("listMenuBottom").removeSelections();
 
                 switch (id) {
                     case "__item0":
@@ -89,6 +96,20 @@ sap.ui.define([
                     case "__item4":
                         app.getDetailPage("pageManageUnits").getModel().loadData("backend/web/services/manageUnits.php");
                         app.toDetail("pageManageUnits", "show");
+                        break;
+                }
+            },
+
+            onNavToReports: function()
+            {
+                //FIXME: можно же как то с реальными ID сделать это
+                var id = this.getView().byId("listMenuBottom").getSelectedItem().sId;
+                var app = this.byId("splitApp");
+                this.getView().byId("listMainMenu").removeSelections();
+
+                switch (id) {
+                    case "__item5":
+                        app.toDetail("pageReports", "show");
                         break;
                 }
             }
