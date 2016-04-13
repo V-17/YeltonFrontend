@@ -49,6 +49,37 @@ sap.ui.define([
                     });
             },
 
+            onChangeEmailPress: function()
+            {
+                //FIXME: по нормальному нужно получать id
+                var splitAppID = "__xmlview0--splitApp";
+                var textView = sap.ui.getCore().byId("textViewChangeEmail");
+                var out = {
+                    email: sap.ui.getCore().byId("inputNewEmail").getValue()
+                };
+                $.ajax({
+                        url: "backend/web/services/user.php",
+                        type: "POST",
+                        data: {
+                            changeEmail: JSON.stringify(out)
+                        }
+                    })
+                    .done(function() {
+                        textView.setSemanticColor("Positive");
+                        textView.setText("Email успешно изменен");
+                        sap.ui.getCore().byId(splitAppID).getModel("user").loadData(
+                            "backend/web/services/user.php");
+                    })
+                    .fail(function(data) {
+                        textView.setSemanticColor("Negative");
+                        textView.setText(data.responseText);
+                    })
+                    .always(function() {
+                        sap.ui.getCore().byId("inputNewEmail").setValue();
+                        textView.setVisible(true);
+                    });
+            },
+
             onClose: function()
             {
                 sap.ui.getCore().byId("dialogSettings").destroy();
