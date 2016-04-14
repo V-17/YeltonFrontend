@@ -7,16 +7,24 @@
     <Page showHeader="false">
         <subHeader>
             <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
                 <ToolbarSpacer/>
-                <!-- <SearchField width="30%" liveChange="onFilterLiveSearch"/> -->
-                <Button text="{user>/login}" tooltip="Настройки" press="onSettingsButtonPress" />
-                <Button id="buttonLogout" icon="sap-icon://log" tooltip="Выход" type="Reject" press="onLogoutButtonPress"/>
+                <Button
+                    id="buttonSettings"
+                    icon="sap-icon://settings"
+                    text="{user>/login}"
+                    tooltip="Меню"
+                    press="onSettingsButtonPress"/>
             </Toolbar>
         </subHeader>
         <List id="tableStores" mode="SingleSelectMaster" items="{/}" growing="true">
+            <headerToolbar>
+                <Toolbar>
+                    <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                    <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                    <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                    <ToolbarSpacer/>
+                </Toolbar>
+            </headerToolbar>
             <items>
                 <StandardListItem type="Active" title="{name}"/>
             </items>

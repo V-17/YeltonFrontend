@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+jQuery.sap.require("controller.settings.settings");
+
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel",
@@ -23,19 +25,9 @@ sap.ui.define([
         "use strict";
         return Controller.extend("controller.reports.reports", {
 
-            onLogoutButtonPress: function()
-            {
-                $.post("backend/web/services/signOut.php");
-                window.location.reload();
-            },
-
             onSettingsButtonPress: function()
             {
-                var oCtrl = sap.ui.controller("controller.settings");
-                var settignsDialog = sap.ui.xmlfragment("view.settings.V", oCtrl);
-                // onInit там не работает, поэтому придется грузить модель тут
-                this.getView().addDependent(settignsDialog);
-                settignsDialog.open();
+                settings.showPopover.apply(this);
             },
 
             onTileBestPriceClick: function()

@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Popover title="{Name}" placement="Bottom" showHeader="false">
+        <List>
+            <StandardListItem
+                title="Настройки"
+                type="Active"
+                icon="sap-icon://account"
+               press="settings.showSettings"/>
+            <StandardListItem
+                title="Выход"
+                type="Active"
+                icon="sap-icon://log"
+                press="settings.logout"/>
+        </List>
+    </Popover>
+</core:FragmentDefinition>

@@ -26,8 +26,12 @@
             <Toolbar>
                 <Button icon="sap-icon://nav-back" press="onNavBackPress"/>
                 <ToolbarSpacer/>
-                <Button text="{user>/login}" tooltip="Настройки" press="onSettingsButtonPress"/>
-                <Button id="buttonLogout" icon="sap-icon://log" tooltip="Выход" type="Reject" press="onLogoutButtonPress"/>
+                <Button
+                    id="buttonSettings"
+                    icon="sap-icon://settings"
+                    text="{user>/login}"
+                    tooltip="Меню"
+                    press="onSettingsButtonPress"/>
             </Toolbar>
         </subHeader>
         <SearchField
@@ -49,7 +53,8 @@
                 <Label text="Стоимость"/>
                 <Text text="{bestPrice>/price} {bestPrice>/currency} за {bestPrice>/unitFullName}"/>
                 <Label text="Дата"/>
-                <Text text="{
+                <Text
+                    text="{
                     path: 'bestPrice>/date',
                     type: 'sap.ui.model.type.Date',
                     formatOptions: {

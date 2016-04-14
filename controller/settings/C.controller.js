@@ -21,7 +21,7 @@ sap.ui.define([
     ],
     function(Controller, JSONModel) {
         "use strict";
-        return Controller.extend("controller.settings", {
+        return Controller.extend("controller.settings.C", {
 
             onChangePasswordPress: function()
             {

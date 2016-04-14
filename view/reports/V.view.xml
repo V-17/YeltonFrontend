@@ -25,8 +25,12 @@
         <subHeader>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button text="{user>/login}" tooltip="Настройки" press="onSettingsButtonPress"/>
-                <Button id="buttonLogout" icon="sap-icon://log" tooltip="Выход" type="Reject" press="onLogoutButtonPress"/>
+                <Button
+                    id="buttonSettings"
+                    icon="sap-icon://settings"
+                    text="{user>/login}"
+                    tooltip="Меню"
+                    press="onSettingsButtonPress"/>
             </Toolbar>
         </subHeader>
         <TileContainer id="reportsContainer">

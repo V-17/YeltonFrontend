@@ -1,21 +1,25 @@
-<mvc:View
-    controllerName="controller.managePrices"
-    xmlns:l="sap.ui.layout"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+<mvc:View controllerName="controller.managePrices" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
     <Page showHeader="false">
         <subHeader>
             <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
                 <ToolbarSpacer/>
-                <!-- <SearchField width="30%" liveChange="onFilterLiveSearch"/> -->
-                <Button text="{user>/login}" tooltip="Настройки" press="onSettingsButtonPress" />
-                <Button id="buttonLogout" icon="sap-icon://log" tooltip="Выход" type="Reject" press="onLogoutButtonPress"/>
+                <Button
+                    id="buttonSettings"
+                    icon="sap-icon://settings"
+                    text="{user>/login}"
+                    tooltip="Меню"
+                    press="onSettingsButtonPress"/>
             </Toolbar>
         </subHeader>
         <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false">
+            <headerToolbar>
+                <Toolbar>
+                    <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                    <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                    <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                    <ToolbarSpacer/>
+                </Toolbar>
+            </headerToolbar>
             <columns>
                 <Column/>
                 <Column/>
