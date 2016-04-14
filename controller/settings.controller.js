@@ -17,15 +17,15 @@
 
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
-        "sap/ui/model/json/JSONModel",
-        'sap/m/MessageToast'
+        "sap/ui/model/json/JSONModel"
     ],
-    function(Controller, JSONModel, MessageToast) {
+    function(Controller, JSONModel) {
         "use strict";
         return Controller.extend("controller.settings", {
 
             onChangePasswordPress: function()
             {
+                var textView = sap.ui.getCore().byId("textViewChangePassword");
                 var out = {
                     oldPassword: sap.ui.getCore().byId("inputOldPassword").getValue(),
                     newPassword: sap.ui.getCore().byId("inputNewPassword").getValue()
@@ -38,18 +38,21 @@ sap.ui.define([
                         }
                     })
                     .done(function() {
-                        MessageToast.show("Пароль успешно изменен");
+                        textView.setSemanticColor("Positive");
+                        textView.setText("Пароль успешно изменен");
                     })
                     .fail(function(answer) {
                         if (answer.status === 401) {
                             window.location.reload();
                         } else {
-                            MessageToast.show(answer.responseText);
+                            textView.setSemanticColor("Negative");
+                            textView.setText(answer.responseText);
                         }
                     })
                     .always(function() {
                         sap.ui.getCore().byId("inputOldPassword").setValue();
                         sap.ui.getCore().byId("inputNewPassword").setValue();
+                        textView.setVisible(true);
                     });
             },
 

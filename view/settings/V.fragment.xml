@@ -4,19 +4,22 @@
     xmlns:core="sap.ui.core"
     xmlns:commons="sap.ui.commons">
     <Dialog id="dialogSettings" title="Настройки" afterClose="onClose">
-        <VBox>
-            <Panel headerText="Email" expandable="true"  expanded="true">
+        <Panel headerText="Email" expandable="true" expanded="true" backgroundDesign="Transparent">
+            <VBox>
                 <Label text="{user>/email}"/>
                 <Input id="inputNewEmail" placeholder="Новый email" type="Email"/>
                 <Button text="Сменить" width="100%" press="onChangeEmailPress"/>
                 <commons:TextView id="textViewChangeEmail" visible="false"/>
-            </Panel>
-            <Panel headerText="Пароль" expandable="true" expanded="true">
+            </VBox>
+        </Panel>
+        <Panel headerText="Пароль" expandable="true" expanded="true" backgroundDesign="Transparent">
+            <VBox>
                 <Input id="inputOldPassword" placeholder="Старый пароль" type="Password"/>
                 <Input id="inputNewPassword" placeholder="Новый пароль" type="Password"/>
                 <Button text="Сменить" width="100%" press="onChangePasswordPress"/>
-            </Panel>
-        </VBox>
+                <commons:TextView id="textViewChangePassword" visible="false"/>
+            </VBox>
+        </Panel>
         <beginButton>
             <Button text="Закрыть" press="onClose"/>
         </beginButton>
