@@ -23,6 +23,21 @@ sap.ui.define([
         "use strict";
         return Controller.extend("controller.reports.reports", {
 
+            onLogoutButtonPress: function()
+            {
+                $.post("backend/web/services/signOut.php");
+                window.location.reload();
+            },
+
+            onSettingsButtonPress: function()
+            {
+                var oCtrl = sap.ui.controller("controller.settings");
+                var settignsDialog = sap.ui.xmlfragment("view.settings.V", oCtrl);
+                // onInit там не работает, поэтому придется грузить модель тут
+                this.getView().addDependent(settignsDialog);
+                settignsDialog.open();
+            },
+
             onTileBestPriceClick: function()
             {
                 var app = sap.ui.getCore().byId("__xmlview0--splitApp");
