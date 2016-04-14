@@ -22,15 +22,9 @@ sap.ui.define([
         "sap/ui/model/json/JSONModel",
         "sap/ui/model/Filter",
         "sap/ui/model/FilterOperator",
-        'sap/m/Dialog',
-        'sap/m/Button',
-        'sap/m/MessageToast',
-        'sap/m/Text',
-        'sap/m/Input',
-        'sap/m/ComboBox',
-        'sap/m/DatePicker'
+        "sap/m/MessageToast"
     ],
-    function(Controller, JSONModel, Filter, FilterOperator, Dialog, Button, MessageToast, Text, Input, ComboBox, DatePicker) {
+    function(Controller, JSONModel, Filter, FilterOperator, MessageToastr) {
         "use strict";
         return Controller.extend("controller.managePrices", {
 
@@ -177,35 +171,35 @@ sap.ui.define([
 
                 // грузим список товаров
                 $.ajax({
-                    url: "backend/web/services/manageProducts.php",
-                    type: "GET"
-                })
-                .done(function(answer)
-                {
-                    that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
-                })
-                .fail(function(answer)
-                {
-                    if (answer.status === 401) {
-                        window.location.reload();
-                    }
-                });
+                        url: "backend/web/services/manageProducts.php",
+                        type: "GET"
+                    })
+                    .done(function(answer)
+                    {
+                        that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
 
                 // грузим список магазинов
                 $.ajax({
-                    url: "backend/web/services/manageStores.php",
-                    type: "GET"
-                })
-                .done(function(answer)
-                {
-                    that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "stores");
-                })
-                .fail(function(answer)
-                {
-                    if (answer.status === 401) {
-                        window.location.reload();
-                    }
-                });
+                        url: "backend/web/services/manageStores.php",
+                        type: "GET"
+                    })
+                    .done(function(answer)
+                    {
+                        that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "stores");
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
 
                 // ставим текущую дату
                 var dd = new Date().getDate();
@@ -385,7 +379,8 @@ sap.ui.define([
                     {
                         answer = answer.trim();
                         if (answer === "ok") {
-                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData("backend/web/services/managePrices.php");
+                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData(
+                                "backend/web/services/managePrices.php");
                         } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
@@ -426,7 +421,8 @@ sap.ui.define([
                     {
                         answer = answer.trim();
                         if (answer === "ok") {
-                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData("backend/web/services/managePrices.php");
+                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData(
+                                "backend/web/services/managePrices.php");
                         } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
