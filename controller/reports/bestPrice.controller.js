@@ -79,12 +79,28 @@ sap.ui.define([
                         "clientID": clientID
                     };
 
-                    var model = new JSONModel();
-                    model.loadData("backend/web/services/reports.php", {
-                        "bestPrice": JSON.stringify(out)
-                    });
-                    this.getView().setModel(model, "bestPrice");
-                    form.setVisible(true);
+                    var that = this;
+                    $.ajax({
+                            url: "backend/web/services/reports.php",
+                            type: "GET",
+                            data: {
+                                "bestPrice": JSON.stringify(out)
+                            }
+                        })
+                        .done(function(answer)
+                        {
+                            that.getView().setModel(new JSONModel(JSON.parse(answer)), "bestPrice");
+                        })
+                        .fail(function(answer)
+                        {
+                            if (answer.status === 401) {
+                                window.location.reload();
+                            }
+                        })
+                        .always(function()
+                        {
+                            form.setVisible(true);
+                        });
                 } else {
                     form.setVisible(false);
                 }

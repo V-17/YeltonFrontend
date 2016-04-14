@@ -35,8 +35,22 @@ sap.ui.define([
             onInit: function()
             {
                 // т.к. это первая страница, сразу надо сюда данные грузить
-                // а потом об этом позаботится splitapp
-                this.getView().setModel(new JSONModel("backend/web/services/managePrices.php"));
+                // а потом об этом позаботится splitApp
+                var that = this;
+                $.ajax({
+                        url: "backend/web/services/managePrices.php",
+                        type: "GET"
+                    })
+                    .done(function(answer)
+                    {
+                        that.getView().setModel(new JSONModel(JSON.parse(answer)));
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
             },
 
             // Поиск
@@ -94,25 +108,48 @@ sap.ui.define([
                     var jsonModel = new JSONModel(model);
                     this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
                     this._oEditDialog.setModel(jsonModel);
+                    var that = this;
 
-                    // грузим список товаров
-                    var productsModel = new JSONModel("backend/web/services/manageProducts.php");
-                    this._oEditDialog.setModel(productsModel, "products");
-                    //выбираем в списке текущую
-                    var productID = jsonModel.getProperty("/productID");
-                    var productClientID = jsonModel.getProperty("/productClientID");
-                    sap.ui.core.Fragment.byId("editDialog", "selectProduct").setSelectedKey(productID + ":" + productClientID);
+                    // грузим список товаров, выбираем в списке нужный
+                    $.ajax({
+                            url: "backend/web/services/manageProducts.php",
+                            type: "GET"
+                        })
+                        .done(function(answer)
+                        {
+                            that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
+                            var id = jsonModel.getProperty("/productID");
+                            var clientID = jsonModel.getProperty("/productClientID");
+                            sap.ui.core.Fragment.byId("editDialog", "selectProduct").setSelectedKey(id + ":" + clientID);
+                        })
+                        .fail(function(answer)
+                        {
+                            if (answer.status === 401) {
+                                window.location.reload();
+                            }
+                        });
 
-                    // грузим список магазов
-                    var storesModel = new JSONModel("backend/web/services/manageStores.php");
-                    this._oEditDialog.setModel(storesModel, "stores");
-                    //выбираем в списке текущую
-                    var storeID = jsonModel.getProperty("/storeID");
-                    var storeClientID = jsonModel.getProperty("/storeClientID");
-                    sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(storeID + ":" + storeClientID);
+                    // грузим список магазинов, выбираем в списке нужный
+                    $.ajax({
+                            url: "backend/web/services/manageStores.php",
+                            type: "GET"
+                        })
+                        .done(function(answer)
+                        {
+                            that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "stores");
+                            var id = jsonModel.getProperty("/storeID");
+                            var clientID = jsonModel.getProperty("/storeClientID");
+                            sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(id + ":" + clientID);
+                        })
+                        .fail(function(answer)
+                        {
+                            if (answer.status === 401) {
+                                window.location.reload();
+                            }
+                        });
 
                     //ставим дату
-                    // fixme: по идее тоже через модель надо
+                    // FIXME: по идее тоже через модель надо
                     // просто лень сейчас разбираться с форматом
                     // а может и не придётся разбираться ))
                     // но все равно пока лень
@@ -144,14 +181,39 @@ sap.ui.define([
 
                 this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
                 this._oEditDialog.setModel(jsonModel);
+                var that = this;
 
-                // грузим список категорий
-                var productsModel = new JSONModel("backend/web/services/manageProducts.php");
-                this._oEditDialog.setModel(productsModel, "products");
+                // грузим список товаров
+                $.ajax({
+                    url: "backend/web/services/manageProducts.php",
+                    type: "GET"
+                })
+                .done(function(answer)
+                {
+                    that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
+                })
+                .fail(function(answer)
+                {
+                    if (answer.status === 401) {
+                        window.location.reload();
+                    }
+                });
 
-                // грузим список мер
-                var storesModel = new JSONModel("backend/web/services/manageStores.php");
-                this._oEditDialog.setModel(storesModel, "stores");
+                // грузим список магазинов
+                $.ajax({
+                    url: "backend/web/services/manageStores.php",
+                    type: "GET"
+                })
+                .done(function(answer)
+                {
+                    that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "stores");
+                })
+                .fail(function(answer)
+                {
+                    if (answer.status === 401) {
+                        window.location.reload();
+                    }
+                });
 
                 // ставим текущую дату
                 var dd = new Date().getDate();
@@ -289,13 +351,13 @@ sap.ui.define([
                     return;
                 }
 
-                var data;
+                var out;
                 // создаем или изменяем
                 // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
                 // сервис поймет, создавать ему или обновлять
                 if (id === undefined && clientID === undefined) {
                     // создаем
-                    data = {
+                    out = {
                         productID: productID,
                         productClientID: productClientID,
                         storeID: storeID,
@@ -307,7 +369,7 @@ sap.ui.define([
                     };
                 } else {
                     // изменяем
-                    data = {
+                    out = {
                         id: id,
                         clientID: clientID,
                         productID: productID,
@@ -321,25 +383,32 @@ sap.ui.define([
                     };
                 }
 
+                var that = this;
                 $.ajax({
-                    type: "POST",
-                    url: "/backend/web/services/managePrices.php",
-                    data: data,
-                    success: function(data)
+                        url: "/backend/web/services/managePrices.php",
+                        type: "POST",
+                        data: out,
+                    })
+                    .done(function(answer)
                     {
-                        data = data.trim();
-                        if (data === "ok") {
-                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData(
-                                "backend/web/services/managePrices.php");
-                        } else if (data === "unknown_error") {
+                        answer = answer.trim();
+                        if (answer === "ok") {
+                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData("backend/web/services/managePrices.php");
+                        } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
-                            sap.m.MessageToast.show(data);
+                            sap.m.MessageToast.show(answer);
                         }
-                    }
-                });
-
-                this._oEditDialog.destroy();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    })
+                    .always(function() {
+                        that._oEditDialog.destroy();
+                    });
             },
 
             _onEditDialogCancel: function()
@@ -352,28 +421,35 @@ sap.ui.define([
                 var id = this._oDeleteDialog.getModel().getProperty("/id");
                 var clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
 
+                var that = this;
                 $.ajax({
-                    type: "DEL",
-                    url: "/backend/web/services/managePrices.php",
-                    data: {
-                        id: id,
-                        clientID: clientID
-                    },
-                    success: function(data)
+                        url: "/backend/web/services/managePrices.php",
+                        type: "DEL",
+                        data: {
+                            id: id,
+                            clientID: clientID
+                        }
+                    })
+                    .done(function(answer)
                     {
-                        data = data.trim();
-                        if (data === "ok") {
-                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData(
-                                "backend/web/services/managePrices.php");
-                        } else if (data === "unknown_error") {
+                        answer = answer.trim();
+                        if (answer === "ok") {
+                            sap.ui.getCore().byId("pageManagePrices").getModel().loadData("backend/web/services/managePrices.php");
+                        } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
-                            sap.m.MessageToast.show(data);
+                            sap.m.MessageToast.show(answer);
                         }
-                    }
-                });
-
-                this._oDeleteDialog.destroy();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    })
+                    .always(function() {
+                        that._oDeleteDialog.destroy();
+                    });
             },
 
             _onDeleteDialogCancel: function()

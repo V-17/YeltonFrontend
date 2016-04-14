@@ -93,22 +93,41 @@ sap.ui.define([
                     if (this._oEditDialog.getModel().getProperty("/barcode")) {
                         sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
                     }
+                    var that = this;
 
-                    // грузим список категорий
-                    var categoriesModel = new JSONModel("backend/web/services/manageCategories.php");
-                    this._oEditDialog.setModel(categoriesModel, "categories");
-                    //выбираем в списке текущую
-                    var categoryID = jsonModel.getProperty("/categoryID");
-                    var categoryClientID = jsonModel.getProperty("/categoryClientID");
-                    sap.ui.getCore().byId("selectCategory").setSelectedKey(categoryID + ":" + categoryClientID);
+                    // грузим список категорий и выбираем нужную
+                    $.ajax({
+                            url: "backend/web/services/manageCategories.php",
+                            type: "GET"
+                        })
+                        .done(function(answer) {
+                            that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "categories");
+                            var id = jsonModel.getProperty("/categoryID");
+                            var clientID = jsonModel.getProperty("/categoryClientID");
+                            sap.ui.getCore().byId("selectCategory").setSelectedKey(id + ":" + clientID);
+                        })
+                        .fail(function(answer) {
+                            if (answer.status === 401) {
+                                window.location.reload();
+                            }
+                        });
 
-                    // грузим список единиц измерения
-                    var unitsModel = new JSONModel("backend/web/services/manageUnits.php");
-                    this._oEditDialog.setModel(unitsModel, "units");
-                    //выбираем в списке текущую
-                    var unitID = jsonModel.getProperty("/unitID");
-                    var unitClientID = jsonModel.getProperty("/unitClientID");
-                    sap.ui.getCore().byId("selectUnit").setSelectedKey(unitID + ":" + unitClientID);
+                    // грузим список единиц измерения и выбираем нужную
+                    $.ajax({
+                            url: "backend/web/services/manageUnits.php",
+                            type: "GET"
+                        })
+                        .done(function(answer) {
+                            that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "units");
+                            var id = jsonModel.getProperty("/unitID");
+                            var clientID = jsonModel.getProperty("/unitClientID");
+                            sap.ui.getCore().byId("selectUnit").setSelectedKey(id + ":" + clientID);
+                        })
+                        .fail(function(answer) {
+                            if (answer.status === 401) {
+                                window.location.reload();
+                            }
+                        });
 
                     this._oEditDialog.open();
                 } else {
@@ -134,14 +153,35 @@ sap.ui.define([
 
                 this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
                 this._oEditDialog.setModel(jsonModel);
+                var that = this;
 
                 // грузим список категорий
-                var categoriesModel = new JSONModel("backend/web/services/manageCategories.php");
-                this._oEditDialog.setModel(categoriesModel, "categories");
+                $.ajax({
+                        url: "backend/web/services/manageCategories.php",
+                        type: "GET"
+                    })
+                    .done(function(answer) {
+                        that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "categories");
+                    })
+                    .fail(function(answer) {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
 
                 // грузим список единиц измерения
-                var unitsModel = new JSONModel("backend/web/services/manageUnits.php");
-                this._oEditDialog.setModel(unitsModel, "units");
+                $.ajax({
+                        url: "backend/web/services/manageUnits.php",
+                        type: "GET"
+                    })
+                    .done(function(answer) {
+                        that._oEditDialog.setModel(new JSONModel(JSON.parse(answer)), "units");
+                    })
+                    .fail(function(answer) {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
 
                 this._oEditDialog.open();
             },
@@ -161,13 +201,13 @@ sap.ui.define([
                 var unitID = selectedKey[0];
                 var unitClientID = selectedKey[1];
 
-                var data;
+                var out;
                 // создаем или изменяем
                 // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
                 // сервис поймет, создавать ему или обновлять
                 if (id === undefined && clientID === undefined) {
                     // создаем
-                    data = {
+                    out = {
                         "name": name,
                         "manufacturer": manufacturer,
                         "barcode": barcode,
@@ -178,7 +218,7 @@ sap.ui.define([
                     };
                 } else {
                     // изменяем
-                    data = {
+                    out = {
                         "id": id,
                         "clientID": clientID,
                         "name": name,
@@ -191,25 +231,32 @@ sap.ui.define([
                     };
                 }
 
+                var that = this;
                 $.ajax({
-                    type: "POST",
-                    url: "/backend/web/services/manageProducts.php",
-                    data: data,
-                    success: function(data)
+                        url: "/backend/web/services/manageProducts.php",
+                        type: "POST",
+                        data: out,
+                    })
+                    .done(function(answer)
                     {
-                        data = data.trim();
-                        if (data === "ok") {
-                            sap.ui.getCore().byId("pageManageProducts").getModel().loadData(
-                                "backend/web/services/manageProducts.php");
-                        } else if (data === "unknown_error") {
+                        answer = answer.trim();
+                        if (answer === "ok") {
+                            sap.ui.getCore().byId("pageManageProducts").getModel().loadData("backend/web/services/manageProducts.php");
+                        } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
-                            sap.m.MessageToast.show(data);
+                            sap.m.MessageToast.show(answer);
                         }
-                    }
-                });
-
-                this._oEditDialog.destroy();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    })
+                    .always(function() {
+                        that._oEditDialog.destroy();
+                    });
             },
 
             //liveChange на barcode
@@ -242,27 +289,35 @@ sap.ui.define([
                 var id = this._oDeleteDialog.getModel().getProperty("/id");
                 var clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
 
+                var that = this;
                 $.ajax({
-                    type: "DEL",
-                    url: "/backend/web/services/manageProducts.php",
-                    data: {
-                        id: id,
-                        clientID: clientID
-                    },
-                    success: function(data)
+                        url: "/backend/web/services/manageProducts.php",
+                        type: "DEL",
+                        data: {
+                            id: id,
+                            clientID: clientID
+                        }
+                    })
+                    .done(function(answer)
                     {
-                        data = data.trim();
-                        if (data === "ok") {
-                            sap.ui.getCore().byId("pageManageProducts").getModel().loadData(
-                                "backend/web/services/manageProducts.php");
-                        } else if (data === "unknown_error") {
+                        answer = answer.trim();
+                        if (answer === "ok") {
+                            sap.ui.getCore().byId("pageManageProducts").getModel().loadData("backend/web/services/manageProducts.php");
+                        } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
-                            sap.m.MessageToast.show(data);
+                            sap.m.MessageToast.show(answer);
                         }
-                    }
-                });
-                this._oDeleteDialog.destroy();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    })
+                    .always(function() {
+                        that._oDeleteDialog.destroy();
+                    });
             },
 
             _onDeleteDialogCancel: function()

@@ -50,13 +50,25 @@ sap.ui.define([
                     app.addDetailPage(this._viewBestPrice);
                 }
 
-                var model = new JSONModel();
-                model.loadData("backend/web/services/reports.php", {
-                    "productsWithPrices": null
-                });
-                this._viewBestPrice.setModel(model, "products");
-
-                app.toDetail("pageReportsBestPrice", "show");
+                var that = this;
+                $.ajax({
+                        url: "backend/web/services/reports.php",
+                        type: "GET",
+                        data: {
+                            "productsWithPrices": null
+                        }
+                    })
+                    .done(function(answer)
+                    {
+                        that._viewBestPrice.setModel(new JSONModel(JSON.parse(answer)), "products");
+                        app.toDetail("pageReportsBestPrice", "show");
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
             }
         });
     });

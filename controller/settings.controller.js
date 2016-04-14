@@ -40,8 +40,12 @@ sap.ui.define([
                     .done(function() {
                         MessageToast.show("Пароль успешно изменен");
                     })
-                    .fail(function(data) {
-                        MessageToast.show(data.responseText);
+                    .fail(function(answer) {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        } else {
+                            MessageToast.show(answer.responseText);
+                        }
                     })
                     .always(function() {
                         sap.ui.getCore().byId("inputOldPassword").setValue();
@@ -67,12 +71,15 @@ sap.ui.define([
                     .done(function() {
                         textView.setSemanticColor("Positive");
                         textView.setText("Email успешно изменен");
-                        sap.ui.getCore().byId(splitAppID).getModel("user").loadData(
-                            "backend/web/services/user.php");
+                        sap.ui.getCore().byId(splitAppID).getModel("user").loadData("backend/web/services/user.php");
                     })
-                    .fail(function(data) {
-                        textView.setSemanticColor("Negative");
-                        textView.setText(data.responseText);
+                    .fail(function(answer) {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        } else {
+                            textView.setSemanticColor("Negative");
+                            textView.setText(answer.responseText);
+                        }
                     })
                     .always(function() {
                         sap.ui.getCore().byId("inputNewEmail").setValue();

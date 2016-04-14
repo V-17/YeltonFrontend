@@ -114,42 +114,49 @@ sap.ui.define([
                 var clientID = this._oEditDialog.getModel().getProperty("/clientID");
                 var name = this._oEditDialog.getModel().getProperty("/name");
 
-                var data;
-
+                var out;
                 // создаем или изменяем
                 // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
                 // сервис поймет, создавать ему или обновлять
                 if (id === undefined && clientID === undefined) {
-                    data = {
+                    out = {
                         name: name
                     };
                 } else {
-                    data = {
+                    out = {
                         id: id,
                         clientID: clientID,
                         name: name
                     };
                 }
 
+                var that = this;
                 $.ajax({
-                    type: "POST",
-                    url: "/backend/web/services/manageCategories.php",
-                    data: data,
-                    success: function(data)
+                        url: "/backend/web/services/manageCategories.php",
+                        type: "POST",
+                        data: out,
+                    })
+                    .done(function(answer)
                     {
-                        data = data.trim();
-                        if (data === "ok") {
-                            sap.ui.getCore().byId("pageManageCategories").getModel().loadData(
-                                "backend/web/services/manageCategories.php");
-                        } else if (data === "unknown_error") {
+                        answer = answer.trim();
+                        if (answer === "ok") {
+                            sap.ui.getCore().byId("pageManageCategories").getModel().loadData("backend/web/services/manageCategories.php");
+                        } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
-                            sap.m.MessageToast.show(data);
+                            sap.m.MessageToast.show(answer);
                         }
-                    }
-                });
-
-                this._oEditDialog.destroy();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    })
+                    .always(function()
+                    {
+                        that._oEditDialog.destroy();
+                    });
             },
 
             _onEditDialogCancel: function()
@@ -162,28 +169,35 @@ sap.ui.define([
                 var id = this._oDeleteDialog.getModel().getProperty("/id");
                 var clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
 
+                var that = this;
                 $.ajax({
-                    type: "DEL",
-                    url: "/backend/web/services/manageCategories.php",
-                    data: {
-                        id: id,
-                        clientID: clientID
-                    },
-                    success: function(data)
+                        url: "/backend/web/services/manageCategories.php",
+                        type: "DEL",
+                        data: {
+                            id: id,
+                            clientID: clientID
+                        }
+                    })
+                    .done(function(answer)
                     {
-                        data = data.trim();
-                        if (data === "ok") {
-                            sap.ui.getCore().byId("pageManageCategories").getModel().loadData(
-                                "backend/web/services/manageCategories.php");
-                        } else if (data === "unknown_error") {
+                        answer = answer.trim();
+                        if (answer === "ok") {
+                            sap.ui.getCore().byId("pageManageCategories").getModel().loadData("backend/web/services/manageCategories.php");
+                        } else if (answer === "unknown_error") {
                             sap.m.MessageToast.show("Произошла непредвиденная ошибка");
                         } else {
-                            sap.m.MessageToast.show(data);
+                            sap.m.MessageToast.show(answer);
                         }
-                    }
-                });
-
-                this._oDeleteDialog.destroy();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    })
+                    .always(function() {
+                        that._oDeleteDialog.destroy();
+                    });
             },
 
             _onDeleteDialogCancel: function()

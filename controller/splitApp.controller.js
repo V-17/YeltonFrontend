@@ -64,7 +64,18 @@ sap.ui.define([
                 app.addDetailPage(unitsView);
                 app.addDetailPage(reportsView);
 
-                this.getView().setModel(new JSONModel("backend/web/services/user.php"), "user");
+                var that = this;
+                $.ajax({
+                        url: "backend/web/services/user.php"
+                    })
+                    .done(function(answer) {
+                        that.getView().setModel(new JSONModel(JSON.parse(answer)), "user");
+                    })
+                    .fail(function(answer) {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
             },
 
             onNavToDetail: function()
@@ -76,26 +87,74 @@ sap.ui.define([
 
                 switch (id) {
                     case "__item0":
-                        app.getDetailPage("pageManagePrices").getModel().loadData("backend/web/services/managePrices.php");
-                        app.toDetail("pageManagePrices", "show");
+                        $.ajax({
+                                url: "backend/web/services/managePrices.php"
+                            })
+                            .done(function(answer) {
+                                app.getDetailPage("pageManagePrices").getModel().setData(JSON.parse(answer));
+                                app.toDetail("pageManagePrices", "show");
+                            })
+                            .fail(function(answer) {
+                                if (answer.status === 401) {
+                                    window.location.reload();
+                                }
+                            });
                         break;
                     case "__item1":
-                        app.getDetailPage("pageManageCategories").getModel().loadData(
-                            "backend/web/services/manageCategories.php");
-                        app.toDetail("pageManageCategories", "show");
+                        $.ajax({
+                                url: "backend/web/services/manageCategories.php"
+                            })
+                            .done(function(answer) {
+                                app.getDetailPage("pageManageCategories").getModel().setData(JSON.parse(answer));
+                                app.toDetail("pageManageCategories", "show");
+                            })
+                            .fail(function(answer) {
+                                if (answer.status === 401) {
+                                    window.location.reload();
+                                }
+                            });
                         break;
                     case "__item2":
-                        app.getDetailPage("pageManageProducts").getModel().loadData(
-                            "backend/web/services/manageProducts.php");
-                        app.toDetail("pageManageProducts", "show");
+                        $.ajax({
+                                url: "backend/web/services/manageProducts.php"
+                            })
+                            .done(function(answer) {
+                                app.getDetailPage("pageManageProducts").getModel().setData(JSON.parse(answer));
+                                app.toDetail("pageManageProducts", "show");
+                            })
+                            .fail(function(answer) {
+                                if (answer.status === 401) {
+                                    window.location.reload();
+                                }
+                            });
                         break;
                     case "__item3":
-                        app.getDetailPage("pageManageStores").getModel().loadData("backend/web/services/manageStores.php");
-                        app.toDetail("pageManageStores", "show");
+                        $.ajax({
+                                url: "backend/web/services/manageStores.php"
+                            })
+                            .done(function(answer) {
+                                app.getDetailPage("pageManageStores").getModel().setData(JSON.parse(answer));
+                                app.toDetail("pageManageStores", "show");
+                            })
+                            .fail(function(answer) {
+                                if (answer.status === 401) {
+                                    window.location.reload();
+                                }
+                            });
                         break;
                     case "__item4":
-                        app.getDetailPage("pageManageUnits").getModel().loadData("backend/web/services/manageUnits.php");
-                        app.toDetail("pageManageUnits", "show");
+                        $.ajax({
+                                url: "backend/web/services/manageUnits.php"
+                            })
+                            .done(function(answer) {
+                                app.getDetailPage("pageManageUnits").getModel().setData(JSON.parse(answer));
+                                app.toDetail("pageManageUnits", "show");
+                            })
+                            .fail(function(answer) {
+                                if (answer.status === 401) {
+                                    window.location.reload();
+                                }
+                            });
                         break;
                 }
             },

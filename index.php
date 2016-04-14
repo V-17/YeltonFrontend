@@ -37,26 +37,24 @@
         <script src="core/lib.js"></script>
 
         <?php
-            // Провекра логина
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-            // если пользователь не залогинен - показыаем ему index страницу
-            if (empty($_SESSION['userID'])) {
-                echo '
-                <script>
-                    sap.ui.localResources("view");
-                    new sap.m.Shell({
-                        app: sap.ui.view({viewName: "view.index.V", type: sap.ui.core.mvc.ViewType.XML})
-                    }).placeAt("content");
-                </script>';
-            // иначе - норм приложуху
-            } else {
+            include $_SERVER ['DOCUMENT_ROOT'].'/backend/'.'web/services/internal/sessions.php';
+
+            // если пользователь залогинен - показыаем ему приложение
+            if (\yelton\isSetUserID() === true) {
                 echo '
                 <script>
                     sap.ui.localResources("view");
                     new sap.m.Shell({
                         app: sap.ui.view({viewName: "view.splitApp", type: sap.ui.core.mvc.ViewType.XML})
+                    }).placeAt("content");
+                </script>';
+            // иначе - index страницу
+            } else {
+                echo '
+                <script>
+                    sap.ui.localResources("view");
+                    new sap.m.Shell({
+                        app: sap.ui.view({viewName: "view.index.V", type: sap.ui.core.mvc.ViewType.XML})
                     }).placeAt("content");
                 </script>';
             }
