@@ -447,6 +447,197 @@ sap.ui.define([
             _onDeleteDialogCancel: function()
             {
                 this._oDeleteDialog.destroy();
+            },
+
+
+            ////////////
+            // Фильтр //
+            ////////////
+
+            // нажатие на кнопку фильтрации
+            onFilterButtonPress: function()
+            {
+                this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "view.managePrices.filterDialog", this);
+
+                var currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
+                currentFilters.forEach(function(item, i, arr) {
+                    switch (item.sPath) {
+                        case "productName":
+                            sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue(item.oValue1);
+                            break;
+                        case "categoryName":
+                            sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue(item.oValue1);
+                            break;
+                        case "storeName":
+                            sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").setValue(item.oValue1);
+                            break;
+                    }
+                });
+
+                var that = this;
+
+                // загружаем список товаров (у которых есть хотя бы 1 покупка)
+                $.ajax({
+                        url: "backend/web/services/reports.php",
+                        type: "GET",
+                        data: {
+                            "productsWithPrices": null
+                        }
+                    })
+                    .done(function(answer)
+                    {
+                        that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
+                        that._oFilterDialog.open();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
+
+                // загружаем список категорий
+                $.ajax({
+                        url: "backend/web/services/manageCategories.php",
+                        type: "GET"
+                    })
+                    .done(function(answer)
+                    {
+                        that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "categories");
+                        that._oFilterDialog.open();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
+
+                // загружаем список магазинов
+                $.ajax({
+                        url: "backend/web/services/manageStores.php",
+                        type: "GET"
+                    })
+                    .done(function(answer)
+                    {
+                        that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "stores");
+                        that._oFilterDialog.open();
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
+            },
+
+            // сброс фильтра
+            onFilterResetButtonPress: function()
+            {
+                this.byId("buttonResetFilter").setVisible(false);
+                this.byId("tablePrices").getBinding("items").filter(null);
+            },
+
+            _onFilterDialogSearchFieldProductSuggest: function(event)
+            {
+                var value = event.getParameter("suggestValue");
+                var filters = [];
+                if (value) {
+                    filters = [new sap.ui.model.Filter([
+                        new sap.ui.model.Filter("name", function(sText) {
+                            return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                        }),
+                        new sap.ui.model.Filter("categoryName", function(sDes) {
+                            return (sDes || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                        })
+                    ], false)];
+                }
+
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct")
+                    .getBinding("suggestionItems")
+                    .filter(filters);
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").suggest();
+            },
+
+            // при выборе товара сбрасывается категория
+            _onFilterDialogSearchFieldProductSearch: function(event)
+            {
+                if (event.getParameter("suggestionItem")) {
+                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue();
+                }
+            },
+
+            _onFilterDialogSearchFieldCategorySuggest: function(event)
+            {
+                var value = event.getParameter("suggestValue");
+                var filter;
+                if (value) {
+                    filter = new sap.ui.model.Filter("name", function(sText) {
+                        return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                    });
+                }
+
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory")
+                    .getBinding("suggestionItems")
+                    .filter(filter);
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").suggest();
+            },
+
+            // при выборе категории  брасывается товар
+            _onFilterDialogSearchFieldCategorySearch: function(event)
+            {
+                if (event.getParameter("suggestionItem")) {
+                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue();
+                }
+            },
+
+            _onFilterDialogSearchFieldStoreSuggest: function(event)
+            {
+                var value = event.getParameter("suggestValue");
+                var filter;
+                if (value) {
+                    filter = new sap.ui.model.Filter("name", function(sText) {
+                        return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                    });
+                }
+
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore")
+                    .getBinding("suggestionItems")
+                    .filter(filter);
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").suggest();
+            },
+
+            // примерение фильтра
+            _onFilterDialogOK: function()
+            {
+                var productName = sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").getValue();
+                var categoryName = sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").getValue();
+                var storeName = sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").getValue();
+
+                if (productName || categoryName || storeName) {
+                    var aFilters = [];
+
+                    if (productName) {
+                        aFilters.push(new Filter("productName", FilterOperator.EQ, productName));
+                    }
+                    if (categoryName) {
+                        aFilters.push(new Filter("categoryName", FilterOperator.EQ, categoryName));
+                    }
+                    if (storeName) {
+                        aFilters.push(new Filter("storeName", FilterOperator.EQ, storeName));
+                    }
+
+                    this.byId("tablePrices").getBinding("items").filter(aFilters);
+                    this.byId("buttonResetFilter").setVisible(true);
+                } else {
+                    this.onFilterResetButtonPress();
+                }
+                this._oFilterDialog.destroy();
+            },
+
+            _onFilterDialogCancel: function()
+            {
+                this._oFilterDialog.destroy();
             }
         });
     });

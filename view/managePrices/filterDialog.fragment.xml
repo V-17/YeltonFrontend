@@ -1,0 +1,52 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="Фильтр" afterClose="_onFilterDialogCancel" initialFocus="buttonOK">
+        <content>
+            <VBox>
+                <Label text="Товар"/>
+                <SearchField
+                    id="searchFieldProduct"
+                    enableSuggestions="true"
+                    showSearchButton="false"
+                    suggest="_onFilterDialogSearchFieldProductSuggest"
+                    search="_onFilterDialogSearchFieldProductSearch"
+                    suggestionItems="{products>/}">
+                    <suggestionItems>
+                        <SuggestionItem text="{products>name}" description="{products>categoryName}"/>
+                    </suggestionItems>
+                </SearchField>
+                <Text/>
+                <Label text="Категория"/>
+                <SearchField
+                    id="searchFieldCategory"
+                    enableSuggestions="true"
+                    showSearchButton="false"
+                    suggest="_onFilterDialogSearchFieldCategorySuggest"
+                    search="_onFilterDialogSearchFieldCategorySearch"
+                    suggestionItems="{categories>/}">
+                    <suggestionItems>
+                        <SuggestionItem text="{categories>name}"/>
+                    </suggestionItems>
+                </SearchField>
+                <Text/>
+                <Label text="Магазин"/>
+                <SearchField
+                    id="searchFieldStore"
+                    enableSuggestions="true"
+                    showSearchButton="false"
+                    suggest="_onFilterDialogSearchFieldStoreSuggest"
+                    search="_onFilterDialogSearchFieldStoreSearch"
+                    suggestionItems="{stores>/}">
+                    <suggestionItems>
+                        <SuggestionItem text="{stores>name}"/>
+                    </suggestionItems>
+                </SearchField>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button id="buttonOK" text="Применить" type="Accept" press="_onFilterDialogOK"/>
+        </beginButton>
+        <endButton>
+            <Button text="Закрыть" press="_onFilterDialogCancel"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

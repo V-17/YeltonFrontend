@@ -18,6 +18,13 @@
                     <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
                     <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
                     <ToolbarSpacer/>
+                    <Button
+                        id="buttonResetFilter"
+                        icon="sap-icon://decline"
+                        press="onFilterResetButtonPress"
+                        tooltip="Сбросить фильтр"
+                        visible="false"/>
+                    <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
                 </Toolbar>
             </headerToolbar>
             <columns>
