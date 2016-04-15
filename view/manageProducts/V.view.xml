@@ -1,15 +1,7 @@
 <mvc:View controllerName="controller.manageProducts.C" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
     <Page showHeader="false">
         <subHeader>
-            <Toolbar>
-                <ToolbarSpacer/>
-                <Button
-                    id="buttonSettings"
-                    icon="sap-icon://settings"
-                    text="{user>/login}"
-                    tooltip="Меню"
-                    press="onSettingsButtonPress"/>
-            </Toolbar>
+            <Toolbar/>
         </subHeader>
         <List
             growing="true"
@@ -22,17 +14,17 @@
                     group : true
                 }
             }">
-            <headerToolbar>
-                <Toolbar>
-                    <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                    <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                    <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
-                    <ToolbarSpacer/>
-                </Toolbar>
-            </headerToolbar>
             <items>
                 <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
             </items>
         </List>
+        <footer>
+            <Toolbar>
+                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                <ToolbarSpacer/>
+            </Toolbar>
+        </footer>
     </Page>
 </mvc:View>

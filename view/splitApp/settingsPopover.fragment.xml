@@ -1,8 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Popover title="{Name}" placement="Bottom" showHeader="false">
+    <Popover title="{Name}" placement="Right" showHeader="false">
         <List>
             <StandardListItem
                 title="Настройки"
+                description="{user>/login}"
                 type="Active"
                 icon="sap-icon://account"
                press="settings.showSettings"/>

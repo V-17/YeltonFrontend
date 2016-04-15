@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("controller.settings.settings");
-
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel",
@@ -24,13 +22,6 @@ sap.ui.define([
     function(Controller, JSONModel) {
         "use strict";
         return Controller.extend("controller.reports.bestPrice", {
-
-            onInit: function() {},
-
-            onSettingsButtonPress: function()
-            {
-                settings.showPopover.apply(this);
-            },
 
             onNavBackPress: function()
             {

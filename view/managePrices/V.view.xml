@@ -1,32 +1,9 @@
 <mvc:View controllerName="controller.managePrices.C" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
     <Page showHeader="false">
         <subHeader>
-            <Toolbar>
-                <ToolbarSpacer/>
-                <Button
-                    id="buttonSettings"
-                    icon="sap-icon://settings"
-                    text="{user>/login}"
-                    tooltip="Меню"
-                    press="onSettingsButtonPress"/>
-            </Toolbar>
+            <Toolbar/>
         </subHeader>
         <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false">
-            <headerToolbar>
-                <Toolbar>
-                    <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                    <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                    <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
-                    <ToolbarSpacer/>
-                    <Button
-                        id="buttonResetFilter"
-                        icon="sap-icon://decline"
-                        press="onFilterResetButtonPress"
-                        tooltip="Сбросить фильтр"
-                        visible="false"/>
-                    <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
-                </Toolbar>
-            </headerToolbar>
             <columns>
                 <Column/>
                 <Column/>
@@ -53,5 +30,20 @@
                 </ColumnListItem>
             </items>
         </Table>
+        <footer>
+            <Toolbar>
+                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                <ToolbarSpacer/>
+                <Button
+                    id="buttonResetFilter"
+                    icon="sap-icon://decline"
+                    press="onFilterResetButtonPress"
+                    tooltip="Сбросить фильтр"
+                    visible="false"/>
+                <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
+            </Toolbar>
+        </footer>
     </Page>
 </mvc:View>

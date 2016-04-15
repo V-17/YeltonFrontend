@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("controller.settings.settings");
 jQuery.sap.require("controller.manageCategories.editDialog");
 jQuery.sap.require("controller.manageCategories.deleteDialog");
 
@@ -41,12 +40,6 @@ sap.ui.define([
                 table.getBinding("items").filter(
                     new Filter("name", FilterOperator.Contains, sQuery)
                 );
-            },
-
-            // нажатие кнопки Настройки
-            onSettingsButtonPress: function()
-            {
-                settings.showPopover.apply(this);
             },
 
             // нажатие кнопки Создать

@@ -26,12 +26,6 @@
             <Toolbar>
                 <Button icon="sap-icon://nav-back" press="onNavBackPress"/>
                 <ToolbarSpacer/>
-                <Button
-                    id="buttonSettings"
-                    icon="sap-icon://settings"
-                    text="{user>/login}"
-                    tooltip="Меню"
-                    press="onSettingsButtonPress"/>
             </Toolbar>
         </subHeader>
         <SearchField

@@ -1,5 +1,4 @@
 <core:FragmentDefinition
-    controllerName="controller.settings"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:commons="sap.ui.commons">

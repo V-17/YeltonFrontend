@@ -45,7 +45,7 @@
                 <script>
                     sap.ui.localResources("view");
                     new sap.m.Shell({
-                        app: sap.ui.view({viewName: "view.splitApp", type: sap.ui.core.mvc.ViewType.XML})
+                        app: sap.ui.view({viewName: "view.splitApp.V", type: sap.ui.core.mvc.ViewType.XML})
                     }).placeAt("content");
                 </script>';
             // иначе - index страницу

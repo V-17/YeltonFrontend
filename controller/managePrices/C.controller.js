@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("controller.settings.settings");
 jQuery.sap.require("controller.managePrices.editDialog");
 jQuery.sap.require("controller.managePrices.deleteDialog");
 jQuery.sap.require("controller.managePrices.filterDialog");
@@ -68,13 +67,6 @@ sap.ui.define([
                     ])
                 );
             },
-
-            // нажатие кнопки Настройки
-            onSettingsButtonPress: function()
-            {
-                settings.showPopover.apply(this);
-            },
-
 
             // нажатие кнопки Создать
             onCreateButtonPress: function()

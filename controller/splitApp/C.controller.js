@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
+jQuery.sap.require("controller.splitApp.settingsPopover");
+
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel"
     ],
     function(Controller, JSONModel) {
         "use strict";
-        return Controller.extend("controller.splitApp", {
+        return Controller.extend("controller.splitApp.C", {
 
             onInit: function()
             {
@@ -191,6 +193,11 @@ sap.ui.define([
                         app.toDetail("pageReports", "show");
                         break;
                 }
-            }
+            },
+
+            onSettingsButtonPress: function()
+            {
+                settings.showPopover.apply(this);
+            },
         });
     });
