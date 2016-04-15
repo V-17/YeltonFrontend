@@ -92,7 +92,7 @@
                     </VBox>
                 </HBox>
             </Panel>
-            <Panel headerText="Немного статистики ..." expandable="true" expanded="false">
+            <!-- <Panel headerText="Немного статистики ..." expandable="true" expanded="false">
                 <f:SimpleForm>
                     <f:content>
                         <Label text="Запуск проекта"/>
@@ -103,7 +103,7 @@
                         <Text text="{stat>/activeUsers}" tooltip="Пользователи, которые пользовались сервисом в последние 6 месяцев"/>
                     </f:content>
                 </f:SimpleForm>
-            </Panel>
+            </Panel> -->
             <footer>
                 <Toolbar design="Solid">
                     <ToolbarSpacer/>
