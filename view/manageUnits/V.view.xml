@@ -6,10 +6,13 @@
     xmlns="sap.m">
     <Page showHeader="false">
         <subHeader>
-            <Toolbar/>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
+            </Toolbar>
         </subHeader>
         <content>
-            <List id="tableUnits" mode="SingleSelectMaster" items="{/}" growing="true">
+            <List id="listUnits" mode="SingleSelectMaster" items="{/}" growing="true">
                 <items>
                     <StandardListItem type="Active" title="{fullName}"/>
                 </items>

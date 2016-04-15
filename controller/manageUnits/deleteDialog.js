@@ -19,7 +19,7 @@ var unitsDeleteDialog = {
 
     show: function()
     {
-        var path = this.getView().byId("tableUnits").getSelectedContexts();
+        var path = this.getView().byId("listUnits").getSelectedContexts();
 
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);

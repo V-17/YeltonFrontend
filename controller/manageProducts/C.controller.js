@@ -34,17 +34,16 @@ sap.ui.define([
             },
 
             // Поиск
-            onFilterLiveSearch: function(oEvent) {
+            onFilterLiveSearch: function(oEvent)
+            {
                 var sQuery = oEvent.getParameter("newValue");
-                // FIXME: реализовать
-                // var table = this.getView().byId("tablePrices");
-                // table.getBinding("items").filter(
-                //     new Filter([
-                //         new Filter("productName", FilterOperator.Contains, sQuery),
-                //         new Filter("storeName", FilterOperator.Contains, sQuery),
-                //         new Filter("date", FilterOperator.Contains, sQuery)
-                //     ])
-                // );
+                var table = this.getView().byId("listProducts");
+                table.getBinding("items").filter(
+                    new Filter([
+                        new Filter("name", FilterOperator.Contains, sQuery),
+                        new Filter("categoryName", FilterOperator.Contains, sQuery)
+                    ])
+                );
             },
 
             // нажатие кнопки create

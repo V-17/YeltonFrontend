@@ -19,7 +19,7 @@ var storesDeleteDialog = {
 
     show: function()
     {
-        var path = this.getView().byId("tableStores").getSelectedContexts();
+        var path = this.getView().byId("listStores").getSelectedContexts();
 
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);

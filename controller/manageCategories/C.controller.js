@@ -34,9 +34,10 @@ sap.ui.define([
             },
 
             // Поиск
-            onFilterLiveSearch: function(oEvent) {
+            onFilterLiveSearch: function(oEvent)
+            {
                 var sQuery = oEvent.getParameter("newValue");
-                var table = this.getView().byId("tableCategories");
+                var table = this.getView().byId("listCategories");
                 table.getBinding("items").filter(
                     new Filter("name", FilterOperator.Contains, sQuery)
                 );

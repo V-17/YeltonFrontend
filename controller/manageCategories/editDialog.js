@@ -20,7 +20,7 @@ var categoriesEditDialog = {
     // нажатие кнопки Редактировать
     showEditDialog: function()
     {
-        var path = this.getView().byId("tableCategories").getSelectedContexts();
+        var path = this.getView().byId("listCategories").getSelectedContexts();
 
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);

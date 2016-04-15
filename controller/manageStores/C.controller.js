@@ -37,7 +37,7 @@ sap.ui.define([
             onFilterLiveSearch: function(oEvent)
             {
                 var sQuery = oEvent.getParameter("newValue");
-                var table = this.getView().byId("tableStores");
+                var table = this.getView().byId("listStores");
                 table.getBinding("items").filter(
                     new Filter("name", FilterOperator.Contains, sQuery)
                 );
