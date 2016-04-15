@@ -24,7 +24,7 @@ sap.ui.define([
         "sap/ui/model/FilterOperator",
         "sap/m/MessageToast"
     ],
-    function(Controller, JSONModel, Filter, FilterOperator, MessageToastr) {
+    function(Controller, JSONModel, Filter, FilterOperator, MessageToast) {
         "use strict";
         return Controller.extend("controller.managePrices", {
 
@@ -482,8 +482,7 @@ sap.ui.define([
                     })
                     .done(function(answer)
                     {
-                        that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
-                        that._oFilterDialog.open();
+                        that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "products");                        
                     })
                     .fail(function(answer)
                     {
@@ -500,7 +499,6 @@ sap.ui.define([
                     .done(function(answer)
                     {
                         that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "categories");
-                        that._oFilterDialog.open();
                     })
                     .fail(function(answer)
                     {
@@ -517,7 +515,6 @@ sap.ui.define([
                     .done(function(answer)
                     {
                         that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "stores");
-                        that._oFilterDialog.open();
                     })
                     .fail(function(answer)
                     {
@@ -525,6 +522,8 @@ sap.ui.define([
                             window.location.reload();
                         }
                     });
+
+                    that._oFilterDialog.open();
             },
 
             // сброс фильтра
