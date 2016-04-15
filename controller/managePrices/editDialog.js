@@ -76,7 +76,7 @@ var pricesEditDialog = {
 
             this._oEditDialog.open();
         } else {
-            MessageToast.show("Выберите покупку");
+            sap.m.MessageToast.show("Выберите покупку");
         }
     },
 
