@@ -12,7 +12,13 @@
             </Toolbar>
         </subHeader>
         <content>
-            <List id="listStores" mode="SingleSelectMaster" items="{/}" growing="true">
+            <List
+                id="listStores"
+                mode="SingleSelectMaster"
+                items="{/}"
+                growing="true"
+                growingThreshold="50"
+                growingScrollToLoad="true">
                 <items>
                     <StandardListItem type="Active" title="{name}"/>
                 </items>

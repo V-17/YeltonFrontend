@@ -11,7 +11,13 @@
                 <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
             </Toolbar>
         </subHeader>
-        <List id="listCategories" mode="SingleSelectMaster" items="{/}" growing="true">
+        <List
+            id="listCategories"
+            mode="SingleSelectMaster"
+            items="{/}"
+            growing="true"
+            growingThreshold="50"
+            growingScrollToLoad="true">
             <items>
                 <StandardListItem type="Active" title="{name}"/>
             </items>

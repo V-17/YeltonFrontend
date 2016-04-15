@@ -8,6 +8,8 @@
         </subHeader>
         <List
             growing="true"
+            growingThreshold="50"
+            growingScrollToLoad="true"
             id="listProducts"
             mode="SingleSelectMaster"
             items="{
