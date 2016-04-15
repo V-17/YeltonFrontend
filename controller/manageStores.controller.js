@@ -131,21 +131,26 @@ sap.ui.define([
                         type: "POST",
                         data: out,
                     })
-                    .done(function(answer)
+                    .done(function(data, textStatus, jqXHR)
                     {
-                        answer = answer.trim();
-                        if (answer === "ok") {
-                            sap.ui.getCore().byId("pageManageStores").getModel().loadData("backend/web/services/manageStores.php");
-                        } else if (answer === "unknown_error") {
-                            sap.m.MessageToast.show("Произошла непредвиденная ошибка");
-                        } else {
-                            sap.m.MessageToast.show(answer);
+                        switch (jqXHR.status) {
+                            case 200:
+                                sap.ui.getCore().byId("pageManageStores").getModel().setData(JSON.parse(data));
+                                break;
+                            case 204:
+                                sap.ui.getCore().byId("pageManageStores").getModel().setData();
+                                break;
                         }
                     })
                     .fail(function(answer)
                     {
-                        if (answer.status === 401) {
-                            window.location.reload();
+                        switch (answer.status) {
+                            case 401:
+                                window.location.reload();
+                                break;
+                            case 500:
+                                sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                                break;
                         }
                     })
                     .always(function() {
@@ -172,21 +177,26 @@ sap.ui.define([
                             clientID: clientID
                         },
                     })
-                    .done(function(answer)
+                    .done(function(data, textStatus, jqXHR)
                     {
-                        answer = answer.trim();
-                        if (answer === "ok") {
-                            sap.ui.getCore().byId("pageManageStores").getModel().loadData("backend/web/services/manageStores.php");
-                        } else if (answer === "unknown_error") {
-                            sap.m.MessageToast.show("Произошла непредвиденная ошибка");
-                        } else {
-                            sap.m.MessageToast.show(answer);
+                        switch (jqXHR.status) {
+                            case 200:
+                                sap.ui.getCore().byId("pageManageStores").getModel().setData(JSON.parse(data));
+                                break;
+                            case 204:
+                                sap.ui.getCore().byId("pageManageStores").getModel().setData();
+                                break;
                         }
                     })
                     .fail(function(answer)
                     {
-                        if (answer.status === 401) {
-                            window.location.reload();
+                        switch (answer.status) {
+                            case 401:
+                                window.location.reload();
+                                break;
+                            case 500:
+                                sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                                break;
                         }
                     })
                     .always(function() {
