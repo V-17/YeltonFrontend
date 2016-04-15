@@ -486,7 +486,7 @@ sap.ui.define([
                     })
                     .done(function(answer)
                     {
-                        that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "products");                        
+                        that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
                     })
                     .fail(function(answer)
                     {
@@ -527,7 +527,7 @@ sap.ui.define([
                         }
                     });
 
-                    that._oFilterDialog.open();
+                that._oFilterDialog.open();
             },
 
             // сброс фильтра
