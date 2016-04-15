@@ -22,12 +22,9 @@ sap.ui.define([
         "sap/ui/model/json/JSONModel",
         "sap/ui/model/Filter",
         "sap/ui/model/FilterOperator",
-        'sap/m/Button',
-        'sap/m/MessageToast',
-        'sap/m/Text',
-        'sap/m/Input'
+        'sap/m/MessageToast'
     ],
-    function(Controller, JSONModel, Filter, FilterOperator, Button, MessageToast, Text, Input) {
+    function(Controller, JSONModel, Filter, FilterOperator, MessageToast) {
         "use strict";
         return Controller.extend("controller.manageStores", {
 
