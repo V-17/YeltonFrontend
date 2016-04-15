@@ -37,9 +37,13 @@ sap.ui.define([
                         url: "backend/web/services/managePrices.php",
                         type: "GET"
                     })
-                    .done(function(answer)
+                    .done(function(data, textStatus, jqXHR)
                     {
-                        that.getView().setModel(new JSONModel(JSON.parse(answer)));
+                        if (jqXHR.status === 204) { // no content
+                            that.getView().setModel(new JSONModel());
+                        } else {
+                            that.getView().setModel(new JSONModel(JSON.parse(data)));
+                        }
                     })
                     .fail(function(answer)
                     {

@@ -90,8 +90,12 @@ sap.ui.define([
                         $.ajax({
                                 url: "backend/web/services/managePrices.php"
                             })
-                            .done(function(answer) {
-                                app.getDetailPage("pageManagePrices").getModel().setData(JSON.parse(answer));
+                            .done(function(data, textStatus, jqXHR) {
+                                if (jqXHR.status === 204) {
+                                    app.getDetailPage("pageManagePrices").getModel().setData();
+                                } else {
+                                    app.getDetailPage("pageManagePrices").getModel().setData(JSON.parse(data));
+                                }
                                 app.toDetail("pageManagePrices", "show");
                             })
                             .fail(function(answer) {
@@ -104,8 +108,12 @@ sap.ui.define([
                         $.ajax({
                                 url: "backend/web/services/manageCategories.php"
                             })
-                            .done(function(answer) {
-                                app.getDetailPage("pageManageCategories").getModel().setData(JSON.parse(answer));
+                            .done(function(data, textStatus, jqXHR) {
+                                if (jqXHR.status === 204) { // no content
+                                    app.getDetailPage("pageManageCategories").getModel().setData();
+                                } else {
+                                    app.getDetailPage("pageManageCategories").getModel().setData(JSON.parse(data));
+                                }
                                 app.toDetail("pageManageCategories", "show");
                             })
                             .fail(function(answer) {
@@ -118,8 +126,12 @@ sap.ui.define([
                         $.ajax({
                                 url: "backend/web/services/manageProducts.php"
                             })
-                            .done(function(answer) {
-                                app.getDetailPage("pageManageProducts").getModel().setData(JSON.parse(answer));
+                            .done(function(data, textStatus, jqXHR) {
+                                if (jqXHR.status === 204) {
+                                    app.getDetailPage("pageManageProducts").getModel().setData();
+                                } else {
+                                    app.getDetailPage("pageManageProducts").getModel().setData(JSON.parse(data));
+                                }
                                 app.toDetail("pageManageProducts", "show");
                             })
                             .fail(function(answer) {
@@ -132,8 +144,12 @@ sap.ui.define([
                         $.ajax({
                                 url: "backend/web/services/manageStores.php"
                             })
-                            .done(function(answer) {
-                                app.getDetailPage("pageManageStores").getModel().setData(JSON.parse(answer));
+                            .done(function(data, textStatus, jqXHR) {
+                                if (jqXHR.status === 204) {
+                                    app.getDetailPage("pageManageStores").getModel().setData();
+                                } else {
+                                    app.getDetailPage("pageManageStores").getModel().setData(JSON.parse(data));
+                                }
                                 app.toDetail("pageManageStores", "show");
                             })
                             .fail(function(answer) {
@@ -146,8 +162,12 @@ sap.ui.define([
                         $.ajax({
                                 url: "backend/web/services/manageUnits.php"
                             })
-                            .done(function(answer) {
-                                app.getDetailPage("pageManageUnits").getModel().setData(JSON.parse(answer));
+                            .done(function(data, textStatus, jqXHR) {
+                                if (jqXHR.status === 204) {
+                                    app.getDetailPage("pageManageUnits").getModel().setData();
+                                } else {
+                                    app.getDetailPage("pageManageUnits").getModel().setData(JSON.parse(data));
+                                }
                                 app.toDetail("pageManageUnits", "show");
                             })
                             .fail(function(answer) {
