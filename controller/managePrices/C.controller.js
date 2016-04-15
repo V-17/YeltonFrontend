@@ -166,6 +166,12 @@ sap.ui.define([
                 pricesFilterDialog.onStoreSuggest.apply(this, [event]);
             },
 
+            // при выборе магазина
+            _onFilterDialogSearchFieldStoreSearch: function(e)
+            {
+                pricesFilterDialog.onStoreSearch.apply(this, [e]);
+            },
+
             // примерение фильтра
             _onFilterDialogOK: function()
             {

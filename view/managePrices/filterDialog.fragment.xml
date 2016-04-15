@@ -11,7 +11,7 @@
                     search="_onFilterDialogSearchFieldProductSearch"
                     suggestionItems="{products>/}">
                     <suggestionItems>
-                        <SuggestionItem text="{products>name}" description="{products>categoryName}"/>
+                        <SuggestionItem key="{products>id}:{products>clientID}" text="{products>name}" description="{products>categoryName}"/>
                     </suggestionItems>
                 </SearchField>
                 <Text/>
@@ -24,7 +24,7 @@
                     search="_onFilterDialogSearchFieldCategorySearch"
                     suggestionItems="{categories>/}">
                     <suggestionItems>
-                        <SuggestionItem text="{categories>name}"/>
+                        <SuggestionItem key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
                     </suggestionItems>
                 </SearchField>
                 <Text/>
@@ -37,7 +37,7 @@
                     search="_onFilterDialogSearchFieldStoreSearch"
                     suggestionItems="{stores>/}">
                     <suggestionItems>
-                        <SuggestionItem text="{stores>name}"/>
+                        <SuggestionItem key="{stores>id}:{stores>clientID}" text="{stores>name}"/>
                     </suggestionItems>
                 </SearchField>
             </VBox>
