@@ -1,4 +1,4 @@
-<mvc:View controllerName="controller.index" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+<mvc:View controllerName="controller.index" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form">
     <App>
         <Page showHeader="false">
             <subHeader>
@@ -92,7 +92,18 @@
                     </VBox>
                 </HBox>
             </Panel>
-
+            <Panel headerText="Немного статистики ..." expandable="true" expanded="false">
+                <f:SimpleForm>
+                    <f:content>
+                        <Label text="Запуск проекта"/>
+                        <Text text="09 ноября 2015"/>
+                        <Label
+                            text="Количество активных пользователей"
+                            tooltip="Пользователи, которые пользовались сервисом в последние 6 месяцев"/>
+                        <Text text="{stat>/activeUsers}" tooltip="Пользователи, которые пользовались сервисом в последние 6 месяцев"/>
+                    </f:content>
+                </f:SimpleForm>
+            </Panel>
             <footer>
                 <Toolbar design="Solid">
                     <ToolbarSpacer/>
@@ -102,5 +113,4 @@
             </footer>
         </Page>
     </App>
-
 </mvc:View>
