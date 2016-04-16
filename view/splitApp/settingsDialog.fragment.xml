@@ -8,7 +8,7 @@
                 <Label text="{user>/email}"/>
                 <Input id="inputNewEmail" placeholder="Новый email" type="Email"/>
                 <Button text="Сменить" width="100%" press="onChangeEmailPress"/>
-                <commons:TextView id="textViewChangeEmail" visible="false"/>
+                <commons:TextView id="textViewChangeEmail"/>
             </VBox>
         </Panel>
         <Panel headerText="Пароль" expandable="true" expanded="true" backgroundDesign="Transparent">
@@ -16,7 +16,7 @@
                 <Input id="inputOldPassword" placeholder="Старый пароль" type="Password"/>
                 <Input id="inputNewPassword" placeholder="Новый пароль" type="Password"/>
                 <Button text="Сменить" width="100%" press="onChangePasswordPress"/>
-                <commons:TextView id="textViewChangePassword" visible="false"/>
+                <commons:TextView id="textViewChangePassword"/>
             </VBox>
         </Panel>
         <beginButton>

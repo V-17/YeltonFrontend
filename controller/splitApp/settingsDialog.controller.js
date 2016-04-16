@@ -52,7 +52,6 @@ sap.ui.define([
                     .always(function() {
                         sap.ui.getCore().byId("inputOldPassword").setValue();
                         sap.ui.getCore().byId("inputNewPassword").setValue();
-                        textView.setVisible(true);
                     });
             },
 
@@ -86,7 +85,6 @@ sap.ui.define([
                     })
                     .always(function() {
                         sap.ui.getCore().byId("inputNewEmail").setValue();
-                        textView.setVisible(true);
                     });
             },
 
