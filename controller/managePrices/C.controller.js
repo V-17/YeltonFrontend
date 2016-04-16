@@ -62,8 +62,11 @@ sap.ui.define([
                 table.getBinding("items").filter(
                     new Filter([
                         new Filter("productName", FilterOperator.Contains, sQuery),
+                        new Filter("categoryName", FilterOperator.Contains, sQuery),
                         new Filter("storeName", FilterOperator.Contains, sQuery),
-                        new Filter("date", FilterOperator.Contains, sQuery)
+                        new Filter("date", FilterOperator.Contains, sQuery),
+                        new Filter("price", FilterOperator.EQ, sQuery),
+                        new Filter("amount", FilterOperator.EQ, sQuery),
                     ])
                 );
             },

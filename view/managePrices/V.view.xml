@@ -10,6 +10,7 @@
                     tooltip="Сбросить фильтр"
                     visible="false"/>
                 <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
+                <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
             </Toolbar>
         </subHeader>
         <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false">
