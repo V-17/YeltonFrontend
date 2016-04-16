@@ -22,21 +22,21 @@ var pricesFilterDialog = {
         this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "view.managePrices.filterDialog", this);
 
         var currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
+        var that = this;
+
         currentFilters.forEach(function(item, i, arr) {
             switch (item.sPath) {
-                case "productName":
-                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue(item.oValue1);
+                case "productID":
+                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue(that._filterProductName);
                     break;
-                case "categoryName":
-                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue(item.oValue1);
+                case "categoryID":
+                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue(that._filterCategoryName);
                     break;
-                case "storeName":
-                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").setValue(item.oValue1);
+                case "storeID":
+                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").setValue(that._filterStoreName);
                     break;
             }
         });
-
-        var that = this;
 
         // загружаем список товаров (у которых есть хотя бы 1 покупка)
         $.ajax({
@@ -99,10 +99,13 @@ var pricesFilterDialog = {
         this.byId("tablePrices").getBinding("items").filter(null);
         this._filterProductID = null;
         this._filterProductClientID = null;
+        this._filterProductName = null;
         this._filterCategoryID = null;
         this._filterCategoryClientID = null;
+        this._filterCategoryName = null;
         this._filterStoreID = null;
         this._filterStoreClientID = null;
+        this._filterStoreName = null;
     },
 
     onProductSuggest: function(event)
@@ -131,12 +134,15 @@ var pricesFilterDialog = {
     {
         if (event.getParameter("suggestionItem")) {
             sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue();
-            var selectedKey = event.getParameter("suggestionItem").getKey().split(":");
-            this._filterProductID = selectedKey[0];
-            this._filterProductClientID = selectedKey[1];
+            var item = event.getParameter("suggestionItem");
+            var key = item.getKey().split(":");
+            this._filterProductID = key[0];
+            this._filterProductClientID = key[1];
+            this._filterProductName = item.getText();
         } else {
             this._filterProductID = null;
             this._filterProductClientID = null;
+            this._filterProductName = null;
         }
     },
 
@@ -161,12 +167,15 @@ var pricesFilterDialog = {
     {
         if (event.getParameter("suggestionItem")) {
             sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue();
-            var selectedKey = event.getParameter("suggestionItem").getKey().split(":");
-            this._filterCategoryID = selectedKey[0];
-            this._filterCategoryClientID = selectedKey[1];
+            var item = event.getParameter("suggestionItem");
+            var key = item.getKey().split(":");
+            this._filterCategoryID = key[0];
+            this._filterCategoryClientID = key[1];
+            this._filterCategoryName = item.getText();
         } else {
             this._filterCategoryID = null;
             this._filterCategoryClientID = null;
+            this._filterCategoryName = null;
         }
     },
 
@@ -190,12 +199,15 @@ var pricesFilterDialog = {
     onStoreSearch: function(e)
     {
         if (e.getParameter("suggestionItem")) {
-            var selectedKey = e.getParameter("suggestionItem").getKey().split(":");
-            this._filterStoreID = selectedKey[0];
-            this._filterStoreClientID = selectedKey[1];
+            var item = e.getParameter("suggestionItem");
+            var key = item.getKey().split(":");
+            this._filterStoreID = key[0];
+            this._filterStoreClientID = key[1];
+            this._filterStoreName = item.getText();
         } else {
             this._filterStoreID = null;
             this._filterStoreClientID = null;
+            this._filterStoreName = null;
         }
     },
 
