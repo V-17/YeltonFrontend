@@ -51,22 +51,23 @@ sap.ui.define([
             {
                 var login = sap.ui.getCore().byId("inputSignInLogin").getValue();
                 var password = sap.ui.getCore().byId("inputSignInPassword").getValue();
+                var textView = sap.ui.getCore().byId("textViewSignIn");
 
-                $.post(
-                    "/backend/web/services/signIn.php", {
-                        login: login,
-                        password: password
-                    },
-                    onAjaxSuccess
-                );
-
-                function onAjaxSuccess(data) {
-                    if (data.trim() == "ok") {
-                        document.location = '/index.php';
-                    } else {
-                        sap.m.MessageToast.show("Неправильный логин/пароль");
-                    }
-                }
+                $.ajax({
+                        url: "/backend/web/services/signIn.php",
+                        type: "POST",
+                        data: {
+                            login: login,
+                            password: password
+                        }
+                    })
+                    .done(function(data) {
+                        if (data.trim() == "ok") {
+                            window.location.reload();
+                        } else {
+                            textView.setText("Неправильный логин/пароль");
+                        }
+                    });
             },
 
             _onButtonSignUpPress: function()
@@ -74,35 +75,46 @@ sap.ui.define([
                 var login = sap.ui.getCore().byId("inputSignUpLogin").getValue();
                 var password = sap.ui.getCore().byId("inputSignUpPassword").getValue();
                 var email = sap.ui.getCore().byId("inputSignUpEmail").getValue();
+                var textView = sap.ui.getCore().byId("textViewSignUp");
 
-                var data;
+                var out;
                 if (email.length > 0) {
-                    data = {
+                    out = {
                         login: login,
                         password: password,
                         email: email
                     };
                 } else {
-                    data = {
+                    out = {
                         login: login,
                         password: password
                     };
                 }
 
-                $.post(
-                    "/backend/web/services/signUp.php",
-                    data,
-                    onAjaxSuccess
-                );
+                $.ajax({
+                        url: "/backend/web/services/signUp.php",
+                        type: "POST",
+                        data: out
+                    })
+                    .done(function(data) {
+                        if (data.trim() == "ok") {
+                            window.location.reload();
+                        } else {
+                            textView.setText(data.trim());
+                        }
+                    });
+            },
 
-
-                function onAjaxSuccess(data)
-                {
-                    if (data.trim() == "ok") {
-                        document.location = '/index.php';
-                    } else {
-                        sap.m.MessageToast.show(data.trim());
-                    }
+            _onPopupSelect: function(e)
+            {
+                var newTab = e.getParameters().key;
+                switch (newTab) {
+                    case "tabSignUp":
+                        sap.ui.getCore().byId("textViewSignIn").setText();
+                        break;
+                    case "tabSignIn":
+                        sap.ui.getCore().byId("textViewSignUp").setText();
+                        break;
                 }
             },
 
