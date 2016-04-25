@@ -1,6 +1,6 @@
 <mvc:View controllerName="controller.managePrices.C" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
-    <Page showHeader="false">
-        <subHeader>
+    <Page>
+        <headerContent>
             <Toolbar>
                 <ToolbarSpacer/>
                 <Button
@@ -11,6 +11,14 @@
                     visible="false"/>
                 <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
                 <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
+            </Toolbar>
+        </headerContent>
+        <subHeader>
+            <Toolbar>
+                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                <ToolbarSpacer/>
             </Toolbar>
         </subHeader>
         <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false">
@@ -40,13 +48,6 @@
                 </ColumnListItem>
             </items>
         </Table>
-        <footer>
-            <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
-                <ToolbarSpacer/>
-            </Toolbar>
-        </footer>
+
     </Page>
 </mvc:View>

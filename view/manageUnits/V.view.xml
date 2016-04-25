@@ -4,11 +4,19 @@
     xmlns:model="sap.ui.model"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page showHeader="false">
-        <subHeader>
+    <Page>
+        <headerContent>
             <Toolbar>
                 <ToolbarSpacer/>
                 <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
+            </Toolbar>
+        </headerContent>
+        <subHeader>
+            <Toolbar>
+                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
+                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
+                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
+                <ToolbarSpacer/>
             </Toolbar>
         </subHeader>
         <content>
@@ -24,13 +32,5 @@
                 </items>
             </List>
         </content>
-        <footer>
-            <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
-                <ToolbarSpacer/>
-            </Toolbar>
-        </footer>
     </Page>
 </mvc:View>
