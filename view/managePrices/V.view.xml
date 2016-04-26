@@ -1,17 +1,15 @@
 <mvc:View controllerName="controller.managePrices.C" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
     <Page>
         <headerContent>
-            <Toolbar>
-                <ToolbarSpacer/>
-                <Button
-                    id="buttonResetFilter"
-                    icon="sap-icon://decline"
-                    press="onFilterResetButtonPress"
-                    tooltip="Сбросить фильтр"
-                    visible="false"/>
-                <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
-                <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
-            </Toolbar>
+            <ToolbarSpacer/>
+            <Button
+                id="buttonResetFilter"
+                icon="sap-icon://decline"
+                press="onFilterResetButtonPress"
+                tooltip="Сбросить фильтр"
+                visible="false"/>
+            <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
+            <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
         <subHeader>
             <Toolbar>

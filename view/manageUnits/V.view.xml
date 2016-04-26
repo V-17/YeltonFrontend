@@ -6,10 +6,8 @@
     xmlns="sap.m">
     <Page>
         <headerContent>
-            <Toolbar>
-                <ToolbarSpacer/>
-                <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
-            </Toolbar>
+            <ToolbarSpacer/>
+            <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
         <subHeader>
             <Toolbar>
