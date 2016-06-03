@@ -120,7 +120,9 @@ var pricesEditDialog = {
         // грузим список магазинов
         $.ajax({
                 url: "backend/web/services/manageStores.php",
-                type: "GET"
+                type: "GET",
+                data: "enabledOnly" // флаг - грузить только активные магазины
+
             })
             .done(function(answer)
             {

@@ -4,6 +4,14 @@
             <Input id="inputName" value="{/name}" placeholder="Введите название" submit="_onEditDialogOK" maxLength="50"/>
             <Text/>
             <Input id="inputAddress" value="{/address}" placeholder="Адрес" maxLength="255"/>
+            <HBox alignItems="Center">
+                <Label text="Статус" tooltip="Архивный магазин будет скрыт при добавлении новой покупки"/>
+                <Switch
+                    id="switchStatus"
+                    state="{/enabled}"
+                    tooltip="Архивный магазин будет скрыт при добавлении новой покупки"
+                    class="sapUiTinyMarginBegin"/>
+            </HBox>
         </content>
         <beginButton>
             <Button text="Сохранить" type="Accept" press="_onEditDialogOK"/>

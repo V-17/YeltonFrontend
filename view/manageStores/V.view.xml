@@ -21,12 +21,18 @@
             <List
                 id="listStores"
                 mode="SingleSelectMaster"
-                items="{/}"
+                items="{
+                    path : '/',
+                    sorter : {
+                        path : 'enabled',
+                        descending: true
+                    }
+                }"
                 growing="true"
                 growingThreshold="50"
                 growingScrollToLoad="true">
                 <items>
-                    <StandardListItem type="Active" title="{name}"/>
+                    <StandardListItem type="Active" title="{name}" info="{= ${enabled} ? '' : 'Архивный'}" infoState="Warning"/>
                 </items>
             </List>
         </content>

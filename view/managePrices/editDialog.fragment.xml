@@ -9,7 +9,7 @@
                 <Text/>
                 <Label text="Магазин"/>
                 <Select id="selectStore" items="{stores>/}" width="100%" tooltip="Товар">
-                    <core:Item key="{stores>id}:{stores>clientID}" text="{stores>name}"/>
+                    <core:Item key="{stores>id}:{stores>clientID}" text="{stores>name}" enabled="{stores>enabled}"/>
                 </Select>
                 <Text/>
                 <DatePicker id="datePicker" placeholder="Дата" displayFormat="long" valueFormat="dd.MM.yyyy"/>

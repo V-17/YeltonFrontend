@@ -34,12 +34,11 @@ var storesEditDialog = {
 
     showCreateDialog: function()
     {
-        var oData = [{
-            id: null,
-            clientID: null,
+        var oData = {
             name: null,
-            address: null
-        }];
+            address: null,
+            enabled: true
+        };
         var jsonModel = new sap.ui.model.json.JSONModel(oData);
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageStores.editDialog", this);
@@ -54,6 +53,7 @@ var storesEditDialog = {
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
         var name = this._oEditDialog.getModel().getProperty("/name");
         var address = this._oEditDialog.getModel().getProperty("/address");
+        var enabled = this._oEditDialog.getModel().getProperty("/enabled");
 
         var out;
         // создаем или изменяем
@@ -62,14 +62,16 @@ var storesEditDialog = {
         if (id === undefined && clientID === undefined) {
             out = {
                 "name": name,
-                "address": address
+                "address": address,
+                "enabled": enabled
             };
         } else {
             out = {
                 "id": id,
                 "clientID": clientID,
                 "name": name,
-                "address": address
+                "address": address,
+                "enabled": enabled
             };
         }
 
