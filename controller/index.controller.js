@@ -25,10 +25,22 @@ sap.ui.define([
 
             onInit: function() {},
 
-            goToGooglePlay: function()
+            gotoGooglePlay: function()
             {
-                sap.m.URLHelper.redirect("https://play.google.com/store/apps/details?id=ru.yelton.android");
+                sap.m.URLHelper.redirect("https://play.google.com/store/apps/details?id=ru.yelton.android", true);
             },
+
+            gotoGitHub: function()
+            {
+                sap.m.URLHelper.redirect("https://github.com/msproduction", true);
+            },
+
+
+            gotoVK: function()
+            {
+                sap.m.URLHelper.redirect("https://vk.com/yelton", true);
+            },
+
 
             handlePopoverPress: function(oEvent)
             {
@@ -36,7 +48,7 @@ sap.ui.define([
                 if (!this._oPopover) {
                     this._oPopover = sap.ui.xmlfragment("view.index.loginMenu", this);
                 }
-                this._oPopover.openBy(this.byId("buttonLogin"));
+                this._oPopover.openBy(oEvent.getSource());
 
                 // это чтобы логин и пароль на обоих вкладках одновременно одинаковыми были
                 var oData = [{

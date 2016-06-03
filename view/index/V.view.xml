@@ -1,116 +1,137 @@
-<mvc:View controllerName="controller.index" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form">
-    <App>
-        <Page showHeader="false">
-            <subHeader>
-                <Toolbar>
-                    <Button icon="sap-icon://money-bills" tooltip="Поддержать проект" press="onDonateButtonPress"/>
-                    <ToolbarSpacer/>
-                    <Title text="¥elton" class="sapMLabel_myMainLogo"/>
-                    <ToolbarSpacer/>
-                    <Button
-                        id="buttonLogin"
-                        icon="sap-icon://log"
-                        type="Reject"
-                        press="handlePopoverPress"
-                        tooltip="Авторизация"/>
-                </Toolbar>
-            </subHeader>
-            <Panel>
-                <Title
-                    text="Ваш личный помощник в планировании выгодных покупок"
-                    width="100%"
-                    textAlign="Center"
-                    class="sapMLabel_myH3"/>
-            </Panel>
-            <Text/>
-            <Panel>
-                <VBox>
-                    <Text
-                        text="Как часто мы покупаем? Да практически каждый день. Продукты, лекарства, бытовая химия, и прочее. Большинство из этих товаров продаются во многих магазинах. Но цены в каждой торговой точке могут отличаться, иногда очень значительно."/>
-                    <Text/>
-                    <Text
-                        text="— Большая пачка стирального порошка за 320р, это дешево? Или полтора месяца назад я покупал в соседнем магазине за 285р?\n
-                    — Корм для кота я всегда покупала в супермаркете. Но недавно открылся зоомагазин, где этот же корм стоит на 60 рублей дешевле. Надо запомнить и покупать там.\n
-                    — Мне кажется, или за последние пол-года молоко прилично подорожало?\n"/>
-                    <Text/>
-                    <Text
-                        text="Наверняка, у многих возникали в жизни такие ситуации и вопросы. Все это довольно непросто запоминать и отслеживать. А ведь эти мелочи могут сэкономить приличную сумму денег, если покупать там, где выгоднее."/>
-                </VBox>
-            </Panel>
-            <Text/>
-            <Panel>
+<core:View
+    xmlns:core="sap.ui.core"
+    xmlns:ux="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:forms="sap.ui.layout.form"
+    controllerName="controller.index"
+    height="100%">
+    <ux:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true">
+        <ux:headerTitle>
+            <ux:ObjectPageHeader
+                objectImageURI="./img/logo_square_padding_256.png"
+                objectTitle="¥elton"
+                objectImageShape="Circle"
+                objectSubtitle="Выгодные покупки"
+                isObjectIconAlwaysVisible="false"
+                isObjectTitleAlwaysVisible="false"
+                isObjectSubtitleAlwaysVisible="false">
+                <ux:actions>
+                    <Button text="Вход" icon="sap-icon://log" type="Reject" press="handlePopoverPress"/>
+                </ux:actions>
+            </ux:ObjectPageHeader>
+        </ux:headerTitle>
+
+        <ux:headerContent>
+            <layout:VerticalLayout>
+                <Text text="Ваш личный помощник в планировании выгодных покупок"/>
+            </layout:VerticalLayout>
+
+            <layout:VerticalLayout>
                 <HBox>
-                    <VBox>
-                        <Image id="imageSlideShow" src="img/android_screen1.png"/>
-                    </VBox>
-                    <VBox width="100%">
-                        <Title text="Всегда под рукой" textAlign="Center" width="100%" class="sapMLabel_myH1"/>
-                        <Title text="Android" textAlign="Center" width="100%" class="sapMLabel_myH2"/>
-                        <Text
-                            text="Телефон всегда с вами, так позвольте же ему стать вашим личным помощником в совершении покупок. Теперь не нужно держать в памяти все выгодные предложения. Ваш смартфон сам подскажет, что и где выгоднее покупать."/>
-                        <Text/>
-                        <Text/>
-                        <Text/>
-                        <Text
-                            text="Возможности:\n
-                        - Ведение истории покупок.\n
-                        - Поиск лучшего предложения.\n
-                        - Фильтр покупок по различным критериям.\n
-                        - Сканер штрих кодов для быстрого поиска товаров\n
-                        - Синхронизация с другими устройствам"/>
-                        <Text/>
-                        <Text/>
-                        <Text/>
-                        <Text/>
-                        <Text/>
-                        <HBox alignItems="Center" justifyContent="Center">
-                            <Image
-                                src="https://play.google.com/intl/en_us/badges/images/apps/ru-play-badge.png"
-                                width="185px"
-                                height="60px"
-                                press="goToGooglePlay"/>
-                        </HBox>
-                    </VBox>
+                    <Image src="img/social/vk.png" width="32px" height="32px" tooltip="ВКонтакте" press="gotoVK"/>
+                    <Image width="10px" height="10px"/> <!-- spacer -->
+                    <Image src="img/social/google_play.png" width="32px" height="32px" tooltip="Google Play" press="gotoGooglePlay"/>
+                    <Image width="10px" height="10px"/> <!-- spacer -->
+                    <Image src="img/social/github_32.png" tooltip="GitHub" press="gotoGitHub"/>
+                    <Image width="10px" height="10px"/> <!-- spacer -->
+                    <Image src="img/social/paypal.png" width="32px" height="32px" tooltip="Поддержать проект" press="onDonateButtonPress"/>
                 </HBox>
-            </Panel>
-            <Text/>
-            <Panel>
-                <HBox>
-                    <VBox>
-                        <Image id="imagePC" src="img/pc_icon.png"/>
-                    </VBox>
-                    <VBox width="100%">
-                        <Title text="Достаточно браузера" textAlign="Center" width="100%" class="sapMLabel_myH1"/>
-                        <Title text="Web-интерфейс" textAlign="Center" width="100%" class="sapMLabel_myH2"/>
-                        <Text
-                            text="Создайте учётную запись, и начинайте планировать покупки прямо сейчас.\n
-                                Для этого необходим лишь доступ в Интернет и любой современный браузер"/>
-                        <Text/>
-                        <Text/>
-                        <Text/>
-                        <Text text="Начать экономить намного проще, чем кажется. "/>
-                    </VBox>
-                </HBox>
-            </Panel>
-            <!-- <Panel headerText="Немного статистики ..." expandable="true" expanded="false">
-                <f:SimpleForm>
-                    <f:content>
-                        <Label text="Запуск проекта"/>
-                        <Text text="09 ноября 2015"/>
-                        <Label
-                            text="Количество активных пользователей"
-                            tooltip="Пользователи, которые пользовались сервисом в последние 6 месяцев"/>
-                        <Text text="{stat>/activeUsers}" tooltip="Пользователи, которые пользовались сервисом в последние 6 месяцев"/>
-                    </f:content>
-                </f:SimpleForm>
-            </Panel> -->
-            <footer>
-                <Toolbar design="Solid">
-                    <ToolbarSpacer/>
-                    <Link text="© msProduction 2015 – 2016" href="mailto:support@Yelton.ru"/>
-                    <ToolbarSpacer/>
-                </Toolbar>
-            </footer>
-        </Page>
-    </App>
-</mvc:View>
+            </layout:VerticalLayout>
+
+        </ux:headerContent>
+
+        <ux:sections>
+            <ux:ObjectPageSection title="¥">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection>
+                        <ux:blocks>
+                            <VBox>
+                                <Text
+                                    text="Как часто мы покупаем? Да практически каждый день. Продукты, лекарства, бытовая химия, и прочее. Большинство из этих товаров продаются во многих магазинах. Но цены в каждой торговой точке могут отличаться, иногда очень значительно."/>
+                                <Text/>
+                                <Text
+                                    text="— Большая пачка стирального порошка за 320р, это дешево? Или полтора месяца назад я покупал в соседнем магазине за 285р?\n
+                                — Корм для кота я всегда покупала в супермаркете. Но недавно открылся зоомагазин, где этот же корм стоит на 60 рублей дешевле. Надо запомнить и покупать там.\n
+                                — Мне кажется, или за последние пол-года молоко прилично подорожало?\n"/>
+                                <Text/>
+                                <Text
+                                    text="Наверняка, у многих возникали в жизни такие ситуации и вопросы. Все это довольно непросто запоминать и отслеживать. А ведь эти мелочи могут сэкономить приличную сумму денег, если покупать там, где выгоднее."/>
+                            </VBox>
+                        </ux:blocks>
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+
+            <ux:ObjectPageSection title="Android">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection>
+                        <ux:blocks>
+                            <HBox>
+                                <VBox>
+                                    <Image id="imageSlideShow" src="img/android_screen1.png"/>
+                                </VBox>
+                                <VBox width="100%">
+                                    <forms:SimpleForm maxContainerCols="1" layout="ResponsiveLayout">
+                                        <core:Title text="Всегда под рукой"/>
+                                        <VBox>
+                                            <Text text="Телефон всегда с вами, так позвольте же ему стать вашим личным помощником в совершении покупок."/>
+                                            <Text text="Теперь не нужно держать в памяти все выгодные предложения."/>
+                                            <Text text="Ваш смартфон сам подскажет, что и где выгоднее покупать."/>
+                                        </VBox>
+
+                                        <core:Title text=""/>
+                                        <core:Title text="Возможности"/>
+                                        <VBox>
+                                            <Text text="- Ведение истории покупок"/>
+                                            <Text text="- Поиск лучшего предложения"/>
+                                            <Text text="- Фильтр покупок по различным критериям"/>
+                                            <Text text="- Сканер штрих кодов для быстрого поиска товаров"/>
+                                            <Text text="- Синхронизация с другими устройствам"/>
+                                        </VBox>
+
+                                    </forms:SimpleForm>
+                                    <HBox alignItems="Center" justifyContent="Center">
+                                        <Image
+                                            src="https://play.google.com/intl/ru_ru/badges/images/generic/ru_badge_web_generic.png"
+                                            width="210px"
+                                            height="80px"
+                                            press="gotoGooglePlay"/>
+                                    </HBox>
+                                </VBox>
+                            </HBox>
+
+                        </ux:blocks>
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+
+            <ux:ObjectPageSection title="Синхронизация">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection>
+                        <ux:blocks>
+                            <HBox>
+                                <VBox>
+                                    <Image id="imagePC" src="img/pc_icon.png"/>
+                                </VBox>
+                                <VBox width="100%">
+                                    <forms:SimpleForm maxContainerCols="1" layout="ResponsiveLayout">
+                                        <core:Title text="Работайте там, где удобно"/>
+                                        <VBox width="100%">
+                                            <Text text="Создайте учётную запись и пользуйтесь сервисом на различных устройствах, а также на сайте."/>
+                                            <Text text="Все ваши данные будут автоматически синхронизированы"/>
+                                            <Text/>
+                                            <Text/>
+                                            <Button text="Начать экономить намного проще, чем кажется" press="handlePopoverPress"/>
+                                        </VBox>
+
+                                    </forms:SimpleForm>
+                                </VBox>
+                            </HBox>
+                        </ux:blocks>
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+        </ux:sections>
+    </ux:ObjectPageLayout>
+</core:View>
