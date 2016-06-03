@@ -69,6 +69,7 @@ var productsDeleteDialog = {
                 }
             })
             .always(function() {
+                that._oEditDialog.destroy();
                 that._oDeleteDialog.destroy();
             });
     },

@@ -1,38 +1,61 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Товар" afterClose="_onEditDialogCancel">
+    <Dialog showHeader="false" afterClose="_onEditDialogCancel">
         <content>
-            <VBox>
-                <Input id="inputName" value="{/name}" placeholder="Введите название" submit="_onEditDialogOK" maxLength="50"/>
-                <Text/>
-                <Label text="Категория:"/>
-                <Select id="selectCategory" items="{categories>/}" width="100%" tooltip="Категория">
-                    <core:Item key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
-                </Select>
-                <Text/>
-                <Label text="Мера:"/>
-                <Select id="selectUnit" items="{units>/}" width="100%" tooltip="Единица измерения">
-                    <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
-                </Select>
-                <Text/>
-                <Input id="inputManufacturer" value="{/manufacturer}" placeholder="Производитель" maxLength="50"/>
-                <Text/>
-                <Label text="Штрих-код:"/>
-                <HBox>
-                    <Input id="inputBarcode" value="{/barcode}" maxLength="255" width="100%" liveChange="_onInputBarcodeLiveChange"/>
-                    <Button
-                        id="buttonBarcodeSearch"
-                        icon="sap-icon://globe"
-                        tooltip="Поиск в интернете"
-                        press="_onSearchBarcodeClick"
-                        enabled="false"/>
-                </HBox>
-            </VBox>
+            <IconTabBar expandable="false">
+                <items>
+                    <IconTabFilter id="tabMain" text="Товар">
+                        <VBox>
+                            <Input id="inputName" value="{/name}" placeholder="Введите название" submit="_onEditDialogOK" maxLength="50"/>
+                            <Text/>
+                            <Label text="Категория:"/>
+                            <Select id="selectCategory" items="{categories>/}" width="100%" tooltip="Категория">
+                                <core:Item key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
+                            </Select>
+                            <Text/>
+                            <Label text="Мера:"/>
+                            <Select id="selectUnit" items="{units>/}" width="100%" tooltip="Единица измерения">
+                                <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
+                            </Select>
+                            <Text/>
+                            <Input id="inputManufacturer" value="{/manufacturer}" placeholder="Производитель" maxLength="50"/>
+                            <Text/>
+                            <Label text="Штрих-код:" labelFor="inputBarcode"/>
+                            <HBox>
+                                <Input id="inputBarcode" value="{/barcode}" maxLength="255" width="100%" liveChange="_onInputBarcodeLiveChange"/>
+                                <Button
+                                    id="buttonBarcodeSearch"
+                                    icon="sap-icon://globe"
+                                    tooltip="Поиск в интернете"
+                                    press="_onSearchBarcodeClick"
+                                    enabled="false"/>
+                            </HBox>
+                            <Text/>
+                            <Link id="linkDelete" text="Удалить товар" press="onDeleteButtonPress"/>
+                        </VBox>
+                    </IconTabFilter>
+                    <IconTabFilter id="tabPrices" text="Цены">
+                        <Text text="Краткая статистика цен"/>
+                    </IconTabFilter>
+                    <IconTabFilter id="tabStores" text="Магазины">
+                        <Text text="Где и сколько раз данный товар  был куплен"/>
+                        <List
+                            noDataText="Нет покупок"
+                            items="{
+                                path: '/stores',
+                                sorter: {
+                                    path: 'count',
+                                    descending: true
+                                }
+                            }">
+                            <StandardListItem title="{name}" counter="{count}"/>
+                        </List>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
         </content>
-        <beginButton>
+        <buttons>
             <Button text="Сохранить" type="Accept" press="_onEditDialogOK"/>
-        </beginButton>
-        <endButton>
             <Button text="Отмена" press="_onEditDialogCancel"/>
-        </endButton>
+        </buttons>
     </Dialog>
 </core:FragmentDefinition>

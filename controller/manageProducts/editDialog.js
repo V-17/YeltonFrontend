@@ -24,12 +24,32 @@ var productsEditDialog = {
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
+
             this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
-            this._oEditDialog.setModel(jsonModel);
-            if (this._oEditDialog.getModel().getProperty("/barcode")) {
-                sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
-            }
             var that = this;
+
+            // идем за полными данными
+            $.ajax({
+                    url: "backend/web/services/manageProducts.php",
+                    type: "GET",
+                    async: false,
+                    data: {
+                        "id": model.id,
+                        "clientID": model.clientID
+                    }
+                })
+                .done(function(answer) {
+                    var model = new sap.ui.model.json.JSONModel(JSON.parse(answer));
+                    that._oEditDialog.setModel(model);
+                    if (model.getProperty("/barcode")) {
+                        sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
+                    }
+                })
+                .fail(function(answer) {
+                    if (answer.status === 401) {
+                        window.location.reload();
+                    }
+                });
 
             // грузим список категорий и выбираем нужную
             $.ajax({
@@ -73,9 +93,7 @@ var productsEditDialog = {
 
     showCreateDialog: function()
     {
-        var oData = [{
-            id: null,
-            clientID: null,
+        var oData = {
             name: null,
             manufacturer: null,
             barcode: null,
@@ -83,10 +101,13 @@ var productsEditDialog = {
             categoryClientID: null,
             unitID: null,
             unitClientID: null
-        }];
+        };
         var jsonModel = new sap.ui.model.json.JSONModel(oData);
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
+        sap.ui.getCore().byId("linkDelete").destroy();
+        sap.ui.getCore().byId("tabPrices").destroy();
+        sap.ui.getCore().byId("tabStores").destroy();
         this._oEditDialog.setModel(jsonModel);
         var that = this;
 

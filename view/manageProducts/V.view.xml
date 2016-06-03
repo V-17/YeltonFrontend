@@ -7,8 +7,6 @@
         <subHeader>
             <Toolbar>
                 <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
                 <ToolbarSpacer/>
             </Toolbar>
         </subHeader>
@@ -18,6 +16,7 @@
             growingScrollToLoad="true"
             id="listProducts"
             mode="SingleSelectMaster"
+            itemPress="onSelect"
             items="{
                 path : '/',
                 sorter : {

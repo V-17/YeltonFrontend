@@ -52,8 +52,8 @@ sap.ui.define([
                 productsEditDialog.showCreateDialog.apply(this);
             },
 
-            // нажатие кнопки Редактировать
-            onEditButtonPress: function()
+            // при выборе
+            onSelect: function()
             {
                 productsEditDialog.showEditDialog.apply(this);
             },
