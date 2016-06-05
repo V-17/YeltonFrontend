@@ -67,6 +67,11 @@ var storesEditDialog = {
         var address = this._oEditDialog.getModel().getProperty("/address");
         var enabled = this._oEditDialog.getModel().getProperty("/enabled");
 
+        if (!name || !name.trim()) {
+            sap.ui.getCore().byId("inputName").setValueState("Error");
+            return;
+        }
+
         var out;
         // создаем или изменяем
         // в зависимости от того, что мы передадим POST (будут там айдишники или нет)

@@ -9,7 +9,9 @@
                     id="inputName"
                     value="{/name}"
                     placeholder="Введите название"
-                    submit="_onEditDialogOK"
+                    valueStateText="Укажите название категории"
+                    submit="_onEditDialogSave"
+                    liveChange="_onInputNameLiveChange"
                     maxLength="50"/>
         </content>
         <buttons>

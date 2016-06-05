@@ -170,6 +170,11 @@ var productsEditDialog = {
         var manufacturer = this._oEditDialog.getModel().getProperty("/manufacturer");
         var barcode = this._oEditDialog.getModel().getProperty("/barcode");
 
+        if (!name || !name.trim()) {
+            sap.ui.getCore().byId("inputName").setValueState("Error");
+            return;
+        }
+
         var selectedKey = sap.ui.getCore().byId("selectCategory").getSelectedKey().split(":");
         var categoryID = selectedKey[0];
         var categoryClientID = selectedKey[1];

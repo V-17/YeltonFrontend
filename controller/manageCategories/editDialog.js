@@ -59,6 +59,11 @@ var categoriesEditDialog = {
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
         var name = this._oEditDialog.getModel().getProperty("/name");
 
+        if (!name || !name.trim()) {
+            sap.ui.getCore().byId("inputName").setValueState("Error");
+            return;
+        }
+
         var out;
         // создаем или изменяем
         // в зависимости от того, что мы передадим POST (будут там айдишники или нет)

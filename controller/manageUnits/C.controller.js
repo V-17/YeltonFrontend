@@ -91,6 +91,22 @@ sap.ui.define([
             _onDeleteDialogCancel: function()
             {
                 unitsDeleteDialog.cancel.apply(this);
+            },
+
+            /**
+             * При любом изменении значения поля, сбрасываем ему valueState
+             */
+            _onInputFullNameLiveChange: function()
+            {
+                sap.ui.getCore().byId("inputFullName").setValueState("None");
+            },
+
+            /**
+             * При любом изменении значения поля, сбрасываем ему valueState
+             */
+            _onInputShortNameLiveChange: function()
+            {
+                sap.ui.getCore().byId("inputShortName").setValueState("None");
             }
         });
     });

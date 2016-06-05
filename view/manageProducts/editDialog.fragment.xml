@@ -5,7 +5,13 @@
                 <items>
                     <IconTabFilter id="tabMain" key="tabMain" text="Товар">
                         <VBox>
-                            <Input id="inputName" value="{/name}" placeholder="Введите название" maxLength="50"/>
+                            <Input
+                                id="inputName"
+                                value="{/name}"
+                                placeholder="Введите название"
+                                valueStateText="Укажите название товара"
+                                maxLength="50"
+                                liveChange="_onInputNameLiveChange"/>
                             <Text/>
                             <Label text="Категория:"/>
                             <Select id="selectCategory" items="{categories>/}" width="100%" tooltip="Категория">

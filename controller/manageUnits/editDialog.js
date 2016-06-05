@@ -35,7 +35,6 @@ var unitsEditDialog = {
         }
     },
 
-
     showCreateDialog: function()
     {
         var jsonModel = new sap.ui.model.json.JSONModel();
@@ -61,6 +60,19 @@ var unitsEditDialog = {
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
         var fullName = this._oEditDialog.getModel().getProperty("/fullName");
         var shortName = this._oEditDialog.getModel().getProperty("/shortName");
+
+        var canContinue = true;
+        if (!fullName || !fullName.trim()) {
+            sap.ui.getCore().byId("inputFullName").setValueState("Error");
+            canContinue = false;
+        }
+        if (!shortName || !shortName.trim()) {
+            sap.ui.getCore().byId("inputShortName").setValueState("Error");
+            canContinue = false;
+        }
+        if (!canContinue) {
+            return;
+        }
 
         var out;
         // создаем или изменяем

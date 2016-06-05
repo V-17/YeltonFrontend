@@ -1,24 +1,22 @@
-<core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <Dialog
-        title="Мера"
-        afterClose="_onEditDialogCancel">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="Мера" afterClose="_onEditDialogCancel">
         <content>
             <VBox>
                 <Input
                     id="inputFullName"
                     value="{/fullName}"
                     placeholder="Полное название"
-                    submit="_onEditDialogOK"
+                    valueStateText="Укажите полное название"
+                    liveChange="_onInputFullNameLiveChange"
                     maxLength="50"/>
-                    <Input
-                        id="inputShortName"
-                        value="{/shortName}"
-                        placeholder="Краткое название"
-                        submit="_onEditDialogOK"
-                        maxLength="5"/>
-                </VBox>
+                <Input
+                    id="inputShortName"
+                    value="{/shortName}"
+                    placeholder="Краткое название"
+                    valueStateText="Укажите краткое название"
+                    liveChange="_onInputShortNameLiveChange"
+                    maxLength="5"/>
+            </VBox>
         </content>
         <buttons>
             <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="_onEditDialogDelete"/>

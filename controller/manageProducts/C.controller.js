@@ -104,6 +104,14 @@ sap.ui.define([
             _onDeleteDialogCancel: function()
             {
                 productsDeleteDialog.cancel.apply(this);
+            },
+
+            /**
+             * При любом изменении значения поля, сбрасываем ему valueState
+             */
+            _onInputNameLiveChange: function()
+            {
+                sap.ui.getCore().byId("inputName").setValueState("None");
             }
         });
     });
