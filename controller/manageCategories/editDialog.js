@@ -38,13 +38,7 @@ var categoriesEditDialog = {
     // нажатие кнопки create
     showCreateDialog: function()
     {
-        var oData = [{
-            id: null,
-            clientID: null,
-            name: null
-        }];
-        var jsonModel = new sap.ui.model.json.JSONModel(oData);
-
+        var jsonModel = new sap.ui.model.json.JSONModel();
         this._oEditDialog = sap.ui.xmlfragment("view.manageCategories.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);

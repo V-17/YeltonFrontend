@@ -38,11 +38,7 @@ var unitsEditDialog = {
 
     showCreateDialog: function()
     {
-        var oData = {
-            fullName: null,
-            shortName: null
-        };
-        var jsonModel = new sap.ui.model.json.JSONModel(oData);
+        var jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageUnits.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);

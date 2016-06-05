@@ -117,16 +117,7 @@ var productsEditDialog = {
      */
     showCreateDialog: function()
     {
-        var oData = {
-            name: null,
-            manufacturer: null,
-            barcode: null,
-            categoryID: null,
-            categoryClientID: null,
-            unitID: null,
-            unitClientID: null
-        };
-        var jsonModel = new sap.ui.model.json.JSONModel(oData);
+        var jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
         sap.ui.getCore().byId("tabPrices").destroy();

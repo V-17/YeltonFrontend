@@ -40,12 +40,8 @@ var storesEditDialog = {
 
     showCreateDialog: function()
     {
-        var oData = {
-            name: null,
-            address: null,
-            enabled: true
-        };
-        var jsonModel = new sap.ui.model.json.JSONModel(oData);
+        // в начальной модели выставим статус true
+        var jsonModel = new sap.ui.model.json.JSONModel({enabled: true});
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageStores.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);

@@ -89,17 +89,7 @@ var pricesEditDialog = {
     // нажатие кнопки create
     showCreateDialog: function()
     {
-        var oData = {
-            productID: null,
-            productClientID: null,
-            storeID: null,
-            storeClientID: null,
-            amount: null,
-            price: null,
-            date: null,
-            currencyID: null
-        };
-        var jsonModel = new sap.ui.model.json.JSONModel(oData);
+        var jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
         sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
