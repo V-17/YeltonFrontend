@@ -294,7 +294,7 @@ var productsEditDialog = {
     searchBarcode: function()
     {
         var barcode = this._oEditDialog.getModel().getProperty("/barcode");
-        sap.m.URLHelper.redirect("https://duckduckgo.com/?q=" + barcode, true);
+        sap.m.URLHelper.redirect("https://www.google.ru/search?q=" + barcode, true);
     },
 
     /**
