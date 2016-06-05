@@ -46,13 +46,13 @@ sap.ui.define([
                 );
             },
 
-            // нажатие кнопки create
+            // нажатие кнопки "Создать новый товар"
             onCreateButtonPress: function()
             {
                 productsEditDialog.showCreateDialog.apply(this);
             },
 
-            // при выборе
+            // при выборе товара из списка
             onSelect: function()
             {
                 productsEditDialog.showEditDialog.apply(this);
@@ -70,20 +70,26 @@ sap.ui.define([
                 productsEditDialog.searchBarcode.apply(this);
             },
 
-            // подтверждение создания / изменения
-            _onEditDialogOK: function()
+            // нажатие на кнопку "Сохранить"
+            _onEditDialogSave: function()
             {
-                productsEditDialog.apply.apply(this);
+                productsEditDialog.save.apply(this);
+            },
+
+            // нажатие на кнопку "Изменить"
+            _onEditDialogEdit: function()
+            {
+                productsEditDialog.edit.apply(this);
             },
 
             // отмена создания / изменения
-            _onEditDialogCancel: function()
+            _onEditDialogClose: function()
             {
-                productsEditDialog.cancel.apply(this);
+                productsEditDialog.close.apply(this);
             },
 
             // нажатие нопки "Удалить"
-            onDeleteButtonPress: function()
+            _onEditDialogDelete: function()
             {
                 productsDeleteDialog.show.apply(this);
             },

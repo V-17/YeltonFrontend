@@ -71,6 +71,7 @@ var pricesDeleteDialog = {
             })
             .always(function() {
                 that._oDeleteDialog.destroy();
+                that._oEditDialog.destroy();
             });
     },
 

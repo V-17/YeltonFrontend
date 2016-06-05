@@ -9,24 +9,25 @@
             <ToolbarSpacer/>
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
-        <subHeader>
+        <content>
+            <List
+                id="listCategories"
+                mode="SingleSelectMaster"
+                items="{/}"
+                growing="true"
+                growingThreshold="50"
+                growingScrollToLoad="true"
+                itemPress="onSelect">
+                <items>
+                    <StandardListItem type="Active" title="{name}"/>
+                </items>
+            </List>
+        </content>
+        <footer>
             <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
                 <ToolbarSpacer/>
+                <Button icon="sap-icon://add" text="Создать" press="onCreateButtonPress" tooltip="Создать новую категорию"/>
             </Toolbar>
-        </subHeader>
-        <List
-            id="listCategories"
-            mode="SingleSelectMaster"
-            items="{/}"
-            growing="true"
-            growingThreshold="50"
-            growingScrollToLoad="true">
-            <items>
-                <StandardListItem type="Active" title="{name}"/>
-            </items>
-        </List>
+        </footer>
     </Page>
 </mvc:View>

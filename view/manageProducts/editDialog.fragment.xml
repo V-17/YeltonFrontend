@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog showHeader="false" afterClose="_onEditDialogCancel">
+    <Dialog showHeader="false" afterClose="_onEditDialogClose">
         <content>
-            <IconTabBar expandable="false">
+            <IconTabBar id="iconTabBar" expandable="false" select="_onEditDialogSelectTab">
                 <items>
-                    <IconTabFilter id="tabMain" text="Товар">
+                    <IconTabFilter id="tabMain" key="tabMain" text="Товар">
                         <VBox>
-                            <Input id="inputName" value="{/name}" placeholder="Введите название" submit="_onEditDialogOK" maxLength="50"/>
+                            <Input id="inputName" value="{/name}" placeholder="Введите название" maxLength="50"/>
                             <Text/>
                             <Label text="Категория:"/>
                             <Select id="selectCategory" items="{categories>/}" width="100%" tooltip="Категория">
@@ -29,8 +29,6 @@
                                     press="_onSearchBarcodeClick"
                                     enabled="false"/>
                             </HBox>
-                            <Text/>
-                            <Link id="linkDelete" text="Удалить товар" press="onDeleteButtonPress"/>
                         </VBox>
                     </IconTabFilter>
                     <IconTabFilter id="tabPrices" text="Цены">
@@ -54,8 +52,10 @@
             </IconTabBar>
         </content>
         <buttons>
-            <Button text="Сохранить" type="Accept" press="_onEditDialogOK"/>
-            <Button text="Отмена" press="_onEditDialogCancel"/>
+            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="_onEditDialogDelete"/>
+            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="_onEditDialogEdit"/>
+            <Button id="buttonSave" text="Сохранить" type="Accept" press="_onEditDialogSave"/>
+            <Button text="Закрыть" press="_onEditDialogClose"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

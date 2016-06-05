@@ -17,6 +17,16 @@
 
 var productsEditDialog = {
 
+    /**
+     * Открытие окна для редактирования выбранного товара.
+     *
+     * При открытии окна заполняются данные на всех вкладках
+     * Изначально окно открывается только для просмотра, и становится доступным для редактирования только после нажатия
+     * на клавишу "Изменить"
+     *
+     * TODO: зарузку справочников можно вынести в отдельную функцию, которая будет использоваться и при открытии
+     * окна для создания. А тут просто будем выбирать нужный элемент из списка
+     */
     showEditDialog: function()
     {
         var path = this.getView().byId("listProducts").getSelectedContexts();
@@ -26,9 +36,16 @@ var productsEditDialog = {
             var jsonModel = new sap.ui.model.json.JSONModel(model);
 
             this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
+
+            sap.ui.getCore().byId("inputName").setEditable(false);
+            sap.ui.getCore().byId("selectCategory").setEnabled(false);
+            sap.ui.getCore().byId("selectUnit").setEnabled(false);
+            sap.ui.getCore().byId("inputManufacturer").setEditable(false);
+            sap.ui.getCore().byId("inputBarcode").setEditable(false);
+            sap.ui.getCore().byId("buttonSave").setVisible(false);
             var that = this;
 
-            // идем за полными данными
+            // идем за полными данными по выбранному товару
             $.ajax({
                     url: "backend/web/services/manageProducts.php",
                     type: "GET",
@@ -91,6 +108,13 @@ var productsEditDialog = {
         }
     },
 
+    /**
+     * Открытие окна для создания нового товара.
+     *
+     * При открытии окна только подтягиваются возможные справочники
+     * Активна только одна вкладка, т.к. по товару еще не может быть никакой статистики
+     * Также поля сразу доступны для редактированя
+     */
     showCreateDialog: function()
     {
         var oData = {
@@ -105,9 +129,9 @@ var productsEditDialog = {
         var jsonModel = new sap.ui.model.json.JSONModel(oData);
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
-        sap.ui.getCore().byId("linkDelete").destroy();
         sap.ui.getCore().byId("tabPrices").destroy();
         sap.ui.getCore().byId("tabStores").destroy();
+        sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         var that = this;
 
@@ -142,7 +166,12 @@ var productsEditDialog = {
         this._oEditDialog.open();
     },
 
-    apply: function()
+    /**
+     * Нажатие на кнопку "Сохранить"
+     *
+     * Берем введённые пользователем параметры и скармливаем их backend'у.
+     */
+    save: function()
     {
         var id = this._oEditDialog.getModel().getProperty("/id");
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
@@ -199,7 +228,7 @@ var productsEditDialog = {
                     case 200:
                         sap.ui.getCore().byId("pageManageProducts").getModel().setData(JSON.parse(data));
                         break;
-                    case 204:
+                    case 204: // пусто
                         sap.ui.getCore().byId("pageManageProducts").getModel().setData();
                         break;
                 }
@@ -216,12 +245,50 @@ var productsEditDialog = {
                 }
             })
             .always(function() {
-                that._oEditDialog.destroy();
+                // если окно открывали на создание товара - тогда его нужно закрыть
+                // если на редактирование - тогда сделать неактивными все элементы ввода, а также показать вкладки
+                if (id === undefined && clientID === undefined) {
+                    that._oEditDialog.destroy();
+                } else {
+                    sap.ui.getCore().byId("inputName").setEditable(false);
+                    sap.ui.getCore().byId("selectCategory").setEnabled(false);
+                    sap.ui.getCore().byId("selectUnit").setEnabled(false);
+                    sap.ui.getCore().byId("inputManufacturer").setEditable(false);
+                    sap.ui.getCore().byId("inputBarcode").setEditable(false);
+                    sap.ui.getCore().byId("buttonDelete").setVisible(false);
+                    sap.ui.getCore().byId("buttonEdit").setVisible(true);
+                    sap.ui.getCore().byId("buttonSave").setVisible(false);
+                    sap.ui.getCore().byId("tabPrices").setVisible(true);
+                    sap.ui.getCore().byId("tabStores").setVisible(true);
+                }
             });
     },
 
-    //liveChange на barcode
-    // если не пусто - активируем кнопку поиска
+    /**
+     * Нажатие на кнопку "Изменить"
+     *
+     * Открываем все возможные поля для редактирования,
+     * но при этом временно скрываем ненужные вкладки
+     */
+    edit: function()
+    {
+        sap.ui.getCore().byId("inputName").setEditable(true);
+        sap.ui.getCore().byId("selectCategory").setEnabled(true);
+        sap.ui.getCore().byId("selectUnit").setEnabled(true);
+        sap.ui.getCore().byId("inputManufacturer").setEditable(true);
+        sap.ui.getCore().byId("inputBarcode").setEditable(true);
+        sap.ui.getCore().byId("buttonDelete").setVisible(true);
+        sap.ui.getCore().byId("buttonEdit").setVisible(false);
+        sap.ui.getCore().byId("buttonSave").setVisible(true);
+        sap.ui.getCore().byId("tabPrices").setVisible(false);
+        sap.ui.getCore().byId("tabStores").setVisible(false);
+    },
+
+    /**
+     * liveChange на barcode
+     *
+     * если не пусто - активируем кнопку поиска
+     */
     onBarcodeLiveChange: function(oEvent)
     {
         var value = oEvent.getParameters().value;
@@ -239,7 +306,10 @@ var productsEditDialog = {
         sap.m.URLHelper.redirect("https://duckduckgo.com/?q=" + barcode, true);
     },
 
-    cancel: function()
+    /**
+     * Закрытие окна
+     */
+    close: function()
     {
         this._oEditDialog.destroy();
     }

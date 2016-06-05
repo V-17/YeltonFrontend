@@ -52,26 +52,31 @@ sap.ui.define([
                 unitsEditDialog.showCreateDialog.apply(this);
             },
 
-            // нажатие кнопки "Редактировать"
-            onEditButtonPress: function()
+            // при выборе из списка
+            onSelect: function()
             {
                 unitsEditDialog.showEditDialog.apply(this);
             },
 
-            // подтверждение создания / редактирования
-            _onEditDialogOK: function()
+            _onEditDialogEdit: function()
             {
-                unitsEditDialog.apply.apply(this);
+                unitsEditDialog.edit.apply(this);
+            },
+
+            // подтверждение создания / редактирования
+            _onEditDialogSave: function()
+            {
+                unitsEditDialog.save.apply(this);
             },
 
             // отмена создания / редактирования
-            _onEditDialogCancel: function()
+            _onEditDialogClose: function()
             {
-                unitsEditDialog.cancel.apply(this);
+                unitsEditDialog.close.apply(this);
             },
 
             // нажатие нопки "Удалить"
-            onDeleteButtonPress: function()
+            _onEditDialogDelete: function()
             {
                 unitsDeleteDialog.show.apply(this);
             },

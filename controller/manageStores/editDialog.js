@@ -25,6 +25,12 @@ var storesEditDialog = {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("view.manageStores.editDialog", this);
+
+            sap.ui.getCore().byId("inputName").setEditable(false);
+            sap.ui.getCore().byId("inputAddress").setEditable(false);
+            sap.ui.getCore().byId("switchStatus").setEnabled(false);
+            sap.ui.getCore().byId("buttonSave").setVisible(false);
+
             this._oEditDialog.setModel(jsonModel);
             this._oEditDialog.open();
         } else {
@@ -42,12 +48,22 @@ var storesEditDialog = {
         var jsonModel = new sap.ui.model.json.JSONModel(oData);
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageStores.editDialog", this);
+        sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         this._oEditDialog.open();
     },
 
+    edit: function()
+    {
+        sap.ui.getCore().byId("inputName").setEditable(true);
+        sap.ui.getCore().byId("inputAddress").setEditable(true);
+        sap.ui.getCore().byId("switchStatus").setEnabled(true);
+        sap.ui.getCore().byId("buttonSave").setVisible(true);
+        sap.ui.getCore().byId("buttonDelete").setVisible(true);
+        sap.ui.getCore().byId("buttonEdit").setVisible(false);
+    },
 
-    apply: function()
+    save: function()
     {
         var id = this._oEditDialog.getModel().getProperty("/id");
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
@@ -104,11 +120,20 @@ var storesEditDialog = {
                 }
             })
             .always(function() {
-                that._oEditDialog.destroy();
+                if (id === undefined && clientID === undefined) {
+                    that._oEditDialog.destroy();
+                } else {
+                    sap.ui.getCore().byId("inputName").setEditable(false);
+                    sap.ui.getCore().byId("inputAddress").setEditable(false);
+                    sap.ui.getCore().byId("switchStatus").setEnabled(false);
+                    sap.ui.getCore().byId("buttonSave").setVisible(false);
+                    sap.ui.getCore().byId("buttonDelete").setVisible(false);
+                    sap.ui.getCore().byId("buttonEdit").setVisible(true);
+                }
             });
     },
 
-    cancel: function()
+    close: function()
     {
         this._oEditDialog.destroy();
     }

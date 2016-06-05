@@ -25,6 +25,12 @@ var pricesEditDialog = {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
+            sap.ui.core.Fragment.byId("editDialog", "selectProduct").setEnabled(false);
+            sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
+            sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
+            sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
+            sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
+            sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
             this._oEditDialog.setModel(jsonModel);
             var that = this;
 
@@ -83,9 +89,7 @@ var pricesEditDialog = {
     // нажатие кнопки create
     showCreateDialog: function()
     {
-        var oData = [{
-            id: null,
-            clientID: null,
+        var oData = {
             productID: null,
             productClientID: null,
             storeID: null,
@@ -94,10 +98,11 @@ var pricesEditDialog = {
             price: null,
             date: null,
             currencyID: null
-        }];
+        };
         var jsonModel = new sap.ui.model.json.JSONModel(oData);
 
         this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
+        sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         var that = this;
 
@@ -208,7 +213,19 @@ var pricesEditDialog = {
         }
     },
 
-    apply: function()
+    edit: function()
+    {
+        sap.ui.core.Fragment.byId("editDialog", "selectProduct").setEnabled(true);
+        sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(true);
+        sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(true);
+        sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(true);
+        sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(true);
+        sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(true);
+        sap.ui.core.Fragment.byId("editDialog", "buttonDelete").setVisible(true);
+        sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
+    },
+
+    save: function()
     {
         var id = this._oEditDialog.getModel().getProperty("/id");
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
@@ -332,11 +349,22 @@ var pricesEditDialog = {
                 }
             })
             .always(function() {
-                that._oEditDialog.destroy();
+                if (id === undefined && clientID === undefined) {
+                    that._oEditDialog.destroy();
+                } else {
+                    sap.ui.core.Fragment.byId("editDialog", "selectProduct").setEnabled(false);
+                    sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
+                    sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
+                    sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
+                    sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
+                    sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
+                    sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(true);
+                    sap.ui.core.Fragment.byId("editDialog", "buttonDelete").setVisible(false);
+                }
             });
     },
 
-    cancel: function()
+    close: function()
     {
         this._oEditDialog.destroy();
     }

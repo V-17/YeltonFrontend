@@ -4,29 +4,31 @@
             <ToolbarSpacer/>
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
-        <subHeader>
-            <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <ToolbarSpacer/>
-            </Toolbar>
-        </subHeader>
-        <List
-            growing="true"
-            growingThreshold="50"
-            growingScrollToLoad="true"
-            id="listProducts"
-            mode="SingleSelectMaster"
-            itemPress="onSelect"
-            items="{
+        <content>
+            <List
+                id="listProducts"
+                growing="true"
+                growingThreshold="50"
+                growingScrollToLoad="true"
+                mode="SingleSelectMaster"
+                itemPress="onSelect"
+                items="{
                 path : '/',
                 sorter : {
                     path : 'categoryName',
                     group : true
                 }
             }">
-            <items>
-                <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
-            </items>
-        </List>
+                <items>
+                    <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
+                </items>
+            </List>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://add" text="Создать" press="onCreateButtonPress" tooltip="Создать новый товар"/>
+            </Toolbar>
+        </footer>
     </Page>
 </mvc:View>

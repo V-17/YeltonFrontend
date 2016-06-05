@@ -9,14 +9,6 @@
             <ToolbarSpacer/>
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
-        <subHeader>
-            <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
-                <ToolbarSpacer/>
-            </Toolbar>
-        </subHeader>
         <content>
             <List
                 id="listUnits"
@@ -24,11 +16,18 @@
                 items="{/}"
                 growing="true"
                 growingThreshold="50"
-                growingScrollToLoad="true">
+                growingScrollToLoad="true"
+                itemPress="onSelect">
                 <items>
                     <StandardListItem type="Active" title="{fullName}"/>
                 </items>
             </List>
         </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://add" text="Создать" press="onCreateButtonPress" tooltip="Создать новую единицу измерения"/>
+            </Toolbar>
+        </footer>
     </Page>
 </mvc:View>

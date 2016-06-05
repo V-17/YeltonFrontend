@@ -20,11 +20,11 @@
                 <Text id="textAmountCalculation"/>
             </VBox>
         </content>
-        <beginButton>
-            <Button text="Сохранить" type="Accept" press="_onEditDialogOK"/>
-        </beginButton>
-        <endButton>
-            <Button text="Отмена" press="_onEditDialogCancel"/>
-        </endButton>
+        <buttons>
+            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="_onEditDialogDelete"/>
+            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="_onEditDialogEdit"/>
+            <Button id="buttonSave" text="Сохранить" type="Accept" press="_onEditDialogSave"/>
+            <Button text="Закрыть" press="_onEditDialogClose"/>
+        </buttons>
     </Dialog>
 </core:FragmentDefinition>

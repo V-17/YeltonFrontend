@@ -11,41 +11,41 @@
             <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
-        <subHeader>
-            <Toolbar>
-                <Button icon="sap-icon://add" press="onCreateButtonPress" tooltip="Создать"/>
-                <Button icon="sap-icon://edit" press="onEditButtonPress" tooltip="Изменить"/>
-                <Button icon="sap-icon://delete" press="onDeleteButtonPress" tooltip="Удалить"/>
-                <ToolbarSpacer/>
-            </Toolbar>
-        </subHeader>
-        <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false">
-            <columns>
-                <Column/>
-                <Column/>
-                <Column/>
-            </columns>
-            <items>
-                <ColumnListItem type="Active">
-                    <cells>
-                        <ObjectIdentifier title="{productName}" text="{categoryName}"/>
-                        <ObjectIdentifier title="{price} {currencyShortName}" text="{amount} {unitShortName}"/>
-                        <ObjectIdentifier
-                            title="{storeName}"
-                            text="{
-                                path: 'date',
-                                type: 'sap.ui.model.type.Date',
-                                formatOptions: {
-                                    style: 'long',
-                                    source: {
-                                        pattern: 'dd.MM.yyyy'
+        <content>
+            <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false" itemPress="onSelect">
+                <columns>
+                    <Column/>
+                    <Column/>
+                    <Column/>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <ObjectIdentifier title="{productName}" text="{categoryName}"/>
+                            <ObjectIdentifier title="{price} {currencyShortName}" text="{amount} {unitShortName}"/>
+                            <ObjectIdentifier
+                                title="{storeName}"
+                                text="
+                                {
+                                    path: 'date',
+                                    type: 'sap.ui.model.type.Date',
+                                    formatOptions: {
+                                        style: 'long',
+                                        source: {
+                                            pattern: 'dd.MM.yyyy'
+                                        }
                                     }
-                                }
-                            }"/>
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-
+                                }"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://add" text="Добавить" press="onCreateButtonPress" tooltip="Добавить новую покупку"/>
+            </Toolbar>
+        </footer>
     </Page>
 </mvc:View>

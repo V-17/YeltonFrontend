@@ -77,39 +77,43 @@ sap.ui.define([
                 pricesEditDialog.showCreateDialog.apply(this);
             },
 
-            // нажатие кнопки Редактировать
-            onEditButtonPress: function()
+            // при выборе товара из списка
+            onSelect: function()
             {
                 pricesEditDialog.showEditDialog.apply(this);
             },
 
-            // при изменении цены
+            // при изменении значения в поле "Цена"
             _onInputPriceLiveChange: function(oEvent)
             {
                 pricesEditDialog.onInputPriceLiveChange.apply(this, [oEvent]);
             },
 
-            // при изменении количества
+            // при изменении значения в поле "Количество"
             _onInputAmountLiveChange: function(oEvent)
             {
                 pricesEditDialog.onInputAmountLiveChange.apply(this, [oEvent]);
             },
 
-            // подтверждение создания / редактирования
-            _onEditDialogOK: function()
+            _onEditDialogEdit: function()
             {
-                pricesEditDialog.apply.apply(this);
+                pricesEditDialog.edit.apply(this);
+            },
+
+            // при нажатии кнопки "Сохранить"
+            _onEditDialogSave: function()
+            {
+                pricesEditDialog.save.apply(this);
             },
 
             // отмена создания / редактирования
-            _onEditDialogCancel: function()
+            _onEditDialogClose: function()
             {
-                pricesEditDialog.cancel.apply(this);
+                pricesEditDialog.close.apply(this);
             },
 
-
             // нажатие нопки Удалить
-            onDeleteButtonPress: function()
+            _onEditDialogDelete: function()
             {
                 pricesDeleteDialog.show.apply(this);
             },

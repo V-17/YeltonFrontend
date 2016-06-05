@@ -25,6 +25,9 @@ var unitsEditDialog = {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("view.manageUnits.editDialog", this);
+            sap.ui.getCore().byId("buttonSave").setVisible(false);
+            sap.ui.getCore().byId("inputFullName").setEditable(false);
+            sap.ui.getCore().byId("inputShortName").setEditable(false);
             this._oEditDialog.setModel(jsonModel);
             this._oEditDialog.open();
         } else {
@@ -35,20 +38,28 @@ var unitsEditDialog = {
 
     showCreateDialog: function()
     {
-        var oData = [{
-            id: null,
-            clientID: null,
+        var oData = {
             fullName: null,
             shortName: null
-        }];
+        };
         var jsonModel = new sap.ui.model.json.JSONModel(oData);
 
         this._oEditDialog = sap.ui.xmlfragment("view.manageUnits.editDialog", this);
+        sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         this._oEditDialog.open();
     },
 
-    apply: function()
+    edit: function()
+    {
+        sap.ui.getCore().byId("inputFullName").setEditable(true);
+        sap.ui.getCore().byId("inputShortName").setEditable(true);
+        sap.ui.getCore().byId("buttonDelete").setVisible(true);
+        sap.ui.getCore().byId("buttonSave").setVisible(true);
+        sap.ui.getCore().byId("buttonEdit").setVisible(false);
+    },
+
+    save: function()
     {
         var id = this._oEditDialog.getModel().getProperty("/id");
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
@@ -103,11 +114,19 @@ var unitsEditDialog = {
                 }
             })
             .always(function() {
-                that._oEditDialog.destroy();
+                if (id === undefined && clientID === undefined) {
+                    that._oEditDialog.destroy();
+                } else {
+                    sap.ui.getCore().byId("inputFullName").setEditable(false);
+                    sap.ui.getCore().byId("inputShortName").setEditable(false);
+                    sap.ui.getCore().byId("buttonDelete").setVisible(false);
+                    sap.ui.getCore().byId("buttonSave").setVisible(false);
+                    sap.ui.getCore().byId("buttonEdit").setVisible(true);
+                }
             });
     },
 
-    cancel: function()
+    close: function()
     {
         this._oEditDialog.destroy();
     }
