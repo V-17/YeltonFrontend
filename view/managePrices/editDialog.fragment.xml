@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Покупка" afterClose="_onEditDialogCancel">
+    <Dialog title="Покупка" afterClose="_onEditDialogClose">
         <content>
             <VBox>
                 <Label text="Товар"/>
