@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
     <Dialog showHeader="false" afterClose="_onEditDialogClose">
         <content>
             <IconTabBar id="iconTabBar" expandable="false" select="_onEditDialogSelectTab">
@@ -38,7 +38,22 @@
                         </VBox>
                     </IconTabFilter>
                     <IconTabFilter id="tabPrices" text="Цены">
-                        <Text text="Краткая статистика цен"/>
+                        <List>
+                            <items>
+                                <StandardListItem
+                                    title="Минимальная"
+                                    icon="sap-icon://down"
+                                    info="{/minPrice/price} {/minPrice/currency}/{/minPrice/unitShortName}"
+                                    infoState="Success"
+                                    description="{/minPrice/storeName}"/>
+                                <StandardListItem
+                                    title="Максимальная"
+                                     icon="sap-icon://up"
+                                    info="{/maxPrice/price} {/maxPrice/currency}/{/maxPrice/unitShortName}"
+                                    infoState="Error"
+                                    description="{/maxPrice/storeName}"/>
+                            </items>
+                        </List>
                     </IconTabFilter>
                     <IconTabFilter id="tabStores" text="Магазины">
                         <Text text="Где и сколько раз данный товар  был куплен"/>
