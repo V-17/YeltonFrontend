@@ -19,7 +19,7 @@ var pricesFilterDialog = {
 
     show: function()
     {
-        this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "view.managePrices.filterDialog", this);
+        this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "yelton.view.managePrices.filterDialog", this);
 
         var currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
         var that = this;

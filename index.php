@@ -32,7 +32,8 @@
             data-sap-ui-bindingSyntax="complex"
             data-sap-ui-resourceroots='{
                 "yelton.view": "./view",
-                "yelton.controller": "./controller"
+                "yelton.controller": "./controller",
+                "yelton": "./"
             }'></script>
         <script src="core/lib.js"></script>
 
@@ -43,8 +44,8 @@
             if (\yelton\isSetUserID() === true) {
                 echo '
                 <script>
-                    new sap.m.Shell({
-                        app: sap.ui.view({viewName: "yelton.view.splitApp.V", type: sap.ui.core.mvc.ViewType.XML})
+                    new sap.ui.core.ComponentContainer({
+                        name : "yelton"
                     }).placeAt("content");
                 </script>';
             // иначе - index страницу

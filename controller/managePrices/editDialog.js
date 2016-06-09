@@ -24,7 +24,7 @@ var pricesEditDialog = {
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
-            this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
+            this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
             sap.ui.core.Fragment.byId("editDialog", "selectProduct").setEnabled(false);
             sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
             sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
@@ -91,7 +91,7 @@ var pricesEditDialog = {
     {
         var jsonModel = new sap.ui.model.json.JSONModel();
 
-        this._oEditDialog = sap.ui.xmlfragment("editDialog", "view.managePrices.editDialog", this);
+        this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
         sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         var that = this;
