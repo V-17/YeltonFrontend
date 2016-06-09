@@ -4,7 +4,7 @@
     xmlns:layout="sap.ui.layout"
     xmlns="sap.m"
     xmlns:forms="sap.ui.layout.form"
-    controllerName="controller.index"
+    controllerName="yelton.controller.index"
     height="100%">
     <ux:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true">
         <ux:headerTitle>

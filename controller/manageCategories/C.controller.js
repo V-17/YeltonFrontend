@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("controller.manageCategories.editDialog");
-jQuery.sap.require("controller.manageCategories.deleteDialog");
+jQuery.sap.require("yelton.controller.manageCategories.editDialog");
+jQuery.sap.require("yelton.controller.manageCategories.deleteDialog");
 
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
@@ -26,7 +26,7 @@ sap.ui.define([
     ],
     function(Controller, JSONModel, Filter, FilterOperator) {
         "use strict";
-        return Controller.extend("controller.manageCategories.C", {
+        return Controller.extend("yelton.controller.manageCategories.C", {
 
             onInit: function()
             {

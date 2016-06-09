@@ -24,7 +24,7 @@ var storesDeleteDialog = {
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
-            this._oDeleteDialog = sap.ui.xmlfragment("view.manageStores.deleteDialog", this);
+            this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.manageStores.deleteDialog", this);
             this._oDeleteDialog.setModel(jsonModel);
             this._oDeleteDialog.open();
         } else {

@@ -25,7 +25,7 @@ var categoriesEditDialog = {
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
-            this._oEditDialog = sap.ui.xmlfragment("view.manageCategories.editDialog", this);
+            this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
             sap.ui.getCore().byId("inputName").setEditable(false);
             this._oEditDialog.setModel(jsonModel);
@@ -39,7 +39,7 @@ var categoriesEditDialog = {
     showCreateDialog: function()
     {
         var jsonModel = new sap.ui.model.json.JSONModel();
-        this._oEditDialog = sap.ui.xmlfragment("view.manageCategories.editDialog", this);
+        this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         this._oEditDialog.open();

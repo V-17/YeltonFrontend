@@ -31,8 +31,8 @@
             data-sap-ui-theme="sap_bluecrystal"
             data-sap-ui-bindingSyntax="complex"
             data-sap-ui-resourceroots='{
-                "view": "./view",
-                "controller": "./controller"
+                "yelton.view": "./view",
+                "yelton.controller": "./controller"
             }'></script>
         <script src="core/lib.js"></script>
 
@@ -43,18 +43,16 @@
             if (\yelton\isSetUserID() === true) {
                 echo '
                 <script>
-                    sap.ui.localResources("view");
                     new sap.m.Shell({
-                        app: sap.ui.view({viewName: "view.splitApp.V", type: sap.ui.core.mvc.ViewType.XML})
+                        app: sap.ui.view({viewName: "yelton.view.splitApp.V", type: sap.ui.core.mvc.ViewType.XML})
                     }).placeAt("content");
                 </script>';
             // иначе - index страницу
             } else {
                 echo '
                 <script>
-                    sap.ui.localResources("view");
                     new sap.m.Shell({
-                        app: sap.ui.view({viewName: "view.index.V", type: sap.ui.core.mvc.ViewType.XML})
+                        app: sap.ui.view({viewName: "yelton.view.index.V", type: sap.ui.core.mvc.ViewType.XML})
                     }).placeAt("content");
                 </script>';
             }

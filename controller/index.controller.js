@@ -21,7 +21,7 @@ sap.ui.define([
     ],
     function(Controller, JSONModel) {
         "use strict";
-        return Controller.extend("controller.index", {
+        return Controller.extend("yelton.controller.index", {
 
             onInit: function() {},
 
@@ -46,7 +46,7 @@ sap.ui.define([
             {
                 // create popover
                 if (!this._oPopover) {
-                    this._oPopover = sap.ui.xmlfragment("view.index.loginMenu", this);
+                    this._oPopover = sap.ui.xmlfragment("yelton.view.index.loginMenu", this);
                 }
                 this._oPopover.openBy(oEvent.getSource());
 

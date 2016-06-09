@@ -24,7 +24,7 @@ var unitsEditDialog = {
         if (path.length !== 0) {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
-            this._oEditDialog = sap.ui.xmlfragment("view.manageUnits.editDialog", this);
+            this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageUnits.editDialog", this);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
             sap.ui.getCore().byId("inputFullName").setEditable(false);
             sap.ui.getCore().byId("inputShortName").setEditable(false);
@@ -39,7 +39,7 @@ var unitsEditDialog = {
     {
         var jsonModel = new sap.ui.model.json.JSONModel();
 
-        this._oEditDialog = sap.ui.xmlfragment("view.manageUnits.editDialog", this);
+        this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageUnits.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         this._oEditDialog.open();

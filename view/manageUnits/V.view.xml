@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="controller.manageUnits.C"
+    controllerName="yelton.controller.manageUnits.C"
     xmlns:l="sap.ui.layout"
     xmlns:model="sap.ui.model"
     xmlns:mvc="sap.ui.core.mvc"

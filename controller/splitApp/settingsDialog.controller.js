@@ -21,7 +21,7 @@ sap.ui.define([
     ],
     function(Controller, JSONModel) {
         "use strict";
-        return Controller.extend("controller.splitApp.settingsDialog", {
+        return Controller.extend("yelton.controller.splitApp.settingsDialog", {
 
             onChangePasswordPress: function()
             {

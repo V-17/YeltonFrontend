@@ -16,7 +16,7 @@
 -->
 
 <mvc:View
-    controllerName="controller.reports.bestPrice"
+    controllerName="yelton.controller.reports.bestPrice"
     xmlns:l="sap.ui.layout"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.ui.layout.form"

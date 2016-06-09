@@ -35,7 +35,7 @@ var productsEditDialog = {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
 
-            this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
+            this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageProducts.editDialog", this);
 
             sap.ui.getCore().byId("inputName").setEditable(false);
             sap.ui.getCore().byId("selectCategory").setEnabled(false);
@@ -119,7 +119,7 @@ var productsEditDialog = {
     {
         var jsonModel = new sap.ui.model.json.JSONModel();
 
-        this._oEditDialog = sap.ui.xmlfragment("view.manageProducts.editDialog", this);
+        this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageProducts.editDialog", this);
         sap.ui.getCore().byId("tabPrices").destroy();
         sap.ui.getCore().byId("tabStores").destroy();
         sap.ui.getCore().byId("buttonEdit").setVisible(false);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("controller.splitApp.settingsPopover");
+jQuery.sap.require("yelton.controller.splitApp.settingsPopover");
 
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
@@ -23,38 +23,38 @@ sap.ui.define([
     ],
     function(Controller, JSONModel) {
         "use strict";
-        return Controller.extend("controller.splitApp.C", {
+        return Controller.extend("yelton.controller.splitApp.C", {
 
             onInit: function()
             {
                 var pricesView = sap.ui.view({
                     id: "pageManagePrices",
-                    viewName: "view.managePrices.V",
+                    viewName: "yelton.view.managePrices.V",
                     type: sap.ui.core.mvc.ViewType.XML
                 });
                 var categoriesView = sap.ui.view({
                     id: "pageManageCategories",
-                    viewName: "view.manageCategories.V",
+                    viewName: "yelton.view.manageCategories.V",
                     type: sap.ui.core.mvc.ViewType.XML
                 });
                 var productsView = sap.ui.view({
                     id: "pageManageProducts",
-                    viewName: "view.manageProducts.V",
+                    viewName: "yelton.view.manageProducts.V",
                     type: sap.ui.core.mvc.ViewType.XML
                 });
                 var storesView = sap.ui.view({
                     id: "pageManageStores",
-                    viewName: "view.manageStores.V",
+                    viewName: "yelton.view.manageStores.V",
                     type: sap.ui.core.mvc.ViewType.XML
                 });
                 var unitsView = sap.ui.view({
                     id: "pageManageUnits",
-                    viewName: "view.manageUnits.V",
+                    viewName: "yelton.view.manageUnits.V",
                     type: sap.ui.core.mvc.ViewType.XML
                 });
                 var reportsView = sap.ui.view({
                     id: "pageReports",
-                    viewName: "view.reports.V",
+                    viewName: "yelton.view.reports.V",
                     type: sap.ui.core.mvc.ViewType.XML
                 });
 

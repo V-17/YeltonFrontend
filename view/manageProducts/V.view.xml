@@ -1,4 +1,4 @@
-<mvc:View controllerName="controller.manageProducts.C" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="yelton.controller.manageProducts.C" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
     <Page>
         <headerContent>
             <ToolbarSpacer/>

@@ -16,7 +16,7 @@
 -->
 
 <mvc:View
-    controllerName="controller.reports.reports"
+    controllerName="yelton.controller.reports.reports"
     xmlns:l="sap.ui.layout"
     xmlns:model="sap.ui.model"
     xmlns:mvc="sap.ui.core.mvc"

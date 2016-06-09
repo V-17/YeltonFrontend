@@ -21,7 +21,7 @@ sap.ui.define([
     ],
     function(Controller, JSONModel) {
         "use strict";
-        return Controller.extend("controller.reports.reports", {
+        return Controller.extend("yelton.controller.reports.reports", {
 
             onTileBestPriceClick: function()
             {
@@ -29,7 +29,7 @@ sap.ui.define([
                 if (!this._viewBestPrice) {
                     this._viewBestPrice = sap.ui.view({
                         id: "pageReportsBestPrice",
-                        viewName: "view.reports.bestPrice",
+                        viewName: "yelton.view.reports.bestPrice",
                         type: sap.ui.core.mvc.ViewType.XML
                     });
                     app.addDetailPage(this._viewBestPrice);

@@ -16,7 +16,7 @@
 -->
 
 <mvc:View
-    controllerName="controller.splitApp.C"
+    controllerName="yelton.controller.splitApp.C"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">

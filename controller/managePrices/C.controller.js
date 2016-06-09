@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("controller.managePrices.editDialog");
-jQuery.sap.require("controller.managePrices.deleteDialog");
-jQuery.sap.require("controller.managePrices.filterDialog");
+jQuery.sap.require("yelton.controller.managePrices.editDialog");
+jQuery.sap.require("yelton.controller.managePrices.deleteDialog");
+jQuery.sap.require("yelton.controller.managePrices.filterDialog");
 
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
@@ -27,7 +27,7 @@ sap.ui.define([
     ],
     function(Controller, JSONModel, Filter, FilterOperator) {
         "use strict";
-        return Controller.extend("controller.managePrices.C", {
+        return Controller.extend("yelton.controller.managePrices.C", {
 
             onInit: function()
             {

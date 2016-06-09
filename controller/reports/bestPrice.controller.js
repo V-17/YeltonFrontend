@@ -21,7 +21,7 @@ sap.ui.define([
     ],
     function(Controller, JSONModel) {
         "use strict";
-        return Controller.extend("controller.reports.bestPrice", {
+        return Controller.extend("yelton.controller.reports.bestPrice", {
 
             onNavBackPress: function()
             {

@@ -20,7 +20,7 @@ var settings = {
     showPopover: function()
     {
         if (!this._oPopover) {
-            this._oPopover = sap.ui.xmlfragment("view.splitApp.settingsPopover", this);
+            this._oPopover = sap.ui.xmlfragment("yelton.view.splitApp.settingsPopover", this);
         }
         this.getView().addDependent(this._oPopover);
         this._oPopover.openBy(this.byId("buttonSettings"));
@@ -28,8 +28,8 @@ var settings = {
 
     showSettings: function()
     {
-        var oCtrl = sap.ui.controller("controller.splitApp.settingsDialog");
-        var settignsDialog = sap.ui.xmlfragment("view.splitApp.settingsDialog", oCtrl);
+        var oCtrl = sap.ui.controller("yelton.controller.splitApp.settingsDialog");
+        var settignsDialog = sap.ui.xmlfragment("yelton.view.splitApp.settingsDialog", oCtrl);
         // onInit там не работает, поэтому придется грузить модель тут
         this.getView().addDependent(settignsDialog);
         settignsDialog.open();
