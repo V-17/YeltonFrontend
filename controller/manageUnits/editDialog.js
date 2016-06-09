@@ -103,10 +103,10 @@ var unitsEditDialog = {
             {
                 switch (jqXHR.status) {
                     case 200:
-                        sap.ui.getCore().byId("pageManageUnits").getModel().setData(JSON.parse(data));
+                        that.getView().getModel().setData(JSON.parse(data));
                         break;
                     case 204:
-                        sap.ui.getCore().byId("pageManageUnits").getModel().setData();
+                        that.getView().getModel().setData();
                         break;
                 }
             })

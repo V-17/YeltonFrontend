@@ -222,10 +222,10 @@ var productsEditDialog = {
             {
                 switch (jqXHR.status) {
                     case 200:
-                        sap.ui.getCore().byId("pageManageProducts").getModel().setData(JSON.parse(data));
+                        that.getView().getModel().setData(JSON.parse(data));
                         break;
                     case 204: // пусто
-                        sap.ui.getCore().byId("pageManageProducts").getModel().setData();
+                        that.getView().getModel().setData();
                         break;
                 }
             })

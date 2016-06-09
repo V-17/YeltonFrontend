@@ -23,6 +23,17 @@ sap.ui.define([
         "use strict";
         return Controller.extend("yelton.controller.reports.reports", {
 
+            onInit: function()
+            {
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.getRoute("reports").attachPatternMatched(this.onRouter, this);
+            },
+
+            onRouter: function(oEvent)
+            {
+                sap.ui.getCore().byId("__xmlview0--listMenuBottom").setSelectedItemById("__item5");
+            },
+
             onTileBestPriceClick: function()
             {
                 var app = sap.ui.getCore().byId("__xmlview0--splitApp");

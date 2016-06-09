@@ -27,45 +27,6 @@ sap.ui.define([
 
             onInit: function()
             {
-                var pricesView = sap.ui.view({
-                    id: "pageManagePrices",
-                    viewName: "yelton.view.managePrices.V",
-                    type: sap.ui.core.mvc.ViewType.XML
-                });
-                var categoriesView = sap.ui.view({
-                    id: "pageManageCategories",
-                    viewName: "yelton.view.manageCategories.V",
-                    type: sap.ui.core.mvc.ViewType.XML
-                });
-                var productsView = sap.ui.view({
-                    id: "pageManageProducts",
-                    viewName: "yelton.view.manageProducts.V",
-                    type: sap.ui.core.mvc.ViewType.XML
-                });
-                var storesView = sap.ui.view({
-                    id: "pageManageStores",
-                    viewName: "yelton.view.manageStores.V",
-                    type: sap.ui.core.mvc.ViewType.XML
-                });
-                var unitsView = sap.ui.view({
-                    id: "pageManageUnits",
-                    viewName: "yelton.view.manageUnits.V",
-                    type: sap.ui.core.mvc.ViewType.XML
-                });
-                var reportsView = sap.ui.view({
-                    id: "pageReports",
-                    viewName: "yelton.view.reports.V",
-                    type: sap.ui.core.mvc.ViewType.XML
-                });
-
-                var app = this.byId("splitApp");
-                app.addDetailPage(pricesView);
-                app.addDetailPage(categoriesView);
-                app.addDetailPage(productsView);
-                app.addDetailPage(storesView);
-                app.addDetailPage(unitsView);
-                app.addDetailPage(reportsView);
-
                 var that = this;
                 $.ajax({
                         url: "backend/web/services/user.php"
@@ -80,117 +41,42 @@ sap.ui.define([
                     });
             },
 
-            onNavToDetail: function()
+            onNavToDetail: function(oEvent)
             {
-                //FIXME: можно же как то с реальными ID сделать это
                 var id = this.getView().byId("listMainMenu").getSelectedItem().sId;
-                var app = this.byId("splitApp");
                 this.getView().byId("listMenuBottom").removeSelections();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
+                //FIXME: можно же как то с нормальными ID сделать это
                 switch (id) {
                     case "__item0":
-                        $.ajax({
-                                url: "backend/web/services/managePrices.php"
-                            })
-                            .done(function(data, textStatus, jqXHR) {
-                                if (jqXHR.status === 204) {
-                                    app.getDetailPage("pageManagePrices").getModel().setData();
-                                } else {
-                                    app.getDetailPage("pageManagePrices").getModel().setData(JSON.parse(data));
-                                }
-                                app.toDetail("pageManagePrices", "show");
-                            })
-                            .fail(function(answer) {
-                                if (answer.status === 401) {
-                                    window.location.reload();
-                                }
-                            });
+                        oRouter.navTo("prices");
                         break;
                     case "__item1":
-                        $.ajax({
-                                url: "backend/web/services/manageCategories.php"
-                            })
-                            .done(function(data, textStatus, jqXHR) {
-                                if (jqXHR.status === 204) { // no content
-                                    app.getDetailPage("pageManageCategories").getModel().setData();
-                                } else {
-                                    app.getDetailPage("pageManageCategories").getModel().setData(JSON.parse(data));
-                                }
-                                app.toDetail("pageManageCategories", "show");
-                            })
-                            .fail(function(answer) {
-                                if (answer.status === 401) {
-                                    window.location.reload();
-                                }
-                            });
+                        oRouter.navTo("categories");
                         break;
                     case "__item2":
-                        $.ajax({
-                                url: "backend/web/services/manageProducts.php"
-                            })
-                            .done(function(data, textStatus, jqXHR) {
-                                if (jqXHR.status === 204) {
-                                    app.getDetailPage("pageManageProducts").getModel().setData();
-                                } else {
-                                    app.getDetailPage("pageManageProducts").getModel().setData(JSON.parse(data));
-                                }
-                                app.toDetail("pageManageProducts", "show");
-                            })
-                            .fail(function(answer) {
-                                if (answer.status === 401) {
-                                    window.location.reload();
-                                }
-                            });
+                        oRouter.navTo("products");
                         break;
                     case "__item3":
-                        $.ajax({
-                                url: "backend/web/services/manageStores.php"
-                            })
-                            .done(function(data, textStatus, jqXHR) {
-                                if (jqXHR.status === 204) {
-                                    app.getDetailPage("pageManageStores").getModel().setData();
-                                } else {
-                                    app.getDetailPage("pageManageStores").getModel().setData(JSON.parse(data));
-                                }
-                                app.toDetail("pageManageStores", "show");
-                            })
-                            .fail(function(answer) {
-                                if (answer.status === 401) {
-                                    window.location.reload();
-                                }
-                            });
+                        oRouter.navTo("stores");
                         break;
                     case "__item4":
-                        $.ajax({
-                                url: "backend/web/services/manageUnits.php"
-                            })
-                            .done(function(data, textStatus, jqXHR) {
-                                if (jqXHR.status === 204) {
-                                    app.getDetailPage("pageManageUnits").getModel().setData();
-                                } else {
-                                    app.getDetailPage("pageManageUnits").getModel().setData(JSON.parse(data));
-                                }
-                                app.toDetail("pageManageUnits", "show");
-                            })
-                            .fail(function(answer) {
-                                if (answer.status === 401) {
-                                    window.location.reload();
-                                }
-                            });
+                        oRouter.navTo("units");
                         break;
                 }
             },
 
             onNavToReports: function()
             {
-                //FIXME: можно же как то с реальными ID сделать это
+                //FIXME: можно же как то с нормальными ID сделать это
                 var id = this.getView().byId("listMenuBottom").getSelectedItem().sId;
-                var app = this.byId("splitApp");
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 this.getView().byId("listMainMenu").removeSelections();
 
                 switch (id) {
                     case "__item5":
-                        app.toDetail("pageReports", "show");
+                        oRouter.navTo("reports");
                         break;
                 }
             },

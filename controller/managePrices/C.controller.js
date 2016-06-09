@@ -31,8 +31,13 @@ sap.ui.define([
 
             onInit: function()
             {
-                // т.к. это первая страница, сразу надо сюда данные грузить
-                // а потом об этом позаботится splitApp
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.getRoute("init").attachPatternMatched(this.onRouter, this);
+                oRouter.getRoute("prices").attachPatternMatched(this.onRouter, this);
+            },
+
+            onRouter: function(oEvent)
+            {
                 var that = this;
                 $.ajax({
                         url: "backend/web/services/managePrices.php",
@@ -45,6 +50,8 @@ sap.ui.define([
                         } else {
                             that.getView().setModel(new JSONModel(JSON.parse(data)));
                         }
+                        // FIXME: id
+                        sap.ui.getCore().byId("__xmlview0--listMainMenu").setSelectedItemById("__item0");
                     })
                     .fail(function(answer)
                     {

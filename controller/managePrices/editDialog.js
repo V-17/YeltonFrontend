@@ -320,10 +320,10 @@ var pricesEditDialog = {
             {
                 switch (jqXHR.status) {
                     case 200:
-                        sap.ui.getCore().byId("pageManagePrices").getModel().setData(JSON.parse(data));
+                        that.getView().getModel().setData(JSON.parse(data));
                         break;
                     case 204:
-                        sap.ui.getCore().byId("pageManagePrices").getModel().setData();
+                        that.getView().getModel().setData();
                         break;
                 }
             })

@@ -102,10 +102,10 @@ var storesEditDialog = {
             {
                 switch (jqXHR.status) {
                     case 200:
-                        sap.ui.getCore().byId("pageManageStores").getModel().setData(JSON.parse(data));
+                        that.getView().getModel().setData(JSON.parse(data));
                         break;
                     case 204:
-                        sap.ui.getCore().byId("pageManageStores").getModel().setData();
+                        that.getView().getModel().setData();
                         break;
                 }
             })

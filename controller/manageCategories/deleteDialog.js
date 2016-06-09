@@ -50,10 +50,10 @@ var categoriesDeleteDialog = {
             {
                 switch (jqXHR.status) {
                     case 200:
-                        sap.ui.getCore().byId("pageManageCategories").getModel().setData(JSON.parse(data));
+                        that.getView().getModel().setData(JSON.parse(data));
                         break;
                     case 204:
-                        sap.ui.getCore().byId("pageManageCategories").getModel().setData();
+                        that.getView().getModel().setData();
                         break;
                 }
             })

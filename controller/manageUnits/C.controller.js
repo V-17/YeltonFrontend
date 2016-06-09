@@ -30,7 +30,33 @@ sap.ui.define([
 
             onInit: function()
             {
-                this.getView().setModel(new JSONModel());
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.getRoute("units").attachPatternMatched(this.onRouter, this);
+            },
+
+            onRouter: function(oEvent)
+            {
+                var that = this;
+                $.ajax({
+                        url: "backend/web/services/manageUnits.php",
+                        type: "GET"
+                    })
+                    .done(function(data, textStatus, jqXHR)
+                    {
+                        if (jqXHR.status === 204) { // no content
+                            that.getView().setModel(new JSONModel());
+                        } else {
+                            that.getView().setModel(new JSONModel(JSON.parse(data)));
+                        }
+                        // FIXME: id
+                        sap.ui.getCore().byId("__xmlview0--listMainMenu").setSelectedItemById("__item4");
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
             },
 
             // Поиск

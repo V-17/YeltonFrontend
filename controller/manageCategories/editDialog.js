@@ -90,10 +90,10 @@ var categoriesEditDialog = {
             {
                 switch (jqXHR.status) {
                     case 200:
-                        sap.ui.getCore().byId("pageManageCategories").getModel().setData(JSON.parse(data));
+                        that.getView().getModel().setData(JSON.parse(data));
                         break;
                     case 204:
-                        sap.ui.getCore().byId("pageManageCategories").getModel().setData();
+                        that.getView().getModel().setData();
                         break;
                 }
             })
@@ -115,7 +115,7 @@ var categoriesEditDialog = {
                 } else {
                     sap.ui.getCore().byId("buttonEdit").setVisible(true);
                     sap.ui.getCore().byId("buttonSave").setVisible(false);
-                    sap.ui.getCore().byId("buttonDelete").setVisible(true);
+                    sap.ui.getCore().byId("buttonDelete").setVisible(false);
                     sap.ui.getCore().byId("inputName").setEditable(false);
                 }
             });

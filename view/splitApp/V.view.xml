@@ -34,7 +34,7 @@
                         </Toolbar>
                     </subHeader>
                     <List id="listMainMenu" mode="SingleSelectMaster" selectionChange="onNavToDetail">
-                        <StandardListItem title="Покупки" type="Active" icon="img/prices.png" selected="true"/>
+                        <StandardListItem title="Покупки" type="Active" icon="img/prices.png"/>
                         <StandardListItem title="Категории" type="Active" icon="img/categories.png"/>
                         <StandardListItem title="Товары" type="Active" icon="img/products.png"/>
                         <StandardListItem title="Магазины" type="Active" icon="img/stores.png"/>

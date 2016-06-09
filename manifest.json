@@ -1,6 +1,66 @@
 {
     "_version": "0.3.0",
     "sap.ui5": {
-        "rootView": "yelton.view.splitApp.V"
+        "rootView": "yelton.view.splitApp.V",
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "yelton.view",
+                "controlId": "splitApp",
+                "controlAggregation": "detailPages",
+                "transition": "show"
+            },
+            "routes": [{
+                "pattern": "",
+                "name": "init",
+                "target": "prices"
+            }, {
+                "pattern": "prices",
+                "name": "prices",
+                "target": "prices"
+            }, {
+                "pattern": "categories",
+                "name": "categories",
+                "target": "categories"
+            }, {
+                "pattern": "products",
+                "name": "products",
+                "target": "products"
+            }, {
+                "pattern": "stores",
+                "name": "stores",
+                "target": "stores"
+            }, {
+                "pattern": "units",
+                "name": "units",
+                "target": "units"
+            }, {
+                "pattern": "reports",
+                "name": "reports",
+                "target": "reports"
+            }],
+            "targets": {
+                "prices": {
+                    "viewName": "managePrices.V"
+                },
+                "categories": {
+                    "viewName": "manageCategories.V"
+                },
+                "products": {
+                    "viewName": "manageProducts.V"
+                },
+                "stores": {
+                    "viewName": "manageStores.V"
+                },
+                "units": {
+                    "viewName": "manageUnits.V"
+                },
+                "reports": {
+                    "viewName": "reports.V"
+                }
+            }
+        }
     }
+
 }
