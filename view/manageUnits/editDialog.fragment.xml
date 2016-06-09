@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Мера" afterClose="_onEditDialogClose">
+    <Dialog title="Мера" afterClose="unitsEditDialog.close">
         <content>
             <VBox>
                 <Input
@@ -19,10 +19,10 @@
             </VBox>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="_onEditDialogDelete"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="_onEditDialogEdit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="_onEditDialogSave"/>
-            <Button text="Закрыть" press="_onEditDialogClose"/>
+            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="unitsDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="unitsEditDialog.edit"/>
+            <Button id="buttonSave" text="Сохранить" type="Accept" press="unitsEditDialog.save"/>
+            <Button text="Закрыть" press="unitsEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

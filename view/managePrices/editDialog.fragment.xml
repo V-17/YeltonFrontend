@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Покупка" afterClose="_onEditDialogClose">
+    <Dialog title="Покупка" afterClose="pricesEditDialog.close">
         <content>
             <VBox>
                 <Label text="Товар"/>
@@ -14,17 +14,17 @@
                 <Text/>
                 <DatePicker id="datePicker" placeholder="Дата" displayFormat="long" valueFormat="dd.MM.yyyy"/>
                 <Text/>
-                <Input id="inputPrice" placeholder="Стоимость" value="{/price}" liveChange="_onInputPriceLiveChange"/>
+                <Input id="inputPrice" placeholder="Стоимость" value="{/price}" liveChange="pricesEditDialog.onInputPriceLiveChange"/>
                 <Text id="textPriceCalculation"/>
-                <Input id="inputAmount" placeholder="Количество" value="{/amount}" liveChange="_onInputAmountLiveChange"/>
+                <Input id="inputAmount" placeholder="Количество" value="{/amount}" liveChange="pricesEditDialog.onInputAmountLiveChange"/>
                 <Text id="textAmountCalculation"/>
             </VBox>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="_onEditDialogDelete"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="_onEditDialogEdit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="_onEditDialogSave"/>
-            <Button text="Закрыть" press="_onEditDialogClose"/>
+            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="pricesDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="pricesEditDialog.edit"/>
+            <Button id="buttonSave" text="Сохранить" type="Accept" press="pricesEditDialog.save"/>
+            <Button text="Закрыть" press="pricesEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Магазин" afterClose="_onEditDialogClose">
+    <Dialog title="Магазин" afterClose="storesEditDialog.close">
         <content>
             <Input
                 id="inputName"
@@ -20,10 +20,10 @@
             </HBox>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="_onEditDialogDelete"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="_onEditDialogEdit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="_onEditDialogSave"/>
-            <Button text="Закрыть" press="_onEditDialogClose"/>
+            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="storesDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="storesEditDialog.edit"/>
+            <Button id="buttonSave" text="Сохранить" type="Accept" press="storesEditDialog.save"/>
+            <Button text="Закрыть" press="storesEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

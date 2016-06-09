@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog showHeader="false" afterClose="_onDeleteDialogCancel" initialFocus="buttonCancel">
+    <Dialog showHeader="false" afterClose="categoriesDeleteDialog.cancel" initialFocus="buttonCancel">
         <subHeader>
             <Toolbar>
                 <ToolbarSpacer/>
@@ -10,10 +10,10 @@
         </subHeader>
         <Text text='Также будут удалены все товары и покупки, связанные с этой категорией'/>
         <beginButton>
-            <Button text="Удалить" type="Reject" press="_onDeleteDialogOK"/>
+            <Button text="Удалить" type="Reject" press="categoriesDeleteDialog.apply"/>
         </beginButton>
         <endButton>
-            <Button id="buttonCancel" text="Отмена" press="_onDeleteDialogCancel"/>
+            <Button id="buttonCancel" text="Отмена" press="categoriesDeleteDialog.cancel"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

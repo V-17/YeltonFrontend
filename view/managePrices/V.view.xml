@@ -9,14 +9,14 @@
             <Button
                 id="buttonResetFilter"
                 icon="sap-icon://decline"
-                press="onFilterResetButtonPress"
+                press="pricesFilterDialog.reset"
                 tooltip="Сбросить фильтр"
                 visible="false"/>
-            <Button icon="sap-icon://filter" press="onFilterButtonPress" tooltip="Фильтр"/>
+            <Button icon="sap-icon://filter" press="pricesFilterDialog.show" tooltip="Фильтр"/>
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
         <content>
-            <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false" itemPress="onSelect">
+            <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false" itemPress="pricesEditDialog.showEditDialog">
                 <columns>
                     <Column/>
                     <Column/>
@@ -48,7 +48,7 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button icon="sap-icon://add" text="Добавить" press="onCreateButtonPress" tooltip="Добавить новую покупку"/>
+                <Button icon="sap-icon://add" text="Добавить" press="pricesEditDialog.showCreateDialog" tooltip="Добавить новую покупку"/>
             </Toolbar>
         </footer>
     </Page>

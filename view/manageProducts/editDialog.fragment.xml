@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
-    <Dialog showHeader="false" afterClose="_onEditDialogClose">
+    <Dialog showHeader="false" afterClose="productsEditDialog.close">
         <content>
             <IconTabBar id="iconTabBar" expandable="false" select="_onEditDialogSelectTab">
                 <items>
@@ -27,12 +27,17 @@
                             <Text/>
                             <Label text="Штрих-код:" labelFor="inputBarcode"/>
                             <HBox>
-                                <Input id="inputBarcode" value="{/barcode}" maxLength="255" width="100%" liveChange="_onInputBarcodeLiveChange"/>
+                                <Input
+                                    id="inputBarcode"
+                                    value="{/barcode}"
+                                    maxLength="255"
+                                    width="100%"
+                                    liveChange="productsEditDialog.onBarcodeLiveChange"/>
                                 <Button
                                     id="buttonBarcodeSearch"
                                     icon="sap-icon://globe"
                                     tooltip="Поиск в интернете"
-                                    press="_onSearchBarcodeClick"
+                                    press="productsEditDialog.searchBarcode"
                                     enabled="false"/>
                             </HBox>
                         </VBox>
@@ -48,7 +53,7 @@
                                     description="{/minPrice/storeName}"/>
                                 <StandardListItem
                                     title="Максимальная"
-                                     icon="sap-icon://up"
+                                    icon="sap-icon://up"
                                     info="{/maxPrice/price} {/maxPrice/currency}/{/maxPrice/unitShortName}"
                                     infoState="Error"
                                     description="{/maxPrice/storeName}"/>
@@ -73,10 +78,10 @@
             </IconTabBar>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="_onEditDialogDelete"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="_onEditDialogEdit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="_onEditDialogSave"/>
-            <Button text="Закрыть" press="_onEditDialogClose"/>
+            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="productsDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="productsEditDialog.edit"/>
+            <Button id="buttonSave" text="Сохранить" type="Accept" press="productsEditDialog.save"/>
+            <Button text="Закрыть" press="productsEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

@@ -72,66 +72,6 @@ sap.ui.define([
                 );
             },
 
-            // нажатие кнопки "Создать новый товар"
-            onCreateButtonPress: function()
-            {
-                productsEditDialog.showCreateDialog.apply(this);
-            },
-
-            // при выборе товара из списка
-            onSelect: function()
-            {
-                productsEditDialog.showEditDialog.apply(this);
-            },
-
-            // при изменении штрих-кода
-            _onInputBarcodeLiveChange: function(oEvent)
-            {
-                productsEditDialog.onBarcodeLiveChange.apply(this, [oEvent]);
-            },
-
-            // поиск штрих-кода
-            _onSearchBarcodeClick: function()
-            {
-                productsEditDialog.searchBarcode.apply(this);
-            },
-
-            // нажатие на кнопку "Сохранить"
-            _onEditDialogSave: function()
-            {
-                productsEditDialog.save.apply(this);
-            },
-
-            // нажатие на кнопку "Изменить"
-            _onEditDialogEdit: function()
-            {
-                productsEditDialog.edit.apply(this);
-            },
-
-            // отмена создания / изменения
-            _onEditDialogClose: function()
-            {
-                productsEditDialog.close.apply(this);
-            },
-
-            // нажатие нопки "Удалить"
-            _onEditDialogDelete: function()
-            {
-                productsDeleteDialog.show.apply(this);
-            },
-
-            // подтверждение удаления
-            _onDeleteDialogOK: function()
-            {
-                productsDeleteDialog.apply.apply(this);
-            },
-
-            // отмена удаления
-            _onDeleteDialogCancel: function()
-            {
-                productsDeleteDialog.cancel.apply(this);
-            },
-
             /**
              * При любом изменении значения поля, сбрасываем ему valueState
              */

@@ -11,14 +11,14 @@
                 growingThreshold="50"
                 growingScrollToLoad="true"
                 mode="SingleSelectMaster"
-                itemPress="onSelect"
+                itemPress="productsEditDialog.showEditDialog"
                 items="{
-                path : '/',
-                sorter : {
-                    path : 'categoryName',
-                    group : true
-                }
-            }">
+                    path : '/',
+                    sorter : {
+                        path : 'categoryName',
+                        group : true
+                    }
+                }">
                 <items>
                     <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
                 </items>
@@ -27,7 +27,7 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button icon="sap-icon://add" text="Создать" press="onCreateButtonPress" tooltip="Создать новый товар"/>
+                <Button icon="sap-icon://add" text="Создать" press="productsEditDialog.showCreateDialog" tooltip="Создать новый товар"/>
             </Toolbar>
         </footer>
     </Page>

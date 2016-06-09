@@ -72,53 +72,6 @@ sap.ui.define([
                 );
             },
 
-            // нажатие кнопки "Создать"
-            onCreateButtonPress: function()
-            {
-                unitsEditDialog.showCreateDialog.apply(this);
-            },
-
-            // при выборе из списка
-            onSelect: function()
-            {
-                unitsEditDialog.showEditDialog.apply(this);
-            },
-
-            _onEditDialogEdit: function()
-            {
-                unitsEditDialog.edit.apply(this);
-            },
-
-            // подтверждение создания / редактирования
-            _onEditDialogSave: function()
-            {
-                unitsEditDialog.save.apply(this);
-            },
-
-            // отмена создания / редактирования
-            _onEditDialogClose: function()
-            {
-                unitsEditDialog.close.apply(this);
-            },
-
-            // нажатие нопки "Удалить"
-            _onEditDialogDelete: function()
-            {
-                unitsDeleteDialog.show.apply(this);
-            },
-
-            // подтверждение удаления
-            _onDeleteDialogOK: function()
-            {
-                unitsDeleteDialog.apply.apply(this);
-            },
-
-            // отмена удаления
-            _onDeleteDialogCancel: function()
-            {
-                unitsDeleteDialog.cancel.apply(this);
-            },
-
             /**
              * При любом изменении значения поля, сбрасываем ему valueState
              */

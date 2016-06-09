@@ -23,7 +23,7 @@
                 growing="true"
                 growingThreshold="50"
                 growingScrollToLoad="true"
-                itemPress="onSelect">
+                itemPress="storesEditDialog.showEditDialog">
                 <items>
                     <StandardListItem type="Active" title="{name}" info="{= ${enabled} ? '' : 'Архивный'}" infoState="Warning"/>
                 </items>
@@ -32,7 +32,7 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button icon="sap-icon://add" text="Создать" press="onCreateButtonPress" tooltip="Создать новый магазин"/>
+                <Button icon="sap-icon://add" text="Создать" press="storesEditDialog.showCreateDialog" tooltip="Создать новый магазин"/>
             </Toolbar>
         </footer>
     </Page>
