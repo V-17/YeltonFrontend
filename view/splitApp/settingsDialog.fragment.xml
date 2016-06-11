@@ -1,24 +1,43 @@
-<core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:commons="sap.ui.commons">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.ui.commons">
     <Dialog id="dialogSettings" title="Настройки" afterClose="onClose">
-        <Panel headerText="Email" expandable="true" expanded="true" backgroundDesign="Transparent">
-            <VBox>
-                <Label text="{user>/email}"/>
-                <Input id="inputNewEmail" placeholder="Новый email" type="Email"/>
-                <Button text="Сменить" width="100%" press="onChangeEmailPress"/>
-                <commons:TextView id="textViewChangeEmail"/>
-            </VBox>
-        </Panel>
-        <Panel headerText="Пароль" expandable="true" expanded="true" backgroundDesign="Transparent">
-            <VBox>
-                <Input id="inputOldPassword" placeholder="Старый пароль" type="Password"/>
-                <Input id="inputNewPassword" placeholder="Новый пароль" type="Password"/>
-                <Button text="Сменить" width="100%" press="onChangePasswordPress"/>
-                <commons:TextView id="textViewChangePassword"/>
-            </VBox>
-        </Panel>
+        <content>
+            <IconTabBar expandable="false" select="_onPopupSelect">
+                <items>
+                    <IconTabFilter key="tabUser" text="ПОЛЬЗОВАТЕЛЬ">
+                        <Panel headerText="Email" expandable="true" expanded="true" backgroundDesign="Transparent">
+                            <VBox>
+                                <Label text="{user>/userInfo/email}"/>
+                                <Input id="inputNewEmail" placeholder="Новый email" type="Email"/>
+                                <Button text="Сменить" width="100%" press="onChangeEmailPress"/>
+                                <commons:TextView id="textViewChangeEmail"/>
+                            </VBox>
+                        </Panel>
+                        <Panel headerText="Пароль" expandable="true" expanded="true" backgroundDesign="Transparent">
+                            <VBox>
+                                <Input id="inputOldPassword" placeholder="Старый пароль" type="Password"/>
+                                <Input id="inputNewPassword" placeholder="Новый пароль" type="Password"/>
+                                <Button text="Сменить" width="100%" press="onChangePasswordPress"/>
+                                <commons:TextView id="textViewChangePassword"/>
+                            </VBox>
+                        </Panel>
+                    </IconTabFilter>
+                    <IconTabFilter key="tabDevices" text="УСТРОЙСТВА">
+                        <List id="tableDevices" items="{user>/deviceInfo}">
+                            <items>
+                                <ObjectListItem title="{user>deviceName}">
+                                    <firstStatus>
+                                        <ObjectStatus text="{user>lastSync}"/>
+                                    </firstStatus>
+                                    <attributes>
+                                        <ObjectAttribute text="{user>osName} {user>osVersion}"/>
+                                    </attributes>
+                                </ObjectListItem>
+                            </items>
+                        </List>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
         <beginButton>
             <Button text="Закрыть" press="onClose"/>
         </beginButton>

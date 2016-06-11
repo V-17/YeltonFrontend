@@ -3,7 +3,7 @@
         <List>
             <StandardListItem
                 title="Настройки"
-                description="{user>/login}"
+                description="{user>/userInfo/login}"
                 type="Active"
                 icon="sap-icon://account"
                press="settings.showSettings"/>
