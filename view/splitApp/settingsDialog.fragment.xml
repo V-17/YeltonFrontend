@@ -24,7 +24,7 @@
                     <IconTabFilter key="tabDevices" text="УСТРОЙСТВА">
                         <List id="tableDevices" items="{user>/deviceInfo}">
                             <items>
-                                <ObjectListItem title="{user>deviceName}">
+                                <ObjectListItem title="{user>deviceName}" icon="img/AndroidRobot.png">
                                     <firstStatus>
                                         <ObjectStatus text="{user>lastSync}"/>
                                     </firstStatus>
