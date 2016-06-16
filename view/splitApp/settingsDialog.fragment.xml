@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.ui.commons">
-    <Dialog id="dialogSettings" title="Настройки" afterClose="onClose">
+    <Dialog id="dialogSettings" title="Настройки" stretch="true" afterClose="onClose">
         <content>
             <IconTabBar expandable="false" select="_onPopupSelect">
                 <items>
