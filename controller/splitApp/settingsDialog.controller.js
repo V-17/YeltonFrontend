@@ -91,6 +91,74 @@ sap.ui.define([
             onClose: function()
             {
                 sap.ui.getCore().byId("dialogSettings").destroy();
+            },
+
+            /**
+             * Удаление выбранного девайса
+             */
+            onDeleteDevice: function(oEvent)
+            {
+                var oList = oEvent.getSource();
+                var oItem = oEvent.getParameter("listItem");
+                var iClientID = oItem.getBindingContext("user").getProperty().clientID;
+
+                var dialog = new sap.m.Dialog({
+                    title: "Отключить мобильное устройство?",
+                    type: "Message",
+                    content: new sap.m.Text({
+                        text: "Все несинхронизированные на нём данные будут утеряны.\n" +
+                            "А также потребуется повторный вход в аккаунт"
+                    }),
+                    initialFocus: "buttonNo",
+                    beginButton: new sap.m.Button({
+                        text: "Да",
+                        type: "Reject",
+                        press: function() {
+                            $.ajax({
+                                    url: "/backend/web/services/user.php",
+                                    type: "DEL",
+                                    data: {
+                                        "device": JSON.stringify({
+                                            "clientID": iClientID
+                                        })
+                                    },
+                                })
+                                .done(function(data, textStatus, jqXHR)
+                                {
+                                    switch (jqXHR.status) {
+                                        case 200:
+                                            sap.ui.getCore().byId("dialogSettings").getModel("user").setData(
+                                                JSON.parse(data));
+                                            break;
+                                    }
+                                })
+                                .fail(function(answer)
+                                {
+                                    switch (answer.status) {
+                                        case 401:
+                                            window.location.reload();
+                                            break;
+                                        case 500:
+                                            sap.m.sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                                            break;
+                                    }
+                                });
+
+                            dialog.close();
+                        }
+                    }),
+                    endButton: new sap.m.Button("buttonNo", {
+                        text: "Нет",
+                        press: function() {
+                            dialog.close();
+                        }
+                    }),
+                    afterClose: function() {
+                        dialog.destroy();
+                    }
+                });
+
+                dialog.open();
             }
         });
     });

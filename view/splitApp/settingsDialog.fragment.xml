@@ -22,7 +22,12 @@
                         </Panel>
                     </IconTabFilter>
                     <IconTabFilter key="tabDevices" text="УСТРОЙСТВА">
-                        <List id="tableDevices" items="{user>/deviceInfo}">
+                        <List
+                            id="tableDevices"
+                            items="{user>/deviceInfo}"
+                            mode="Delete"
+                            delete="onDeleteDevice"
+                            noDataText="Нет мобильных устройств">
                             <items>
                                 <ObjectListItem title="{user>deviceName}" icon="img/AndroidRobot.png">
                                     <firstStatus>
