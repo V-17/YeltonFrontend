@@ -29,16 +29,12 @@
 
             <layout:VerticalLayout>
                 <HBox>
-                    <Image src="img/social/vk.png" width="32px" height="32px" tooltip="ВКонтакте" press="gotoVK"/>
-                    <Image width="10px" height="10px"/> <!-- spacer -->
-                    <Image src="img/social/google_play.png" width="32px" height="32px" tooltip="Google Play" press="gotoGooglePlay"/>
-                    <Image width="10px" height="10px"/> <!-- spacer -->
-                    <Image src="img/social/github_32.png" tooltip="GitHub" press="gotoGitHub"/>
-                    <Image width="10px" height="10px"/> <!-- spacer -->
+                    <Image src="img/social/vk.png" width="32px" height="32px" tooltip="ВКонтакте" press="gotoVK" class="sapUiTinyMarginEnd"/>
+                    <Image src="img/social/google_play.png" width="32px" height="32px" tooltip="Google Play" press="gotoGooglePlay" class="sapUiTinyMarginEnd"/>
+                    <Image src="img/social/github_32.png" tooltip="GitHub" press="gotoGitHub" class="sapUiTinyMarginEnd"/>
                     <Image src="img/social/paypal.png" width="32px" height="32px" tooltip="Поддержать проект" press="onDonateButtonPress"/>
                 </HBox>
             </layout:VerticalLayout>
-
         </ux:headerContent>
 
         <ux:sections>
