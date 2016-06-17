@@ -7,5 +7,5 @@ backend/
 # idea
 .idea/
 
-# openui5
-openui5/
+# 3rd party
+3rd/
