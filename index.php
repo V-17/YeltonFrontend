@@ -30,6 +30,7 @@
             data-sap-ui-libs="sap.m"
             data-sap-ui-theme="sap_bluecrystal"
             data-sap-ui-bindingSyntax="complex"
+            data-sap-ui-preload="async"
             data-sap-ui-resourceroots='{
                 "yelton.view": "./view",
                 "yelton.controller": "./controller",
@@ -44,17 +45,21 @@
             if (\yelton\isSetUserID() === true) {
                 echo '
                 <script>
-                    new sap.ui.core.ComponentContainer({
-                        name : "yelton"
-                    }).placeAt("content");
+                    sap.ui.getCore().attachInit(function(){
+                        new sap.ui.core.ComponentContainer({
+                            name : "yelton"
+                        }).placeAt("content");
+                    });
                 </script>';
             // иначе - index страницу
             } else {
                 echo '
                 <script>
-                    new sap.m.Shell({
-                        app: sap.ui.view({viewName: "yelton.view.index.V", type: sap.ui.core.mvc.ViewType.XML})
-                    }).placeAt("content");
+                    sap.ui.getCore().attachInit(function(){
+                        new sap.m.Shell({
+                            app: sap.ui.view({viewName: "yelton.view.index.V", type: sap.ui.core.mvc.ViewType.XML})
+                        }).placeAt("content");
+                    });
                 </script>';
             }
          ?>
