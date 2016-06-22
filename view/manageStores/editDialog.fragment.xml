@@ -1,16 +1,19 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
     <Dialog title="Магазин" afterClose="storesEditDialog.close">
         <content>
+            <Label text="Название" labelFor="inputBarcode"/>
             <Input
                 id="inputName"
                 value="{/name}"
-                placeholder="Введите название"
+                placeholder="Введите название магазина"
                 valueStateText="Укажите название магазина"
                 liveChange="_onInputNameLiveChange"
                 maxLength="50"/>
-            <Text/>
-            <Input id="inputAddress" value="{/address}" placeholder="Адрес" maxLength="255"/>
-            <HBox alignItems="Center">
+
+            <Label text="Адрес" labelFor="inputAddress" class="sapUiSmallMarginTop"/>
+            <Input id="inputAddress" value="{/address}" placeholder="Введите адрес магазина" maxLength="255"/>
+
+            <HBox alignItems="Center" class="sapUiSmallMarginTop">
                 <Label text="Статус" tooltip="Архивный магазин будет скрыт при добавлении новой покупки"/>
                 <Switch
                     id="switchStatus"

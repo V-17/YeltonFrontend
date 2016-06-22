@@ -2,6 +2,7 @@
     <Dialog title="Мера" afterClose="unitsEditDialog.close">
         <content>
             <VBox>
+                <Label text="Полное название" labelFor="inputFullName"/>
                 <Input
                     id="inputFullName"
                     value="{/fullName}"
@@ -9,6 +10,8 @@
                     valueStateText="Укажите полное название"
                     liveChange="_onInputFullNameLiveChange"
                     maxLength="50"/>
+
+                <Label text="Краткое название" labelFor="inputShortName" class="sapUiSmallMarginTop"/>
                 <Input
                     id="inputShortName"
                     value="{/shortName}"

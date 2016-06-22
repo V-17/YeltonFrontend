@@ -5,27 +5,33 @@
                 <items>
                     <IconTabFilter id="tabMain" key="tabMain" text="Товар">
                         <VBox>
+                            <Label text="Название" labelFor="inputName"/>
                             <Input
                                 id="inputName"
                                 value="{/name}"
-                                placeholder="Введите название"
+                                placeholder="Введите название товара"
                                 valueStateText="Укажите название товара"
                                 maxLength="50"
                                 liveChange="_onInputNameLiveChange"/>
-                            <Text/>
-                            <Label text="Категория:"/>
+
+                            <Label text="Категория" labelFor="selectCategory" class="sapUiSmallMarginTop"/>
                             <Select id="selectCategory" items="{categories>/}" width="100%" tooltip="Категория">
                                 <core:Item key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
                             </Select>
-                            <Text/>
-                            <Label text="Мера:"/>
+
+                            <Label text="Мера" labelFor="selectUnit" class="sapUiSmallMarginTop"/>
                             <Select id="selectUnit" items="{units>/}" width="100%" tooltip="Единица измерения">
                                 <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
                             </Select>
-                            <Text/>
-                            <Input id="inputManufacturer" value="{/manufacturer}" placeholder="Производитель" maxLength="50"/>
-                            <Text/>
-                            <Label text="Штрих-код:" labelFor="inputBarcode"/>
+
+                            <Label text="Производитель" labelFor="inputManufacturer" class="sapUiSmallMarginTop"/>
+                            <Input
+                                id="inputManufacturer"
+                                value="{/manufacturer}"
+                                placeholder="Производитель товара"
+                                maxLength="50"/>
+
+                            <Label text="Штрих-код" labelFor="inputBarcode" class="sapUiSmallMarginTop"/>
                             <HBox>
                                 <Input
                                     id="inputBarcode"

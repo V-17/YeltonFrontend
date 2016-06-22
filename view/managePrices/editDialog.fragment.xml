@@ -6,17 +6,29 @@
                 <Select id="selectProduct" items="{products>/}" width="100%" tooltip="Товар">
                     <core:Item key="{products>id}:{products>clientID}" text="{products>categoryName} / {products>name}"/>
                 </Select>
-                <Text/>
-                <Label text="Магазин"/>
+
+                <Label text="Магазин" class="sapUiSmallMarginTop"/>
                 <Select id="selectStore" items="{stores>/}" width="100%" tooltip="Товар">
                     <core:Item key="{stores>id}:{stores>clientID}" text="{stores>name}" enabled="{stores>enabled}"/>
                 </Select>
-                <Text/>
-                <DatePicker id="datePicker" placeholder="Дата" displayFormat="long" valueFormat="dd.MM.yyyy"/>
-                <Text/>
-                <Input id="inputPrice" placeholder="Стоимость" value="{/price}" liveChange="pricesEditDialog.onInputPriceLiveChange"/>
+
+                <Label text="Дата" laberlFor="datePicker" class="sapUiSmallMarginTop"/>
+                <DatePicker id="datePicker" placeholder="Выберите дату" displayFormat="long" valueFormat="dd.MM.yyyy"/>
+
+                <Label text="Стоимость" labelFor="inputPrice" class="sapUiSmallMarginTop"/>
+                <Input
+                    id="inputPrice"
+                    placeholder="Стоимость покупки"
+                    value="{/price}"
+                    liveChange="pricesEditDialog.onInputPriceLiveChange"/>
                 <Text id="textPriceCalculation"/>
-                <Input id="inputAmount" placeholder="Количество" value="{/amount}" liveChange="pricesEditDialog.onInputAmountLiveChange"/>
+
+                <Label text="Количество" labelFor="inputAmount" class="sapUiTinyMarginTop"/>
+                <Input
+                    id="inputAmount"
+                    placeholder="Количество купленного товара"
+                    value="{/amount}"
+                    liveChange="pricesEditDialog.onInputAmountLiveChange"/>
                 <Text id="textAmountCalculation"/>
             </VBox>
         </content>
