@@ -1,5 +1,5 @@
 {
-    "_version": "0.3.0",
+    "_version": "0.4.0",
     "sap.ui5": {
         "rootView": "yelton.view.splitApp.V",
         "routing": {
