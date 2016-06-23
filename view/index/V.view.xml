@@ -29,8 +29,20 @@
 
             <layout:VerticalLayout>
                 <HBox>
-                    <Image src="img/social/vk.png" width="32px" height="32px" tooltip="ВКонтакте" press="gotoVK" class="sapUiTinyMarginEnd"/>
-                    <Image src="img/social/google_play.png" width="32px" height="32px" tooltip="Google Play" press="gotoGooglePlay" class="sapUiTinyMarginEnd"/>
+                    <Image
+                        src="img/social/vk.png"
+                        width="32px"
+                        height="32px"
+                        tooltip="ВКонтакте"
+                        press="gotoVK"
+                        class="sapUiTinyMarginEnd"/>
+                    <Image
+                        src="img/social/google_play.png"
+                        width="32px"
+                        height="32px"
+                        tooltip="Google Play"
+                        press="gotoGooglePlay"
+                        class="sapUiTinyMarginEnd"/>
                     <Image src="img/social/github_32.png" tooltip="GitHub" press="gotoGitHub" class="sapUiTinyMarginEnd"/>
                     <Image src="img/social/paypal.png" width="32px" height="32px" tooltip="Поддержать проект" press="onDonateButtonPress"/>
                 </HBox>
@@ -65,7 +77,7 @@
                         <ux:blocks>
                             <HBox>
                                 <VBox>
-                                    <Image id="imageSlideShow" src="img/android_screen1.png"/>
+                                    <Image id="imageSlideShow" src="img/android_screen1.png" class="sapUiHideOnPhone"/>
                                 </VBox>
                                 <VBox width="100%">
                                     <forms:SimpleForm maxContainerCols="1" layout="ResponsiveLayout">
@@ -108,7 +120,7 @@
                         <ux:blocks>
                             <HBox>
                                 <VBox>
-                                    <Image id="imagePC" src="img/pc_icon.png"/>
+                                    <Image id="imagePC" src="img/pc_icon.png" class="sapUiHideOnPhone"/>
                                 </VBox>
                                 <VBox width="100%">
                                     <forms:SimpleForm maxContainerCols="1" layout="ResponsiveLayout">
@@ -118,9 +130,8 @@
                                             <Text text="Все ваши данные будут автоматически синхронизированы"/>
                                             <Text/>
                                             <Text/>
-                                            <Button text="Начать экономить намного проще, чем кажется" press="handlePopoverPress"/>
+                                            <Button text="Начать экономить намного проще, чем кажется" press="handlePopoverPress" class="sapUiHideOnPhone"/>
                                         </VBox>
-
                                     </forms:SimpleForm>
                                 </VBox>
                             </HBox>
