@@ -32,8 +32,8 @@ var productsEditDialog = {
         var path = this.getView().byId("listProducts").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel().getProperty(path[0].sPath);
-            var jsonModel = new sap.ui.model.json.JSONModel(model);
+            var oIntputData = this.getView().getModel().getProperty(path[0].sPath);
+            var oFullDataModel;
 
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageProducts.editDialog", this);
 
@@ -49,16 +49,16 @@ var productsEditDialog = {
             $.ajax({
                     url: "backend/web/services/manageProducts.php",
                     type: "GET",
-                    async: false,
+                    async: false, // чтобы загрузить полную инфу, а уже потом выбирать из справочника
                     data: {
-                        "id": model.id,
-                        "clientID": model.clientID
+                        "id": oIntputData.id,
+                        "clientID": oIntputData.clientID
                     }
                 })
                 .done(function(answer) {
-                    var model = new sap.ui.model.json.JSONModel(JSON.parse(answer));
-                    that._oEditDialog.setModel(model);
-                    if (model.getProperty("/barcode")) {
+                    oFullDataModel = new sap.ui.model.json.JSONModel(JSON.parse(answer));
+                    that._oEditDialog.setModel(oFullDataModel);
+                    if (oFullDataModel.getProperty("/barcode")) {
                         sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
                     }
                 })
@@ -75,8 +75,8 @@ var productsEditDialog = {
                 })
                 .done(function(answer) {
                     that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "categories");
-                    var id = jsonModel.getProperty("/categoryID");
-                    var clientID = jsonModel.getProperty("/categoryClientID");
+                    var id = oFullDataModel.getProperty("/categoryID");
+                    var clientID = oFullDataModel.getProperty("/categoryClientID");
                     sap.ui.getCore().byId("selectCategory").setSelectedKey(id + ":" + clientID);
                 })
                 .fail(function(answer) {
@@ -92,8 +92,8 @@ var productsEditDialog = {
                 })
                 .done(function(answer) {
                     that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "units");
-                    var id = jsonModel.getProperty("/unitID");
-                    var clientID = jsonModel.getProperty("/unitClientID");
+                    var id = oFullDataModel.getProperty("/unitID");
+                    var clientID = oFullDataModel.getProperty("/unitClientID");
                     sap.ui.getCore().byId("selectUnit").setSelectedKey(id + ":" + clientID);
                 })
                 .fail(function(answer) {
