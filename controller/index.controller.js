@@ -27,7 +27,10 @@ sap.ui.define([
 
             gotoGooglePlay: function()
             {
-                sap.m.URLHelper.redirect("https://play.google.com/store/apps/details?id=ru.yelton.android", true);
+                sap.m.URLHelper.redirect(
+                    "https://play.google.com/store/apps/details?id=ru.yelton.android&utm_source=yelton_ru",
+                    true
+                );
             },
 
             gotoGitHub: function()
