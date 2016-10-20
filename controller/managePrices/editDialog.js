@@ -25,7 +25,7 @@ var pricesEditDialog = {
             var model = this.getView().getModel().getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
-            sap.ui.core.Fragment.byId("editDialog", "selectProduct").setEnabled(false);
+            sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
             sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
             sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
             sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
@@ -44,7 +44,7 @@ var pricesEditDialog = {
                     that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "products");
                     var id = jsonModel.getProperty("/productID");
                     var clientID = jsonModel.getProperty("/productClientID");
-                    sap.ui.core.Fragment.byId("editDialog", "selectProduct").setSelectedKey(id + ":" + clientID);
+                    sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(id + ":" + clientID);
                 })
                 .fail(function(answer)
                 {
@@ -139,6 +139,12 @@ var pricesEditDialog = {
         this._oEditDialog.open();
     },
 
+    onProductChange: function(event)
+    {
+        // сбрасываем статус
+        sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setValueState("None");
+    },
+
     onInputPriceLiveChange: function(oEvent)
     {
         var inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
@@ -205,7 +211,7 @@ var pricesEditDialog = {
 
     edit: function()
     {
-        sap.ui.core.Fragment.byId("editDialog", "selectProduct").setEnabled(true);
+        sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(true);
         sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(true);
         sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(true);
         sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(true);
@@ -215,12 +221,18 @@ var pricesEditDialog = {
         sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
     },
 
+    /**
+     * Сохранение покупки.
+     *
+     * Проверка правильности заполнения и отправка POST запроса
+     */
     save: function()
     {
         var id = this._oEditDialog.getModel().getProperty("/id");
         var clientID = this._oEditDialog.getModel().getProperty("/clientID");
         var textAmountCalc = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
         var inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
+        var comboBoxProduct = sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct");
         var amount;
         if (textAmountCalc.getText().length > 0) {
             amount = textAmountCalc.getText().substr(1);
@@ -236,12 +248,9 @@ var pricesEditDialog = {
             price = this._oEditDialog.getModel().getProperty("/price");
         }
 
-        var selectedKey = sap.ui.core.Fragment.byId("editDialog", "selectProduct").getSelectedKey().split(":");
-        var productID = selectedKey[0];
-        var productClientID = selectedKey[1];
-        selectedKey = sap.ui.core.Fragment.byId("editDialog", "selectStore").getSelectedKey().split(":");
-        var storeID = selectedKey[0];
-        var storeClientID = selectedKey[1];
+        var selectedStore = sap.ui.core.Fragment.byId("editDialog", "selectStore").getSelectedKey().split(":");
+        var storeID = selectedStore[0];
+        var storeClientID = selectedStore[1];
 
         // тут только дата, а нам бы еще время взять
         // чтобы сортировалось в порядке добавления
@@ -251,7 +260,17 @@ var pricesEditDialog = {
         var ss = new Date().getSeconds();
         date = date + " " + hh + ":" + mm + ":" + ss;
 
+        // проверки
         var canContinue = true;
+        var selectedProduct = comboBoxProduct.getSelectedKey().split(":");
+        var productID = selectedProduct[0];
+        var productClientID = selectedProduct[1];
+        if (!productID || !productClientID) {
+            comboBoxProduct.setValueState("Error");
+            canContinue = false;
+        } else {
+            comboBoxProduct.setValueState("None");
+        }
         if (!isNumeric(price)) {
             inputPrice.setValueStateText("Вводите числа и простые операции, например (2+2)/4");
             inputPrice.setValueState("Error");
@@ -342,7 +361,7 @@ var pricesEditDialog = {
                 if (id === undefined && clientID === undefined) {
                     that._oEditDialog.destroy();
                 } else {
-                    sap.ui.core.Fragment.byId("editDialog", "selectProduct").setEnabled(false);
+                    sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
                     sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
                     sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
                     sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);

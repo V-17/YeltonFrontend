@@ -3,9 +3,19 @@
         <content>
             <VBox>
                 <Label text="Товар"/>
-                <Select id="selectProduct" items="{products>/}" width="100%" tooltip="Товар">
-                    <core:Item key="{products>id}:{products>clientID}" text="{products>categoryName} / {products>name}"/>
-                </Select>
+                <ComboBox
+                    id="comboBoxProduct"
+                    width="100%"
+                    tooltip="Товар"
+                    showSecondaryValues="true"
+                    valueStateText="Выберите товар из списка"
+                    change="pricesEditDialog.onProductChange"
+                    items="{
+					  path: 'products>/',
+                      sorter: {path: 'products>categoryName'}
+                    }">
+                    <core:ListItem key="{products>id}:{products>clientID}" text="{products>name}" additionalText="{products>categoryName}"/>
+                </ComboBox>
 
                 <Label text="Магазин" class="sapUiSmallMarginTop"/>
                 <Select id="selectStore" items="{stores>/}" width="100%" tooltip="Товар">
