@@ -34,7 +34,8 @@
             data-sap-ui-resourceroots='{
                 "yelton.view": "./view",
                 "yelton.controller": "./controller",
-                "yelton": "./"
+                "yelton": "./",
+                "yelton.control": "./control"
             }'></script>
         <script src="core/lib.js"></script>
 

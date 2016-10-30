@@ -28,6 +28,7 @@
         <TileContainer id="reportsContainer">
             <tiles>
                 <StandardTile icon="sap-icon://cart-2" title="Поиск лучшей цены для товара" press="onTileBestPriceClick"/>
+                <StandardTile icon="sap-icon://line-chart-time-axis" title="Динамика цен на товар" press="onTileProductLineChartClick"/>
             </tiles>
         </TileContainer>
     </Page>

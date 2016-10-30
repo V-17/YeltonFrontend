@@ -65,6 +65,39 @@ sap.ui.define([
                             window.location.reload();
                         }
                     });
+            },
+
+            onTileProductLineChartClick: function()
+            {
+                var app = sap.ui.getCore().byId("__xmlview0--splitApp");
+                if (!this._viewProductLineChart) {
+                    this._viewProductLineChart = sap.ui.view({
+                        id: "pageReportsProductLineChart",
+                        viewName: "yelton.view.reports.productLineChart",
+                        type: sap.ui.core.mvc.ViewType.XML
+                    });
+                    app.addDetailPage(this._viewProductLineChart);
+                }
+
+                var that = this;
+                $.ajax({
+                        url: "backend/web/services/reports.php",
+                        type: "GET",
+                        data: {
+                            "productsWithPrices": null
+                        }
+                    })
+                    .done(function(answer)
+                    {
+                        that._viewProductLineChart.setModel(new JSONModel(JSON.parse(answer)), "products");
+                        app.toDetail("pageReportsProductLineChart", "show");
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
             }
         });
     });
