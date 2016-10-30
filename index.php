@@ -25,7 +25,7 @@
         <meta NAME="keywords" CONTENT="покупки, шопинг, экономия, планирование, выгода">
 
         <script
-            src="/3rd/openui5/1.40.8/resources/sap-ui-core.js"
+            src="/lib/3rd/openui5/1.40.8/resources/sap-ui-core.js"
             id="sap-ui-bootstrap"
             data-sap-ui-libs="sap.m"
             data-sap-ui-theme="sap_bluecrystal"
@@ -37,7 +37,7 @@
                 "yelton": "./",
                 "yelton.control": "./control"
             }'></script>
-        <script src="core/lib.js"></script>
+        <script src="lib/YeltonLib.js"></script>
 
         <?php
             include $_SERVER ['DOCUMENT_ROOT'].'/backend/'.'web/services/internal/sessions.php';

@@ -7,5 +7,5 @@ backend/
 # idea
 .idea/
 
-# 3rd party
-3rd/
+# 3rd party libs
+lib/3rd/
