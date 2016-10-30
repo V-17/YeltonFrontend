@@ -16,7 +16,15 @@
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
         <content>
-            <Table id="tablePrices" mode="SingleSelectMaster" items="{/}" fixedLayout="false" itemPress="pricesEditDialog.showEditDialog">
+            <Table
+                id="tablePrices"
+                mode="SingleSelectMaster"
+                growing="true"
+                growingThreshold="50"
+                growingScrollToLoad="true"
+                items="{/}"
+                fixedLayout="false"
+                itemPress="pricesEditDialog.showEditDialog">
                 <columns>
                     <Column/>
                     <Column/>
