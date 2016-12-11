@@ -52,17 +52,19 @@
                         <List>
                             <items>
                                 <StandardListItem
-                                    title="Минимальная"
-                                    icon="sap-icon://down"
+                                    title="{/minPrice/storeName}"
+                                    icon="sap-icon://thumb-up"
                                     info="{/minPrice/price} {/minPrice/currency}/{/minPrice/unitShortName}"
                                     infoState="Success"
-                                    description="{/minPrice/storeName}"/>
+                                    tooltip="Минимальная цена"
+                                    description="{/minPrice/date}"/>
                                 <StandardListItem
-                                    title="Максимальная"
-                                    icon="sap-icon://up"
+                                    title="{/maxPrice/storeName}"
+                                    icon="sap-icon://thumb-down"
                                     info="{/maxPrice/price} {/maxPrice/currency}/{/maxPrice/unitShortName}"
                                     infoState="Error"
-                                    description="{/maxPrice/storeName}"/>
+                                    tooltip="Максимальная цена"
+                                    description="{/maxPrice/date}"/>
                             </items>
                         </List>
                     </IconTabFilter>
