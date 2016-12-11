@@ -25,7 +25,7 @@
         <meta NAME="keywords" CONTENT="покупки, шопинг, экономия, планирование, выгода">
 
         <script
-            src="/lib/3rd/openui5/1.40.8/resources/sap-ui-core.js"
+            src="/lib/3rd/openui5/1.42.6/resources/sap-ui-core.js"
             id="sap-ui-bootstrap"
             data-sap-ui-libs="sap.m"
             data-sap-ui-theme="sap_bluecrystal"
