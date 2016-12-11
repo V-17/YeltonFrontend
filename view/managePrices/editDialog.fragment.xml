@@ -12,7 +12,7 @@
                     change="pricesEditDialog.onProductChange"
                     items="{
 					  path: 'products>/',
-                      sorter: {path: 'products>categoryName'}
+                      sorter: {path: 'categoryName'}
                     }">
                     <core:ListItem key="{products>id}:{products>clientID}" text="{products>name}" additionalText="{products>categoryName}"/>
                 </ComboBox>
