@@ -25,11 +25,7 @@
                             </Select>
 
                             <Label text="Производитель" labelFor="inputManufacturer" class="sapUiSmallMarginTop"/>
-                            <Input
-                                id="inputManufacturer"
-                                value="{/manufacturer}"
-                                placeholder="Производитель товара"
-                                maxLength="50"/>
+                            <Input id="inputManufacturer" value="{/manufacturer}" placeholder="Производитель товара" maxLength="50"/>
 
                             <Label text="Штрих-код" labelFor="inputBarcode" class="sapUiSmallMarginTop"/>
                             <HBox>
@@ -79,7 +75,12 @@
                                     descending: true
                                 }
                             }">
-                            <StandardListItem title="{name}" counter="{count}"/>
+                            <StandardListItem
+                                title="{name}"
+                                counter="{count}"
+                                type="Active"
+                                press="productsEditDialog.navToPricesFilter"
+                                tooltip="Перейти к просмотру истории покупок"/>
                         </List>
                     </IconTabFilter>
                 </items>

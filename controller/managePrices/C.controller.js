@@ -34,6 +34,7 @@ sap.ui.define([
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("init").attachPatternMatched(this.onRouter, this);
                 oRouter.getRoute("prices").attachPatternMatched(this.onRouter, this);
+                oRouter.getRoute("pricesFilterProductAndStore").attachPatternMatched(this.onRouterFilterProductAndStore, this);
             },
 
             onRouter: function(oEvent)
@@ -41,7 +42,8 @@ sap.ui.define([
                 var that = this;
                 $.ajax({
                         url: "backend/web/services/managePrices.php",
-                        type: "GET"
+                        type: "GET",
+                        async: false //FIXME: если это убрать, не отработает маппинг для фильтра
                     })
                     .done(function(data, textStatus, jqXHR)
                     {
@@ -59,6 +61,12 @@ sap.ui.define([
                             window.location.reload();
                         }
                     });
+            },
+
+            onRouterFilterProductAndStore: function(oEvent)
+            {
+                this.onRouter();
+                pricesFilterDialog.onRouterFilterProductAndStore.apply(this, [oEvent]);
             },
 
             // Поиск

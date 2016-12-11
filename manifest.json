@@ -39,6 +39,10 @@
                 "pattern": "reports",
                 "name": "reports",
                 "target": "reports"
+            }, {
+                "pattern": "prices/filter/productAndStore/{productID}/{productClientID}/{storeID}/{storeClientID}",
+                "name": "pricesFilterProductAndStore",
+                "target": "prices"
             }],
             "targets": {
                 "prices": {

@@ -211,7 +211,7 @@ var pricesFilterDialog = {
         }
     },
 
-    // примерение фильтра
+    // применение фильтра
     apply: function()
     {
         if ((this._filterProductID && this._filterProductClientID) ||
@@ -236,13 +236,29 @@ var pricesFilterDialog = {
             this.byId("tablePrices").getBinding("items").filter(aFilters);
             this.byId("buttonResetFilter").setVisible(true);
         } else {
-            this.onFilterResetButtonPress();
+            pricesFilterDialog.reset.apply(this);
         }
-        this._oFilterDialog.destroy();
+        if (this._oFilterDialog) {
+            this._oFilterDialog.destroy();
+        }
     },
 
     close: function()
     {
         this._oFilterDialog.destroy();
+    },
+
+    /**
+     * Роутинг на фильтрацию по товару и магазину
+     */
+    onRouterFilterProductAndStore: function(oEvent)
+    {
+        this._filterProductID = oEvent.getParameter("arguments").productID;
+        this._filterProductClientID = oEvent.getParameter("arguments").productClientID;
+        this._filterStoreID = oEvent.getParameter("arguments").storeID;
+        this._filterStoreClientID = oEvent.getParameter("arguments").storeClientID;
+        this._filterProductName = sessionStorage.getItem("pricesFilterProductName");
+        this._filterStoreName = sessionStorage.getItem("pricesFilterStoreName");
+        pricesFilterDialog.apply.apply(this);
     }
 };

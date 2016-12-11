@@ -308,5 +308,31 @@ var productsEditDialog = {
     close: function()
     {
         this._oEditDialog.destroy();
+    },
+
+    navToPricesFilter: function(oEvent)
+    {
+        let productID = this._oEditDialog.getModel().getData().id;
+        let productClientID = this._oEditDialog.getModel().getData().clientID;
+        let productName = this._oEditDialog.getModel().getData().name;
+        let storeID = oEvent.getSource().getBindingContext().getProperty().id;
+        let storeClientID = oEvent.getSource().getBindingContext().getProperty().clientID;
+        let storeName = oEvent.getSource().getBindingContext().getProperty().name;
+
+        sap.m.MessageToast.show('Фильтр по товару \n"' + productName + '"\n и магазину \n"' + storeName + '"', {
+            duration: 5000,
+            width: "20em",
+            closeOnBrowserNavigation: false
+        });
+
+        sessionStorage.setItem("pricesFilterProductName", productName);
+        sessionStorage.setItem("pricesFilterStoreName", storeName);
+
+        sap.ui.core.UIComponent.getRouterFor(this).navTo("pricesFilterProductAndStore", {
+            "productID": productID,
+            "productClientID": productClientID,
+            "storeID": storeID,
+            "storeClientID": storeClientID
+        });
     }
 };
