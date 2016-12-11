@@ -20,32 +20,32 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Shell>
-        <SplitApp id="splitApp" mode="StretchCompressMode">
-            <masterPages>
-                <Page id="master" showHeader="false">
-                    <subHeader>
-                        <Toolbar>
-                            <Image src="favicon.ico"/>
-                            <ToolbarSpacer/>
-                            <Title text="¥elton"/>
-                            <ToolbarSpacer/>
-                            <Button id="buttonSettings" icon="sap-icon://action-settings" tooltip="Меню" press="onSettingsButtonPress"/>
-                        </Toolbar>
-                    </subHeader>
-                    <List id="listMainMenu" mode="SingleSelectMaster" selectionChange="onNavToDetail">
-                        <StandardListItem title="Покупки" type="Active" icon="img/prices.png"/>
-                        <StandardListItem title="Категории" type="Active" icon="img/categories.png"/>
-                        <StandardListItem title="Товары" type="Active" icon="img/products.png"/>
-                        <StandardListItem title="Магазины" type="Active" icon="img/stores.png"/>
-                        <StandardListItem title="Меры" type="Active" icon="img/units.png"/>
-                    </List>
-                    <Text/>
-                    <List id="listMenuBottom" mode="SingleSelectMaster" selectionChange="onNavToReports">
-                        <StandardListItem title="Отчёты" type="Active" icon="img/reports.png"/>
-                    </List>
-                </Page>
-            </masterPages>
-        </SplitApp>
-    </Shell>
+    <!-- <Shell> -->
+    <SplitApp id="splitApp" mode="StretchCompressMode">
+        <masterPages>
+            <Page id="master" showHeader="false">
+                <subHeader>
+                    <Toolbar>
+                        <Image src="favicon.ico"/>
+                        <ToolbarSpacer/>
+                        <Title text="¥elton"/>
+                        <ToolbarSpacer/>
+                        <Button id="buttonSettings" icon="sap-icon://action-settings" tooltip="Меню" press="onSettingsButtonPress"/>
+                    </Toolbar>
+                </subHeader>
+                <List id="listMainMenu" mode="SingleSelectMaster" selectionChange="onNavToDetail">
+                    <StandardListItem title="Покупки" type="Active" icon="img/prices.png"/>
+                    <StandardListItem title="Категории" type="Active" icon="img/categories.png"/>
+                    <StandardListItem title="Товары" type="Active" icon="img/products.png"/>
+                    <StandardListItem title="Магазины" type="Active" icon="img/stores.png"/>
+                    <StandardListItem title="Меры" type="Active" icon="img/units.png"/>
+                </List>
+                <Text/>
+                <List id="listMenuBottom" mode="SingleSelectMaster" selectionChange="onNavToReports">
+                    <StandardListItem title="Отчёты" type="Active" icon="img/reports.png"/>
+                </List>
+            </Page>
+        </masterPages>
+    </SplitApp>
+    <!-- </Shell> -->
 </mvc:View>
