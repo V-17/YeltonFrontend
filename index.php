@@ -23,6 +23,7 @@
         <meta charset="UTF-8">
         <meta NAME="description" CONTENT="Ваш личный помощник в планировании выгодных покупок">
         <meta NAME="keywords" CONTENT="покупки, шопинг, экономия, планирование, выгода">
+        <meta name="google-play-app" content="app-id=ru.yelton.android">
 
         <script
             src="/3rd/openui5/1.34.12/resources/sap-ui-core.js"
