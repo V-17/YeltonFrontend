@@ -53,7 +53,7 @@
                 </script>';
             }
          ?>
-         <link rel="stylesheet" type="text/css" href="css/my.css">
+         <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
     </head>
     <body class="sapUiBody" role="application">
         <div id="content"/>
