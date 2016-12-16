@@ -1,24 +1,7 @@
-<!--
- Copyright 2016 Yelton authors:
-- Marat "Morion" Talipov
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--->
-
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Yelton - выгодные покупки</title>
+        <title>Yelton Выгодные покупки</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="UTF-8">
         <meta NAME="description" CONTENT="Ваш личный помощник в планировании выгодных покупок">
@@ -46,19 +29,25 @@
             if (\yelton\isSetUserID() === true) {
                 echo '
                 <script>
-                    sap.ui.getCore().attachInit(function(){
+                    sap.ui.getCore().attachInit(function() {
                         new sap.ui.core.ComponentContainer({
                             name : "yelton"
                         }).placeAt("content");
+                        document.title="Yelton";
                     });
                 </script>';
             // иначе - index страницу
             } else {
                 echo '
                 <script>
-                    sap.ui.getCore().attachInit(function(){
-                        new sap.m.Shell({
-                            app: sap.ui.view({viewName: "yelton.view.index.V", type: sap.ui.core.mvc.ViewType.XML})
+                    sap.ui.getCore().attachInit(function() {
+                        sap.m.App({
+                            pages: [
+                                sap.ui.xmlview({
+                                    viewName : "yelton.view.index.V",
+                                    type: sap.ui.core.mvc.ViewType.XML
+                                })
+                            ]
                         }).placeAt("content");
                     });
                 </script>';
