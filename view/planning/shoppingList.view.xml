@@ -1,0 +1,97 @@
+<!--
+ * Copyright 2016 Yelton authors:
+ * - Marat "Morion" Talipov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<mvc:View
+    controllerName="yelton.controller.planning.shoppingList"
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Page title="Список покупок" showNavButton="true" navButtonPress="onNavBackPress">
+        <content>
+            <NavContainer id="navCon" busyIndicatorDelay="500">
+                <Page id="page1" title="Выберите товары, которые собираетесь покупать">
+                    <content>
+                        <List
+                            id="listUnselectedProducts"
+                            itemPress="onSelectProduct"
+                            items="{
+                                        path : 'unselected>/',
+                                        sorter : {
+                                            path : 'categoryName',
+                                            group : true
+                                        }
+                                    }">
+                            <headerToolbar>
+                                <Toolbar>
+                                    <SearchField liveChange="onFilterLiveSearch" width="100%" showSearchButton="false"/>
+                                </Toolbar>
+                            </headerToolbar>
+                            <items>
+                                <StandardListItem title="{unselected>name}" type="Active"/>
+                            </items>
+                        </List>
+                    </content>
+                    <footer>
+                        <Toolbar>
+                            <Button
+                                id="buttonBasket"
+                                icon="sap-icon://basket"
+                                enabled="false"
+                                type="Emphasized"
+                                tooltip="Выбранные товары"
+                                press="onShowSelectedProductsPress"/>
+                            <ToolbarSpacer/>
+                            <Button id="buttonNext" text="Далее" press="onGetResultPress" type="Accept" enabled="false"/>
+                        </Toolbar>
+                    </footer>
+                </Page>
+                <Page id="page2" title="Товары, сгруппированные по магазинам">
+                    <content>
+                        <List
+                            headerText="Список покупок"
+                            items="{
+                                        path : 'shoppingList>/',
+                                        sorter : {
+                                            path : 'storeName',
+                                            group : true
+                                        }
+                                    }">
+                            <items>
+                                <ObjectListItem
+                                    intro="{shoppingList>categoryName}"
+                                    title="{shoppingList>productName}"
+                                    number="{shoppingList>price}"
+                                    numberUnit="{shoppingList>currency} / {shoppingList>unitShortName}">
+                                    <!-- <firstStatus>
+                                        <ObjectStatus text="Актуально на {shoppingList>date}"/>
+                                    </firstStatus> -->
+                                </ObjectListItem>
+                            </items>
+                        </List>
+                    </content>
+                    <footer>
+                        <Toolbar>
+                            <Button text="Назад" press="onBackPress"/>
+                            <ToolbarSpacer/>
+                        </Toolbar>
+                    </footer>
+                </Page>
+            </NavContainer>
+        </content>
+    </Page>
+</mvc:View>

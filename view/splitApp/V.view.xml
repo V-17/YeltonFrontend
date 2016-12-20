@@ -34,15 +34,15 @@
                     </Toolbar>
                 </subHeader>
                 <List id="listMainMenu" mode="SingleSelectMaster" selectionChange="onNavToDetail">
-                    <StandardListItem title="Покупки" type="Active" icon="img/prices.png"/>
-                    <StandardListItem title="Категории" type="Active" icon="img/categories.png"/>
-                    <StandardListItem title="Товары" type="Active" icon="img/products.png"/>
-                    <StandardListItem title="Магазины" type="Active" icon="img/stores.png"/>
-                    <StandardListItem title="Меры" type="Active" icon="img/units.png"/>
+                    <StandardListItem title="Покупки" type="Active" icon="sap-icon://wallet"/>
+                    <StandardListItem title="Категории" type="Active" icon="sap-icon://tag"/>
+                    <StandardListItem title="Товары" type="Active" icon="sap-icon://bar-code"/>
+                    <StandardListItem title="Магазины" type="Active" icon="sap-icon://retail-store"/>
+                    <StandardListItem title="Меры" type="Active" icon="sap-icon://measuring-point"/>
                 </List>
-                <Text/>
-                <List id="listMenuBottom" mode="SingleSelectMaster" selectionChange="onNavToReports">
-                    <StandardListItem title="Отчёты" type="Active" icon="img/reports.png"/>
+                <List id="listMenuBottom" mode="SingleSelectMaster" selectionChange="onNavToReports" class="sapUiMediumMarginTop">
+                    <StandardListItem title="Отчёты" type="Active" icon="sap-icon://pie-chart"/>
+                    <StandardListItem title="Планирование" type="Active" icon="sap-icon://date-time"/>
                 </List>
             </Page>
         </masterPages>

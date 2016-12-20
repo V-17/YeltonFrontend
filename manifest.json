@@ -40,6 +40,14 @@
                 "name": "reports",
                 "target": "reports"
             }, {
+                "pattern": "planning",
+                "name": "planning",
+                "target": "planning"
+            }, {
+                "pattern": "planning/shoppingList",
+                "name": "planningShoppingList",
+                "target": "planning"
+            }, {
                 "pattern": "prices/filter/productAndStore/{productID}/{productClientID}/{storeID}/{storeClientID}",
                 "name": "pricesFilterProductAndStore",
                 "target": "prices"
@@ -62,6 +70,9 @@
                 },
                 "reports": {
                     "viewName": "reports.V"
+                },
+                "planning": {
+                    "viewName": "planning.V"
                 }
             }
         }

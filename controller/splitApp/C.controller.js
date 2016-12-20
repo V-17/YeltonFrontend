@@ -78,6 +78,9 @@ sap.ui.define([
                     case "__item5":
                         oRouter.navTo("reports");
                         break;
+                    case "__item6":
+                        oRouter.navTo("planning");
+                        break;
                 }
             },
 
