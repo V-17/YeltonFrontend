@@ -16,91 +16,90 @@
  */
 
 sap.ui.define([
-        "sap/ui/core/mvc/Controller",
-        "sap/ui/model/json/JSONModel",
-    ],
-    function(Controller, JSONModel) {
-        "use strict";
-        return Controller.extend("yelton.controller.reports.productLineChart", {
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+], function(Controller, JSONModel) {
+    "use strict";
+    return Controller.extend("yelton.controller.reports.productLineChart", {
 
-            onNavBackPress: function()
-            {
-                var app = sap.ui.getCore().byId("__xmlview0--splitApp");
-                app.backDetail();
-            },
+        onNavBackPress: function()
+        {
+            var app = sap.ui.getCore().byId("__xmlview0--splitApp");
+            app.backDetail();
+        },
 
-            onSuggest: function(event)
-            {
-                var value = event.getParameter("suggestValue");
-                var filters = [];
-                if (value) {
-                    filters = [new sap.ui.model.Filter([
-                        new sap.ui.model.Filter("name", function(sText) {
-                            return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
-                        }),
-                        new sap.ui.model.Filter("categoryName", function(sDes) {
-                            return (sDes || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
-                        })
-                    ], false)];
-                }
-
-                this.byId("searchField").getBinding("suggestionItems").filter(filters);
-                this.byId("searchField").suggest();
-            },
-
-            onSearch: function(event)
-            {
-                var chart = this.getView().byId("chart");
-                var item = event.getParameter("suggestionItem");
-
-                if (item) {
-                    var key = item.getKey().split(":");
-                    var id = key[0];
-                    var clientID = key[1];
-                    var out = {
-                        "id": id,
-                        "clientID": clientID
-                    };
-
-                    var that = this;
-                    $.ajax({
-                            url: "backend/web/services/reports.php",
-                            type: "GET",
-                            data: {
-                                "productDynamics": JSON.stringify(out)
-                            }
-                        })
-                        .done(function(answer)
-                        {
-                            answer = JSON.parse(answer);
-
-                            var aLabels = [];
-                            var aData = [];
-                            for (item of answer) {
-                                var oDate = new Date(item.date * 1000);
-                                var sYear = (oDate.getFullYear() + "").substring(2, 4);
-                                let sDay = ("0" + oDate.getDate()).slice(-2);
-                                let sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
-                                aLabels.push(sDay + "." + sMonth + "." + sYear);
-                                aData.push(item.price);
-                            }
-
-                            chart.setVisible(true);
-                            chart.setLabels(aLabels);
-                            chart.setLine({
-                                //label: "Магнит",
-                                data: aData
-                            });
-                        })
-                        .fail(function(answer)
-                        {
-                            if (answer.status === 401) {
-                                window.location.reload();
-                            }
-                        });
-                } else {
-                    chart.setVisible(false);
-                }
+        onSuggest: function(event)
+        {
+            var value = event.getParameter("suggestValue");
+            var filters = [];
+            if (value) {
+                filters = [new sap.ui.model.Filter([
+                    new sap.ui.model.Filter("name", function(sText) {
+                        return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                    }),
+                    new sap.ui.model.Filter("categoryName", function(sDes) {
+                        return (sDes || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                    })
+                ], false)];
             }
-        });
+
+            this.byId("searchField").getBinding("suggestionItems").filter(filters);
+            this.byId("searchField").suggest();
+        },
+
+        onSearch: function(event)
+        {
+            var chart = this.getView().byId("chart");
+            var item = event.getParameter("suggestionItem");
+
+            if (item) {
+                var key = item.getKey().split(":");
+                var id = key[0];
+                var clientID = key[1];
+                var out = {
+                    "id": id,
+                    "clientID": clientID
+                };
+
+                var that = this;
+                $.ajax({
+                        url: "backend/web/services/reports.php",
+                        type: "GET",
+                        data: {
+                            "productDynamics": JSON.stringify(out)
+                        }
+                    })
+                    .done(function(answer)
+                    {
+                        answer = JSON.parse(answer);
+
+                        var aLabels = [];
+                        var aData = [];
+                        for (item of answer) {
+                            var oDate = new Date(item.date * 1000);
+                            var sYear = (oDate.getFullYear() + "").substring(2, 4);
+                            let sDay = ("0" + oDate.getDate()).slice(-2);
+                            let sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
+                            aLabels.push(sDay + "." + sMonth + "." + sYear);
+                            aData.push(item.price);
+                        }
+
+                        chart.setVisible(true);
+                        chart.setLabels(aLabels);
+                        chart.setLine({
+                            //label: "Магнит", В будущем когда буду строить для разных магазинов, будет полезно
+                            data: aData
+                        });
+                    })
+                    .fail(function(answer)
+                    {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
+            } else {
+                chart.setVisible(false);
+            }
+        }
     });
+});
