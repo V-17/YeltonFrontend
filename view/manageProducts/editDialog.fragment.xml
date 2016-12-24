@@ -15,12 +15,30 @@
                                 liveChange="_onInputNameLiveChange"/>
 
                             <Label text="Категория" labelFor="selectCategory" class="sapUiSmallMarginTop"/>
-                            <Select id="selectCategory" items="{categories>/}" width="100%" tooltip="Категория">
+                            <Select
+                                id="selectCategory"
+                                items="{
+                                    path:  'categories>/',
+                                    sorter: {
+                                        path: 'name'
+                                    }
+                                }"
+                                width="100%"
+                                tooltip="Категория">
                                 <core:Item key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
                             </Select>
 
                             <Label text="Мера" labelFor="selectUnit" class="sapUiSmallMarginTop"/>
-                            <Select id="selectUnit" items="{units>/}" width="100%" tooltip="Единица измерения">
+                            <Select
+                                id="selectUnit"
+                                items="{
+                                    path: 'units>/',
+                                    sorter: {
+                                        path: 'fullName'
+                                    }
+                                }"
+                                width="100%"
+                                tooltip="Единица измерения">
                                 <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
                             </Select>
 

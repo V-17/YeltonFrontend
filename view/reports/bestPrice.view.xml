@@ -34,7 +34,12 @@
             enableSuggestions="true"
             suggest="onSuggest"
             search="onSearch"
-            suggestionItems="{products>/}">
+            suggestionItems="{
+                path: 'products>/',
+                sorter: {
+                    path: 'name'
+                }
+            }">
             <suggestionItems>
                 <SuggestionItem key="{products>id}:{products>clientID}" text="{products>name}" description="{products>categoryName}"/>
             </suggestionItems>
@@ -49,15 +54,15 @@
                 <Label text="Дата"/>
                 <Text
                     text="{
-                    path: 'bestPrice>/date',
-                    type: 'sap.ui.model.type.Date',
-                    formatOptions: {
-                        style: 'long',
-                        source: {
-                            pattern: 'dd.MM.yyyy'
+                        path: 'bestPrice>/date',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            style: 'long',
+                            source: {
+                                pattern: 'dd.MM.yyyy'
+                            }
                         }
-                    }
-                }"/>
+                    }"/>
             </f:content>
         </f:SimpleForm>
 

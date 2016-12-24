@@ -9,7 +9,12 @@
                     showSearchButton="false"
                     suggest="pricesFilterDialog.onProductSuggest"
                     search="pricesFilterDialog.onProductSearch"
-                    suggestionItems="{products>/}">
+                    suggestionItems="{
+                        path: 'products>/',
+                        sorter: {
+                            path: 'name'
+                        }
+                    }">
                     <suggestionItems>
                         <SuggestionItem key="{products>id}:{products>clientID}" text="{products>name}" description="{products>categoryName}"/>
                     </suggestionItems>
@@ -22,7 +27,12 @@
                     showSearchButton="false"
                     suggest="pricesFilterDialog.onCategorySuggest"
                     search="pricesFilterDialog.onCategorySearch"
-                    suggestionItems="{categories>/}">
+                    suggestionItems="{
+                        path: 'categories>/',
+                        sorter: {
+                            path: 'name'
+                        }
+                    }">
                     <suggestionItems>
                         <SuggestionItem key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
                     </suggestionItems>
@@ -35,7 +45,12 @@
                     showSearchButton="false"
                     suggest="pricesFilterDialog.onStoreSuggest"
                     search="pricesFilterDialog.onStoreSearch"
-                    suggestionItems="{stores>/}">
+                    suggestionItems="{
+                        path: 'stores>/',
+                        sorter: {
+                            path: 'name'
+                        }
+                    }">
                     <suggestionItems>
                         <SuggestionItem key="{stores>id}:{stores>clientID}" text="{stores>name}"/>
                     </suggestionItems>

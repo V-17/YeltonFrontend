@@ -30,12 +30,14 @@
                             id="listUnselectedProducts"
                             itemPress="onSelectProduct"
                             items="{
-                                        path : 'unselected>/',
-                                        sorter : {
-                                            path : 'categoryName',
-                                            group : true
-                                        }
-                                    }">
+                                path : 'unselected>/',
+                                sorter : [{
+                                    path : 'categoryName',
+                                    group : true
+                                },{
+                                    path: 'name'
+                                }]
+                            }">
                             <headerToolbar>
                                 <Toolbar>
                                     <SearchField liveChange="onFilterLiveSearch" width="100%" showSearchButton="false"/>
@@ -65,12 +67,14 @@
                         <List
                             headerText="Список покупок"
                             items="{
-                                        path : 'shoppingList>/',
-                                        sorter : {
-                                            path : 'storeName',
-                                            group : true
-                                        }
-                                    }">
+                                path : 'shoppingList>/',
+                                sorter : [{
+                                    path : 'storeName',
+                                    group : true
+                                },{
+                                    path: 'productName'
+                                }]
+                            }">
                             <items>
                                 <ObjectListItem
                                     intro="{shoppingList>categoryName}"

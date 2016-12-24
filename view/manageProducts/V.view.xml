@@ -14,10 +14,12 @@
                 itemPress="productsEditDialog.showEditDialog"
                 items="{
                     path : '/',
-                    sorter : {
+                    sorter : [{
                         path : 'categoryName',
                         group : true
-                    }
+                    }, {
+                        path: 'name'
+                    }]
                 }">
                 <items>
                     <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>

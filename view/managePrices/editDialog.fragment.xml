@@ -11,14 +11,27 @@
                     valueStateText="Выберите товар из списка"
                     change="pricesEditDialog.onProductChange"
                     items="{
-					  path: 'products>/',
-                      sorter: {path: 'categoryName'}
+                        path: 'products>/',
+                        sorter: [{
+                            path: 'categoryName'
+                        }, {
+                            path: 'name'
+                        }]
                     }">
                     <core:ListItem key="{products>id}:{products>clientID}" text="{products>name}" additionalText="{products>categoryName}"/>
                 </ComboBox>
 
                 <Label text="Магазин" class="sapUiSmallMarginTop"/>
-                <Select id="selectStore" items="{stores>/}" width="100%" tooltip="Товар">
+                <Select
+                    id="selectStore"
+                    items="{
+                        path : 'stores>/',
+                        sorter : {
+                            path: 'name'
+                        }
+                    }"
+                    width="100%"
+                    tooltip="Товар">
                     <core:Item key="{stores>id}:{stores>clientID}" text="{stores>name}" enabled="{stores>enabled}"/>
                 </Select>
 
