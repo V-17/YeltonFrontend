@@ -328,7 +328,7 @@ var productsEditDialog = {
         sessionStorage.setItem("pricesFilterProductName", productName);
         sessionStorage.setItem("pricesFilterStoreName", storeName);
 
-        sap.ui.core.UIComponent.getRouterFor(this).navTo("pricesFilterProductAndStore", {
+        sap.ui.core.UIComponent.getRouterFor(this).navTo("filterProductAndStore", {
             "productID": productID,
             "productClientID": productClientID,
             "storeID": storeID,

@@ -48,8 +48,11 @@
                 "name": "planningShoppingList",
                 "target": "planning"
             }, {
-                "pattern": "prices/filter/productAndStore/{productID}/{productClientID}/{storeID}/{storeClientID}",
-                "name": "pricesFilterProductAndStore",
+                "pattern": [
+                    "prices/filter/p({productID},{productClientID})/s({storeID},{storeClientID})",
+                    "prices/filter/s({storeID},{storeClientID})/p({productID},{productClientID})"
+                ],
+                "name": "filterProductAndStore",
                 "target": "prices"
             }],
             "targets": {
