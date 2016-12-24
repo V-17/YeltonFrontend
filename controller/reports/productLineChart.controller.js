@@ -79,9 +79,9 @@ sap.ui.define([
                             for (item of answer) {
                                 var oDate = new Date(item.date * 1000);
                                 var sYear = (oDate.getFullYear() + "").substring(2, 4);
-                                var iMonth = oDate.getMonth() + 1;
-                                aLabels.push(oDate.getDate() + "." + iMonth + "." + sYear);
-
+                                let sDay = ("0" + oDate.getDate()).slice(-2);
+                                let sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
+                                aLabels.push(sDay + "." + sMonth + "." + sYear);
                                 aData.push(item.price);
                             }
 
