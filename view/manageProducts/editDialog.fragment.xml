@@ -45,7 +45,7 @@
                         </VBox>
                     </IconTabFilter>
                     <IconTabFilter id="tabPrices" text="Цены">
-                        <List>
+                        <List visible="{= ${/minPrice} === undefined ? false : true}">
                             <items>
                                 <StandardListItem
                                     title="{/minPrice/storeName}"
@@ -63,6 +63,7 @@
                                     description="{/maxPrice/date}"/>
                             </items>
                         </List>
+                        <List noDataText="Нет покупок" visible="{= ${/minPrice} === undefined ? true : false}"/>
                     </IconTabFilter>
                     <IconTabFilter id="tabStores" text="Магазины">
                         <Text text="Где и сколько раз данный товар  был куплен"/>
