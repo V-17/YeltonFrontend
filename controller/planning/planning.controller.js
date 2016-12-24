@@ -51,7 +51,7 @@ sap.ui.define([
 
             let that = this;
             $.ajax({
-                    url: "backend/web/services/reports.php",
+                    url: "backend/web/services/planning.php",
                     type: "GET",
                     data: {
                         "productsWithPrices": null
