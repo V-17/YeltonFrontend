@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 /*jshint evil:true*/
 
 
@@ -44,7 +44,9 @@ var pricesEditDialog = {
                 })
                 .done(function(answer)
                 {
-                    that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "products");
+                    let model = new sap.ui.model.json.JSONModel(JSON.parse(answer));
+                    model.setSizeLimit(model.getData().length + 1);
+                    that._oEditDialog.setModel(model, "products");
                     var id = jsonModel.getProperty("/productID");
                     var clientID = jsonModel.getProperty("/productClientID");
                     sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(id + ":" + clientID);
@@ -63,7 +65,9 @@ var pricesEditDialog = {
                 })
                 .done(function(answer)
                 {
-                    that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "stores");
+                    let model = new sap.ui.model.json.JSONModel(JSON.parse(answer));
+                    model.setSizeLimit(model.getData().length + 1);
+                    that._oEditDialog.setModel(model, "stores");
                     var id = jsonModel.getProperty("/storeID");
                     var clientID = jsonModel.getProperty("/storeClientID");
                     sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(id + ":" + clientID);
