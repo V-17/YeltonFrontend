@@ -23,7 +23,7 @@ var pricesDeleteDialog = {
         var path = this.getView().byId("tablePrices").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel().getProperty(path[0].sPath);
+            var model = this.getView().getModel("prices").getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.managePrices.deleteDialog", this);
             this._oDeleteDialog.setModel(jsonModel);
@@ -47,16 +47,10 @@ var pricesDeleteDialog = {
                     clientID: clientID
                 }
             })
-            .done(function(data, textStatus, jqXHR)
+            .done(function(data)
             {
-                switch (jqXHR.status) {
-                    case 200:
-                        that.getView().getModel().setData(JSON.parse(data));
-                        break;
-                    case 204:
-                        that.getView().getModel().setData();
-                        break;
-                }
+                if (!data) data = null; // for "204 - no content" answer
+                new Dict().setPrices(JSON.parse(data));
             })
             .fail(function(answer)
             {

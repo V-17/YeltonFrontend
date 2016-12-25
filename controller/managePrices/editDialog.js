@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 /*jshint evil:true*/
 
 
@@ -25,9 +25,10 @@ var pricesEditDialog = {
         var path = this.byId("tablePrices").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel().getProperty(path[0].sPath);
+            var model = this.getView().getModel("prices").getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
+            this.getView().addDependent(this._oEditDialog);
             sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
             sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
             sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
@@ -35,45 +36,16 @@ var pricesEditDialog = {
             sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
             sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
             this._oEditDialog.setModel(jsonModel);
-            var that = this;
 
-            // грузим список товаров, выбираем в списке нужный
-            $.ajax({
-                    url: "backend/web/services/manageProducts.php",
-                    type: "GET"
-                })
-                .done(function(answer)
-                {
-                    that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "products");
-                    var id = jsonModel.getProperty("/productID");
-                    var clientID = jsonModel.getProperty("/productClientID");
-                    sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(id + ":" + clientID);
-                })
-                .fail(function(answer)
-                {
-                    if (answer.status === 401) {
-                        window.location.reload();
-                    }
-                });
+            // из товаров выбираем в списке нужный
+            let productID = jsonModel.getProperty("/productID");
+            let productClientID = jsonModel.getProperty("/productClientID");
+            sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(productID + ":" + productClientID);
 
-            // грузим список магазинов, выбираем в списке нужный
-            $.ajax({
-                    url: "backend/web/services/manageStores.php",
-                    type: "GET"
-                })
-                .done(function(answer)
-                {
-                    that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "stores");
-                    var id = jsonModel.getProperty("/storeID");
-                    var clientID = jsonModel.getProperty("/storeClientID");
-                    sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(id + ":" + clientID);
-                })
-                .fail(function(answer)
-                {
-                    if (answer.status === 401) {
-                        window.location.reload();
-                    }
-                });
+            // из магазинов, выбираем в списке нужный
+            let storeID = jsonModel.getProperty("/storeID");
+            let storeClientID = jsonModel.getProperty("/storeClientID");
+            sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(storeID + ":" + storeClientID);
 
             //ставим дату
             // FIXME: по идее тоже через модель надо
@@ -95,43 +67,16 @@ var pricesEditDialog = {
         var jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
+        this.getView().addDependent(this._oEditDialog);
         sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
-        var that = this;
+        //var that = this;
 
-        // грузим список товаров
-        $.ajax({
-                url: "backend/web/services/manageProducts.php",
-                type: "GET"
-            })
-            .done(function(answer)
-            {
-                that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "products");
-            })
-            .fail(function(answer)
-            {
-                if (answer.status === 401) {
-                    window.location.reload();
-                }
-            });
-
-        // грузим список магазинов
-        $.ajax({
-                url: "backend/web/services/manageStores.php",
-                type: "GET",
-                data: "enabledOnly" // флаг - грузить только активные магазины
-
-            })
-            .done(function(answer)
-            {
-                that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "stores");
-            })
-            .fail(function(answer)
-            {
-                if (answer.status === 401) {
-                    window.location.reload();
-                }
-            });
+        // Оставим только активные (не архивные) магазины
+        sap.ui.core.Fragment.byId("editDialog", "selectStore")
+            .getBinding("items").filter(
+                new sap.ui.model.Filter("enabled", sap.ui.model.FilterOperator.EQ, true)
+            );
 
         // ставим текущую дату
         var dd = new Date().getDate();
@@ -338,16 +283,10 @@ var pricesEditDialog = {
                 type: "POST",
                 data: out,
             })
-            .done(function(data, textStatus, jqXHR)
+            .done(function(data)
             {
-                switch (jqXHR.status) {
-                    case 200:
-                        that.getView().getModel().setData(JSON.parse(data));
-                        break;
-                    case 204:
-                        that.getView().getModel().setData();
-                        break;
-                }
+                if (!data) data = null; // for "204 - no content" answer
+                new Dict().setPrices(JSON.parse(data));
             })
             .fail(function(answer)
             {

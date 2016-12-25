@@ -23,7 +23,7 @@ var categoriesEditDialog = {
         var path = this.getView().byId("listCategories").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel().getProperty(path[0].sPath);
+            var model = this.getView().getModel("categories").getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
@@ -86,16 +86,10 @@ var categoriesEditDialog = {
                 type: "POST",
                 data: out,
             })
-            .done(function(data, textStatus, jqXHR)
+            .done(function(data)
             {
-                switch (jqXHR.status) {
-                    case 200:
-                        that.getView().getModel().setData(JSON.parse(data));
-                        break;
-                    case 204:
-                        that.getView().getModel().setData();
-                        break;
-                }
+                if (!data) data = null; // for "204 - no content" answer
+                new Dict().setCategories(JSON.parse(data));
             })
             .fail(function(answer)
             {

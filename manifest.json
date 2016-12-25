@@ -78,7 +78,12 @@
                     "viewName": "planning.V"
                 }
             }
+        },
+        "models": {
+            "user": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "backend/web/services/user.php"
+            }
         }
     }
-
 }

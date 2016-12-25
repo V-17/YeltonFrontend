@@ -22,7 +22,7 @@
                 growing="true"
                 growingThreshold="50"
                 growingScrollToLoad="true"
-                items="{/}"
+                items="{prices>/}"
                 fixedLayout="false"
                 itemPress="pricesEditDialog.showEditDialog">
                 <columns>
@@ -33,13 +33,13 @@
                 <items>
                     <ColumnListItem type="Active">
                         <cells>
-                            <ObjectIdentifier title="{productName}" text="{categoryName}"/>
-                            <ObjectIdentifier title="{price} {currencyShortName}" text="{amount} {unitShortName}"/>
+                            <ObjectIdentifier title="{prices>productName}" text="{prices>categoryName}"/>
+                            <ObjectIdentifier title="{prices>price} {prices>currencyShortName}" text="{prices>amount} {prices>unitShortName}"/>
                             <ObjectIdentifier
-                                title="{storeName}"
+                                title="{prices>storeName}"
                                 text="
                                 {
-                                    path: 'date',
+                                    path: 'prices>date',
                                     type: 'sap.ui.model.type.Date',
                                     formatOptions: {
                                         style: 'long',
@@ -56,7 +56,11 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button icon="sap-icon://add" text="Добавить" press="pricesEditDialog.showCreateDialog" tooltip="Добавить новую покупку"/>
+                <Button
+                    icon="sap-icon://add"
+                    text="Добавить"
+                    press="pricesEditDialog.showCreateDialog"
+                    tooltip="Добавить новую покупку"/>
             </Toolbar>
         </footer>
     </Page>

@@ -20,6 +20,7 @@ var pricesFilterDialog = {
     show: function()
     {
         this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "yelton.view.managePrices.filterDialog", this);
+        this.getView().addDependent(this._oFilterDialog);
 
         var currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
         var that = this;
@@ -56,39 +57,7 @@ var pricesFilterDialog = {
                     window.location.reload();
                 }
             });
-
-        // загружаем список категорий
-        $.ajax({
-                url: "backend/web/services/manageCategories.php",
-                type: "GET"
-            })
-            .done(function(answer)
-            {
-                that._oFilterDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "categories");
-            })
-            .fail(function(answer)
-            {
-                if (answer.status === 401) {
-                    window.location.reload();
-                }
-            });
-
-        // загружаем список магазинов
-        $.ajax({
-                url: "backend/web/services/manageStores.php",
-                type: "GET"
-            })
-            .done(function(answer)
-            {
-                that._oFilterDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "stores");
-            })
-            .fail(function(answer)
-            {
-                if (answer.status === 401) {
-                    window.location.reload();
-                }
-            });
-
+            
         that._oFilterDialog.open();
     },
 

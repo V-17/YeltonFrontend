@@ -23,19 +23,17 @@ var productsEditDialog = {
      * При открытии окна заполняются данные на всех вкладках
      * Изначально окно открывается только для просмотра, и становится доступным для редактирования только после нажатия
      * на клавишу "Изменить"
-     *
-     * TODO: зарузку справочников можно вынести в отдельную функцию, которая будет использоваться и при открытии
-     * окна для создания. А тут просто будем выбирать нужный элемент из списка
      */
     showEditDialog: function()
     {
         var path = this.getView().byId("listProducts").getSelectedContexts();
 
         if (path.length !== 0) {
-            var oIntputData = this.getView().getModel().getProperty(path[0].sPath);
+            var oIntputData = this.getView().getModel("products").getProperty(path[0].sPath);
             var oFullDataModel;
 
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageProducts.editDialog", this);
+            this.getView().addDependent(this._oEditDialog);
 
             sap.ui.getCore().byId("inputName").setEditable(false);
             sap.ui.getCore().byId("selectCategory").setEnabled(false);
@@ -49,52 +47,26 @@ var productsEditDialog = {
             $.ajax({
                     url: "backend/web/services/manageProducts.php",
                     type: "GET",
-                    async: false, // чтобы загрузить полную инфу, а уже потом выбирать из справочника
                     data: {
                         "id": oIntputData.id,
                         "clientID": oIntputData.clientID
                     }
                 })
                 .done(function(answer) {
+                    // получили полную инфу о товаре
                     oFullDataModel = new sap.ui.model.json.JSONModel(JSON.parse(answer));
                     that._oEditDialog.setModel(oFullDataModel);
                     if (oFullDataModel.getProperty("/barcode")) {
                         sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
                     }
-                })
-                .fail(function(answer) {
-                    if (answer.status === 401) {
-                        window.location.reload();
-                    }
-                });
-
-            // грузим список категорий и выбираем нужную
-            $.ajax({
-                    url: "backend/web/services/manageCategories.php",
-                    type: "GET"
-                })
-                .done(function(answer) {
-                    that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "categories");
-                    var id = oFullDataModel.getProperty("/categoryID");
-                    var clientID = oFullDataModel.getProperty("/categoryClientID");
-                    sap.ui.getCore().byId("selectCategory").setSelectedKey(id + ":" + clientID);
-                })
-                .fail(function(answer) {
-                    if (answer.status === 401) {
-                        window.location.reload();
-                    }
-                });
-
-            // грузим список единиц измерения и выбираем нужную
-            $.ajax({
-                    url: "backend/web/services/manageUnits.php",
-                    type: "GET"
-                })
-                .done(function(answer) {
-                    that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "units");
-                    var id = oFullDataModel.getProperty("/unitID");
-                    var clientID = oFullDataModel.getProperty("/unitClientID");
-                    sap.ui.getCore().byId("selectUnit").setSelectedKey(id + ":" + clientID);
+                    // выберем нужную категорию
+                    let categoryID = oFullDataModel.getProperty("/categoryID");
+                    let categoryClientID = oFullDataModel.getProperty("/categoryClientID");
+                    sap.ui.getCore().byId("selectCategory").setSelectedKey(categoryID + ":" + categoryClientID);
+                    // и единицу измерения
+                    let unitID = oFullDataModel.getProperty("/unitID");
+                    let unitClientID = oFullDataModel.getProperty("/unitClientID");
+                    sap.ui.getCore().byId("selectUnit").setSelectedKey(unitID + ":" + unitClientID);
                 })
                 .fail(function(answer) {
                     if (answer.status === 401) {
@@ -111,7 +83,6 @@ var productsEditDialog = {
     /**
      * Открытие окна для создания нового товара.
      *
-     * При открытии окна только подтягиваются возможные справочники
      * Активна только одна вкладка, т.к. по товару еще не может быть никакой статистики
      * Также поля сразу доступны для редактированя
      */
@@ -120,40 +91,11 @@ var productsEditDialog = {
         var jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageProducts.editDialog", this);
+        this.getView().addDependent(this._oEditDialog);
         sap.ui.getCore().byId("tabPrices").destroy();
         sap.ui.getCore().byId("tabStores").destroy();
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
-        var that = this;
-
-        // грузим список категорий
-        $.ajax({
-                url: "backend/web/services/manageCategories.php",
-                type: "GET"
-            })
-            .done(function(answer) {
-                that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "categories");
-            })
-            .fail(function(answer) {
-                if (answer.status === 401) {
-                    window.location.reload();
-                }
-            });
-
-        // грузим список единиц измерения
-        $.ajax({
-                url: "backend/web/services/manageUnits.php",
-                type: "GET"
-            })
-            .done(function(answer) {
-                that._oEditDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "units");
-            })
-            .fail(function(answer) {
-                if (answer.status === 401) {
-                    window.location.reload();
-                }
-            });
-
         this._oEditDialog.open();
     },
 
@@ -218,16 +160,10 @@ var productsEditDialog = {
                 type: "POST",
                 data: out,
             })
-            .done(function(data, textStatus, jqXHR)
+            .done(function(data)
             {
-                switch (jqXHR.status) {
-                    case 200:
-                        that.getView().getModel().setData(JSON.parse(data));
-                        break;
-                    case 204: // пусто
-                        that.getView().getModel().setData();
-                        break;
-                }
+                if (!data) data = null; // for "204 - no content" answer
+                new Dict().setProducts(JSON.parse(data));
             })
             .fail(function(answer)
             {

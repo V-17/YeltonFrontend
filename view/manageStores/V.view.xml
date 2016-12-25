@@ -14,7 +14,7 @@
                 id="listStores"
                 mode="SingleSelectMaster"
                 items="{
-                    path : '/',
+                    path : 'stores>/',
                     sorter : {
                         path : 'enabled',
                         descending: true
@@ -25,7 +25,11 @@
                 growingScrollToLoad="true"
                 itemPress="storesEditDialog.showEditDialog">
                 <items>
-                    <StandardListItem type="Active" title="{name}" info="{= ${enabled} ? '' : 'Архивный'}" infoState="Warning"/>
+                    <StandardListItem
+                        type="Active"
+                        title="{stores>name}"
+                        info="{= ${stores>enabled} ? '' : 'Архивный'}"
+                        infoState="Warning"/>
                 </items>
             </List>
         </content>

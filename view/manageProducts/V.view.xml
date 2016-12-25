@@ -13,7 +13,7 @@
                 mode="SingleSelectMaster"
                 itemPress="productsEditDialog.showEditDialog"
                 items="{
-                    path : '/',
+                    path : 'products>/',
                     sorter : [{
                         path : 'categoryName',
                         group : true
@@ -22,7 +22,7 @@
                     }]
                 }">
                 <items>
-                    <StandardListItem type="Active" title="{name}" info="{unitFullName}"/>
+                    <StandardListItem type="Active" title="{products>name}" info="{products>unitFullName}"/>
                 </items>
             </List>
         </content>

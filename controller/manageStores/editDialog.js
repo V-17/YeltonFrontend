@@ -22,7 +22,7 @@ var storesEditDialog = {
         var path = this.getView().byId("listStores").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel().getProperty(path[0].sPath);
+            var model = this.getView().getModel("stores").getProperty(path[0].sPath);
             var jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageStores.editDialog", this);
 
@@ -98,16 +98,10 @@ var storesEditDialog = {
                 type: "POST",
                 data: out,
             })
-            .done(function(data, textStatus, jqXHR)
+            .done(function(data)
             {
-                switch (jqXHR.status) {
-                    case 200:
-                        that.getView().getModel().setData(JSON.parse(data));
-                        break;
-                    case 204:
-                        that.getView().getModel().setData();
-                        break;
-                }
+                if (!data) data = null; // for "204 - no content" answer
+                new Dict().setStores(JSON.parse(data));
             })
             .fail(function(answer)
             {

@@ -16,6 +16,7 @@
  */
 
 jQuery.sap.require("yelton.controller.splitApp.settingsPopover");
+jQuery.sap.require("yelton.controller.Dict");
 
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
@@ -27,18 +28,12 @@ sap.ui.define([
 
             onInit: function()
             {
-                var that = this;
-                $.ajax({
-                        url: "backend/web/services/user.php"
-                    })
-                    .done(function(answer) {
-                        that.getView().setModel(new JSONModel(JSON.parse(answer)), "user");
-                    })
-                    .fail(function(answer) {
-                        if (answer.status === 401) {
-                            window.location.reload();
-                        }
-                    });
+                let d = new Dict();
+                d.refreshPrices();
+                d.refreshCategories();
+                d.refreshProducts();
+                d.refreshStores();
+                d.refreshUnits();
             },
 
             onNavToDetail: function(oEvent)

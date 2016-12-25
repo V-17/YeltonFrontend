@@ -13,13 +13,13 @@
             <List
                 id="listCategories"
                 mode="SingleSelectMaster"
-                items="{/}"
+                items="{categories>/}"
                 growing="true"
                 growingThreshold="50"
                 growingScrollToLoad="true"
                 itemPress="categoriesEditDialog.showEditDialog">
                 <items>
-                    <StandardListItem type="Active" title="{name}"/>
+                    <StandardListItem type="Active" title="{categories>name}"/>
                 </items>
             </List>
         </content>
