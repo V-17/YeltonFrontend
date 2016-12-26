@@ -25,8 +25,7 @@ var pricesEditDialog = {
         let path = this.byId("tablePrices").getSelectedContexts();
 
         if (path.length !== 0) {
-            let model = this.getView().getModel("prices").getProperty(path[0].sPath);
-            let jsonModel = new sap.ui.model.json.JSONModel(model);
+            let oData = this.getView().getModel("prices").getProperty(path[0].sPath);
             this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
             this.getView().addDependent(this._oEditDialog);
             sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
@@ -35,25 +34,45 @@ var pricesEditDialog = {
             sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
             sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
             sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
-            this._oEditDialog.setModel(jsonModel);
+            let that = this;
 
-            // из товаров выбираем в списке нужный
-            let productID = jsonModel.getProperty("/productID");
-            let productClientID = jsonModel.getProperty("/productClientID");
-            sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(productID + ":" + productClientID);
+            // идем за полными данными по выбранной покупке
+            $.ajax({
+                    url: "backend/web/services/managePrices.php",
+                    type: "GET",
+                    data: {
+                        "id": oData.id,
+                        "clientID": oData.clientID
+                    }
+                })
+                .done(function(answer) {
+                    // получили полную инфу о товаре
+                    let oFullModel = new sap.ui.model.json.JSONModel(JSON.parse(answer));
+                    that._oEditDialog.setModel(oFullModel);
 
-            // из магазинов, выбираем в списке нужный
-            let storeID = jsonModel.getProperty("/storeID");
-            let storeClientID = jsonModel.getProperty("/storeClientID");
-            sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(storeID + ":" + storeClientID);
+                    // из товаров выбираем в списке нужный
+                    let productID = oFullModel.getProperty("/productID");
+                    let productClientID = oFullModel.getProperty("/productClientID");
+                    sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(productID + ":" + productClientID);
 
-            //ставим дату
-            // FIXME: по идее тоже через модель надо
-            // просто лень сейчас разбираться с форматом
-            // а может и не придётся разбираться ))
-            // но все равно пока лень
-            let date = jsonModel.getProperty("/date");
-            sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(date);
+                    // из магазинов, выбираем в списке нужный
+                    let storeID = oFullModel.getProperty("/storeID");
+                    let storeClientID = oFullModel.getProperty("/storeClientID");
+                    sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(storeID + ":" + storeClientID);
+
+                    // ставим дату
+                    // FIXME: по идее тоже через модель надо
+                    // просто лень сейчас разбираться с форматом
+                    // а может и не придётся разбираться ))
+                    // но все равно пока лень
+                    let date = oFullModel.getProperty("/date");
+                    sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(date);
+                })
+                .fail(function(answer) {
+                    if (answer.status === 401) {
+                        window.location.reload();
+                    }
+                });
 
             this._oEditDialog.open();
         } else {

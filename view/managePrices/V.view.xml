@@ -33,8 +33,8 @@
                 <items>
                     <ColumnListItem type="Active">
                         <cells>
-                            <ObjectIdentifier title="{prices>productName}" text="{prices>categoryName}"/>
-                            <ObjectIdentifier title="{prices>price} {prices>currencyShortName}" text="{prices>amount} {prices>unitShortName}"/>
+                            <ObjectIdentifier title="{prices>prodName}" text="{prices>catName}"/>
+                            <ObjectIdentifier title="{prices>price} {prices>currName}" text="{prices>amount} {prices>unitName}"/>
                             <ObjectIdentifier
                                 title="{prices>storeName}"
                                 text="
