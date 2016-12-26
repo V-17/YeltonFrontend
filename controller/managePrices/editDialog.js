@@ -22,11 +22,11 @@ var pricesEditDialog = {
 
     showEditDialog: function()
     {
-        var path = this.byId("tablePrices").getSelectedContexts();
+        let path = this.byId("tablePrices").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel("prices").getProperty(path[0].sPath);
-            var jsonModel = new sap.ui.model.json.JSONModel(model);
+            let model = this.getView().getModel("prices").getProperty(path[0].sPath);
+            let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
             this.getView().addDependent(this._oEditDialog);
             sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
@@ -52,7 +52,7 @@ var pricesEditDialog = {
             // просто лень сейчас разбираться с форматом
             // а может и не придётся разбираться ))
             // но все равно пока лень
-            var date = jsonModel.getProperty("/date");
+            let date = jsonModel.getProperty("/date");
             sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(date);
 
             this._oEditDialog.open();
@@ -64,13 +64,12 @@ var pricesEditDialog = {
     // нажатие кнопки create
     showCreateDialog: function()
     {
-        var jsonModel = new sap.ui.model.json.JSONModel();
+        let jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
         this.getView().addDependent(this._oEditDialog);
         sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
-        //var that = this;
 
         // Оставим только активные (не архивные) магазины
         sap.ui.core.Fragment.byId("editDialog", "selectStore")
@@ -79,9 +78,9 @@ var pricesEditDialog = {
             );
 
         // ставим текущую дату
-        var dd = new Date().getDate();
-        var mm = new Date().getMonth() + 1;
-        var yyyy = new Date().getFullYear();
+        let dd = new Date().getDate();
+        let mm = new Date().getMonth() + 1;
+        let yyyy = new Date().getFullYear();
         sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(dd + "." + mm + "." + yyyy);
 
         this._oEditDialog.open();
@@ -95,9 +94,9 @@ var pricesEditDialog = {
 
     onInputPriceLiveChange: function(oEvent)
     {
-        var inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
-        var price = oEvent.getParameters().value;
-        var lastSymbol = price[price.length - 1];
+        let inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
+        let price = oEvent.getParameters().value;
+        let lastSymbol = price[price.length - 1];
 
         // всегда скидываем статус
         inputPrice.setValueState("None");
@@ -107,7 +106,7 @@ var pricesEditDialog = {
             return;
         }
 
-        var priceCalc;
+        let priceCalc;
         try {
             price = price.replace(",", ".");
             priceCalc = parseFloat(eval(price));
@@ -117,7 +116,7 @@ var pricesEditDialog = {
 
         if (!isNaN(priceCalc)) {
             if (priceCalc != price) {
-                var text = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
+                let text = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
                 text.setText("=" + priceCalc);
             }
         } else {
@@ -127,9 +126,9 @@ var pricesEditDialog = {
 
     onInputAmountLiveChange: function(oEvent)
     {
-        var inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
-        var amount = oEvent.getParameters().value;
-        var lastSymbol = amount[amount.length - 1];
+        let inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
+        let amount = oEvent.getParameters().value;
+        let lastSymbol = amount[amount.length - 1];
 
         // всегда скидываем статус
         inputAmount.setValueState("None");
@@ -139,7 +138,7 @@ var pricesEditDialog = {
             return;
         }
 
-        var amountCalc;
+        let amountCalc;
         try {
             amount = amount.replace(",", ".");
             amountCalc = parseFloat(eval(amount));
@@ -149,7 +148,7 @@ var pricesEditDialog = {
 
         if (!isNaN(amountCalc)) {
             if (amountCalc != amount) {
-                var text = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
+                let text = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
                 text.setText("=" + amountCalc);
             }
         } else {
@@ -176,43 +175,43 @@ var pricesEditDialog = {
      */
     save: function()
     {
-        var id = this._oEditDialog.getModel().getProperty("/id");
-        var clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        var textAmountCalc = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
-        var inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
-        var comboBoxProduct = sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct");
-        var amount;
+        let id = this._oEditDialog.getModel().getProperty("/id");
+        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+        let textAmountCalc = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
+        let inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
+        let comboBoxProduct = sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct");
+        let amount;
         if (textAmountCalc.getText().length > 0) {
             amount = textAmountCalc.getText().substr(1);
         } else {
             amount = this._oEditDialog.getModel().getProperty("/amount");
         }
-        var textPriceCount = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
-        var inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
-        var price;
+        let textPriceCount = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
+        let inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
+        let price;
         if (textPriceCount.getText().length > 0) {
             price = textPriceCount.getText().substr(1);
         } else {
             price = this._oEditDialog.getModel().getProperty("/price");
         }
 
-        var selectedStore = sap.ui.core.Fragment.byId("editDialog", "selectStore").getSelectedKey().split(":");
-        var storeID = selectedStore[0];
-        var storeClientID = selectedStore[1];
+        let selectedStore = sap.ui.core.Fragment.byId("editDialog", "selectStore").getSelectedKey().split(":");
+        let storeID = selectedStore[0];
+        let storeClientID = selectedStore[1];
 
         // тут только дата, а нам бы еще время взять
         // чтобы сортировалось в порядке добавления
-        var date = sap.ui.core.Fragment.byId("editDialog", "datePicker").getValue();
-        var hh = new Date().getHours();
-        var mm = new Date().getMinutes();
-        var ss = new Date().getSeconds();
+        let date = sap.ui.core.Fragment.byId("editDialog", "datePicker").getValue();
+        let hh = new Date().getHours();
+        let mm = new Date().getMinutes();
+        let ss = new Date().getSeconds();
         date = date + " " + hh + ":" + mm + ":" + ss;
 
         // проверки
-        var canContinue = true;
-        var selectedProduct = comboBoxProduct.getSelectedKey().split(":");
-        var productID = selectedProduct[0];
-        var productClientID = selectedProduct[1];
+        let canContinue = true;
+        let selectedProduct = comboBoxProduct.getSelectedKey().split(":");
+        let productID = selectedProduct[0];
+        let productClientID = selectedProduct[1];
         if (!productID || !productClientID) {
             comboBoxProduct.setValueState("Error");
             canContinue = false;
@@ -245,7 +244,7 @@ var pricesEditDialog = {
             return;
         }
 
-        var out;
+        let out;
         // создаем или изменяем
         // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
         // сервис поймет, создавать ему или обновлять
@@ -277,7 +276,7 @@ var pricesEditDialog = {
             };
         }
 
-        var that = this;
+        let that = this;
         $.ajax({
                 url: "/backend/web/services/managePrices.php",
                 type: "POST",

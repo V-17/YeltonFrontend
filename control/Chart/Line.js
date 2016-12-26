@@ -38,7 +38,7 @@ sap.ui.define([
 
         onAfterRendering: function()
         {
-            var ctx = document.getElementById(this.getId());
+            let ctx = document.getElementById(this.getId());
 
             this._chart = new Chart(ctx, {
                 type: 'line',

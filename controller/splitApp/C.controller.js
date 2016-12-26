@@ -38,9 +38,9 @@ sap.ui.define([
 
             onNavToDetail: function(oEvent)
             {
-                var id = this.getView().byId("listMainMenu").getSelectedItem().sId;
+                let id = this.getView().byId("listMainMenu").getSelectedItem().sId;
                 this.getView().byId("listMenuBottom").removeSelections();
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 //FIXME: можно же как то с нормальными ID сделать это
                 switch (id) {
@@ -65,8 +65,8 @@ sap.ui.define([
             onNavToReports: function()
             {
                 //FIXME: можно же как то с нормальными ID сделать это
-                var id = this.getView().byId("listMenuBottom").getSelectedItem().sId;
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                let id = this.getView().byId("listMenuBottom").getSelectedItem().sId;
+                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 this.getView().byId("listMainMenu").removeSelections();
 
                 switch (id) {

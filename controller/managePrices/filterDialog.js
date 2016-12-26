@@ -22,8 +22,8 @@ var pricesFilterDialog = {
         this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "yelton.view.managePrices.filterDialog", this);
         this.getView().addDependent(this._oFilterDialog);
 
-        var currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
-        var that = this;
+        let currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
+        let that = this;
 
         currentFilters.forEach(function(item, i, arr) {
             switch (item.sPath) {
@@ -57,7 +57,7 @@ var pricesFilterDialog = {
                     window.location.reload();
                 }
             });
-            
+
         that._oFilterDialog.open();
     },
 
@@ -79,8 +79,8 @@ var pricesFilterDialog = {
 
     onProductSuggest: function(event)
     {
-        var value = event.getParameter("suggestValue");
-        var filters = [];
+        let value = event.getParameter("suggestValue");
+        let filters = [];
         if (value) {
             filters = [new sap.ui.model.Filter([
                 new sap.ui.model.Filter("name", function(sText) {
@@ -103,8 +103,8 @@ var pricesFilterDialog = {
     {
         if (event.getParameter("suggestionItem")) {
             sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue();
-            var item = event.getParameter("suggestionItem");
-            var key = item.getKey().split(":");
+            let item = event.getParameter("suggestionItem");
+            let key = item.getKey().split(":");
             this._filterProductID = key[0];
             this._filterProductClientID = key[1];
             this._filterProductName = item.getText();
@@ -117,8 +117,8 @@ var pricesFilterDialog = {
 
     onCategorySuggest: function(event)
     {
-        var value = event.getParameter("suggestValue");
-        var filter;
+        let value = event.getParameter("suggestValue");
+        let filter;
         if (value) {
             filter = new sap.ui.model.Filter("name", function(sText) {
                 return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
@@ -136,8 +136,8 @@ var pricesFilterDialog = {
     {
         if (event.getParameter("suggestionItem")) {
             sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue();
-            var item = event.getParameter("suggestionItem");
-            var key = item.getKey().split(":");
+            let item = event.getParameter("suggestionItem");
+            let key = item.getKey().split(":");
             this._filterCategoryID = key[0];
             this._filterCategoryClientID = key[1];
             this._filterCategoryName = item.getText();
@@ -150,8 +150,8 @@ var pricesFilterDialog = {
 
     onStoreSuggest: function(event)
     {
-        var value = event.getParameter("suggestValue");
-        var filter;
+        let value = event.getParameter("suggestValue");
+        let filter;
         if (value) {
             filter = new sap.ui.model.Filter("name", function(sText) {
                 return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
@@ -168,8 +168,8 @@ var pricesFilterDialog = {
     onStoreSearch: function(e)
     {
         if (e.getParameter("suggestionItem")) {
-            var item = e.getParameter("suggestionItem");
-            var key = item.getKey().split(":");
+            let item = e.getParameter("suggestionItem");
+            let key = item.getKey().split(":");
             this._filterStoreID = key[0];
             this._filterStoreClientID = key[1];
             this._filterStoreName = item.getText();
@@ -187,7 +187,7 @@ var pricesFilterDialog = {
             (this._filterCategoryID && this._filterCategoryClientID) ||
             (this._filterStoreID && this._filterStoreClientID)
         ) {
-            var aFilters = [];
+            let aFilters = [];
 
             if (this._filterProductID && this._filterProductClientID) {
                 aFilters.push(new sap.ui.model.Filter("productID", sap.ui.model.FilterOperator.EQ, this._filterProductID));

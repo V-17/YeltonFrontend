@@ -25,14 +25,14 @@ sap.ui.define([
 
             onNavBackPress: function()
             {
-                var app = sap.ui.getCore().byId("__xmlview0--splitApp");
+                let app = sap.ui.getCore().byId("__xmlview0--splitApp");
                 app.backDetail();
             },
 
             onSuggest: function(event)
             {
-                var value = event.getParameter("suggestValue");
-                var filters = [];
+                let value = event.getParameter("suggestValue");
+                let filters = [];
                 if (value) {
                     filters = [new sap.ui.model.Filter([
                         new sap.ui.model.Filter("name", function(sText) {
@@ -50,18 +50,18 @@ sap.ui.define([
 
             onSearch: function(event)
             {
-                var form = this.byId("formBestPrice");
-                var item = event.getParameter("suggestionItem");
+                let form = this.byId("formBestPrice");
+                let item = event.getParameter("suggestionItem");
                 if (item) {
-                    var key = item.getKey().split(":");
-                    var id = key[0];
-                    var clientID = key[1];
-                    var out = {
+                    let key = item.getKey().split(":");
+                    let id = key[0];
+                    let clientID = key[1];
+                    let out = {
                         "id": id,
                         "clientID": clientID
                     };
 
-                    var that = this;
+                    let that = this;
                     $.ajax({
                             url: "backend/web/services/reports.php",
                             type: "GET",

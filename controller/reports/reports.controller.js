@@ -25,7 +25,7 @@ sap.ui.define([
 
             onInit: function()
             {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("reports").attachPatternMatched(this.onRouter, this);
             },
 
@@ -36,7 +36,7 @@ sap.ui.define([
 
             onTileBestPriceClick: function()
             {
-                var app = sap.ui.getCore().byId("__xmlview0--splitApp");
+                let app = sap.ui.getCore().byId("__xmlview0--splitApp");
                 if (!this._viewBestPrice) {
                     this._viewBestPrice = sap.ui.view({
                         id: "pageReportsBestPrice",
@@ -46,7 +46,7 @@ sap.ui.define([
                     app.addDetailPage(this._viewBestPrice);
                 }
 
-                var that = this;
+                let that = this;
                 $.ajax({
                         url: "backend/web/services/reports.php",
                         type: "GET",
@@ -69,7 +69,7 @@ sap.ui.define([
 
             onTileProductLineChartClick: function()
             {
-                var app = sap.ui.getCore().byId("__xmlview0--splitApp");
+                let app = sap.ui.getCore().byId("__xmlview0--splitApp");
                 if (!this._viewProductLineChart) {
                     this._viewProductLineChart = sap.ui.view({
                         id: "pageReportsProductLineChart",
@@ -79,7 +79,7 @@ sap.ui.define([
                     app.addDetailPage(this._viewProductLineChart);
                 }
 
-                var that = this;
+                let that = this;
                 $.ajax({
                         url: "backend/web/services/reports.php",
                         type: "GET",

@@ -54,11 +54,11 @@ sap.ui.define([
                 this._oPopover.openBy(oEvent.getSource());
 
                 // это чтобы логин и пароль на обоих вкладках одновременно одинаковыми были
-                var oData = [{
+                let oData = [{
                     login: null,
                     password: null
                 }];
-                var model = new JSONModel(oData);
+                let model = new JSONModel(oData);
                 this._oPopover.setModel(model);
             },
 
@@ -73,9 +73,9 @@ sap.ui.define([
 
             _onButtonSignInPress: function()
             {
-                var login = sap.ui.getCore().byId("inputSignInLogin").getValue();
-                var password = sap.ui.getCore().byId("inputSignInPassword").getValue();
-                var textView = sap.ui.getCore().byId("textViewSignIn");
+                let login = sap.ui.getCore().byId("inputSignInLogin").getValue();
+                let password = sap.ui.getCore().byId("inputSignInPassword").getValue();
+                let textView = sap.ui.getCore().byId("textViewSignIn");
 
                 $.ajax({
                         url: "/backend/web/services/signIn.php",
@@ -96,12 +96,12 @@ sap.ui.define([
 
             _onButtonSignUpPress: function()
             {
-                var login = sap.ui.getCore().byId("inputSignUpLogin").getValue();
-                var password = sap.ui.getCore().byId("inputSignUpPassword").getValue();
-                var email = sap.ui.getCore().byId("inputSignUpEmail").getValue();
-                var textView = sap.ui.getCore().byId("textViewSignUp");
+                let login = sap.ui.getCore().byId("inputSignUpLogin").getValue();
+                let password = sap.ui.getCore().byId("inputSignUpPassword").getValue();
+                let email = sap.ui.getCore().byId("inputSignUpEmail").getValue();
+                let textView = sap.ui.getCore().byId("textViewSignUp");
 
-                var out;
+                let out;
                 if (email.length > 0) {
                     out = {
                         login: login,
@@ -131,7 +131,7 @@ sap.ui.define([
 
             _onPopupSelect: function(e)
             {
-                var newTab = e.getParameters().key;
+                let newTab = e.getParameters().key;
                 switch (newTab) {
                     case "tabSignUp":
                         sap.ui.getCore().byId("textViewSignIn").setText();

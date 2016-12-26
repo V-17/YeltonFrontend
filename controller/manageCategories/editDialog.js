@@ -20,11 +20,11 @@ var categoriesEditDialog = {
     // нажатие кнопки Редактировать
     showEditDialog: function()
     {
-        var path = this.getView().byId("listCategories").getSelectedContexts();
+        let path = this.getView().byId("listCategories").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel("categories").getProperty(path[0].sPath);
-            var jsonModel = new sap.ui.model.json.JSONModel(model);
+            let model = this.getView().getModel("categories").getProperty(path[0].sPath);
+            let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
             sap.ui.getCore().byId("inputName").setEditable(false);
@@ -38,7 +38,7 @@ var categoriesEditDialog = {
     // нажатие кнопки create
     showCreateDialog: function()
     {
-        var jsonModel = new sap.ui.model.json.JSONModel();
+        let jsonModel = new sap.ui.model.json.JSONModel();
         this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
@@ -55,16 +55,16 @@ var categoriesEditDialog = {
 
     save: function()
     {
-        var id = this._oEditDialog.getModel().getProperty("/id");
-        var clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        var name = this._oEditDialog.getModel().getProperty("/name");
+        let id = this._oEditDialog.getModel().getProperty("/id");
+        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+        let name = this._oEditDialog.getModel().getProperty("/name");
 
         if (!name || !name.trim()) {
             sap.ui.getCore().byId("inputName").setValueState("Error");
             return;
         }
 
-        var out;
+        let out;
         // создаем или изменяем
         // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
         // сервис поймет, создавать ему или обновлять
@@ -80,7 +80,7 @@ var categoriesEditDialog = {
             };
         }
 
-        var that = this;
+        let that = this;
         $.ajax({
                 url: "/backend/web/services/manageCategories.php",
                 type: "POST",

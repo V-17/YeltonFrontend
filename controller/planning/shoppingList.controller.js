@@ -33,8 +33,8 @@ sap.ui.define([
         // Поиск
         onFilterLiveSearch: function(oEvent)
         {
-            var sQuery = oEvent.getParameter("newValue");
-            var list = this.getView().byId("listUnselectedProducts");
+            let sQuery = oEvent.getParameter("newValue");
+            let list = this.getView().byId("listUnselectedProducts");
             list.getBinding("items").filter(
                 new Filter([
                     new Filter("categoryName", FilterOperator.Contains, sQuery),
@@ -130,7 +130,7 @@ sap.ui.define([
                 });
             }
 
-            var that = this;
+            let that = this;
             $.ajax({
                     url: "backend/web/services/planning.php",
                     type: "POST",

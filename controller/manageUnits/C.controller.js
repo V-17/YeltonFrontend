@@ -30,7 +30,7 @@ sap.ui.define([
 
             onInit: function()
             {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("units").attachPatternMatched(this.onRouter, this);
             },
 
@@ -43,8 +43,8 @@ sap.ui.define([
             // Поиск
             onFilterLiveSearch: function(oEvent)
             {
-                var sQuery = oEvent.getParameter("newValue");
-                var table = this.getView().byId("listUnits");
+                let sQuery = oEvent.getParameter("newValue");
+                let table = this.getView().byId("listUnits");
                 table.getBinding("items").filter(
                     new Filter([
                         new Filter("fullName", FilterOperator.Contains, sQuery),

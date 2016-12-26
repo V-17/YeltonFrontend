@@ -19,11 +19,11 @@ var storesDeleteDialog = {
 
     show: function()
     {
-        var path = this.getView().byId("listStores").getSelectedContexts();
+        let path = this.getView().byId("listStores").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel("stores").getProperty(path[0].sPath);
-            var jsonModel = new sap.ui.model.json.JSONModel(model);
+            let model = this.getView().getModel("stores").getProperty(path[0].sPath);
+            let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.manageStores.deleteDialog", this);
             this._oDeleteDialog.setModel(jsonModel);
             this._oDeleteDialog.open();
@@ -34,10 +34,10 @@ var storesDeleteDialog = {
 
     apply: function()
     {
-        var id = this._oDeleteDialog.getModel().getProperty("/id");
-        var clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
+        let id = this._oDeleteDialog.getModel().getProperty("/id");
+        let clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
 
-        var that = this;
+        let that = this;
         $.ajax({
                 url: "/backend/web/services/manageStores.php",
                 type: "DEL",

@@ -24,14 +24,14 @@ sap.ui.define([
 
         onNavBackPress: function()
         {
-            var app = sap.ui.getCore().byId("__xmlview0--splitApp");
+            let app = sap.ui.getCore().byId("__xmlview0--splitApp");
             app.backDetail();
         },
 
         onSuggest: function(event)
         {
-            var value = event.getParameter("suggestValue");
-            var filters = [];
+            let value = event.getParameter("suggestValue");
+            let filters = [];
             if (value) {
                 filters = [new sap.ui.model.Filter([
                     new sap.ui.model.Filter("name", function(sText) {
@@ -49,19 +49,19 @@ sap.ui.define([
 
         onSearch: function(event)
         {
-            var chart = this.getView().byId("chart");
-            var item = event.getParameter("suggestionItem");
+            let chart = this.getView().byId("chart");
+            let item = event.getParameter("suggestionItem");
 
             if (item) {
-                var key = item.getKey().split(":");
-                var id = key[0];
-                var clientID = key[1];
-                var out = {
+                let key = item.getKey().split(":");
+                let id = key[0];
+                let clientID = key[1];
+                let out = {
                     "id": id,
                     "clientID": clientID
                 };
 
-                var that = this;
+                let that = this;
                 $.ajax({
                         url: "backend/web/services/reports.php",
                         type: "GET",
@@ -73,11 +73,11 @@ sap.ui.define([
                     {
                         answer = JSON.parse(answer);
 
-                        var aLabels = [];
-                        var aData = [];
+                        let aLabels = [];
+                        let aData = [];
                         for (item of answer) {
-                            var oDate = new Date(item.date * 1000);
-                            var sYear = (oDate.getFullYear() + "").substring(2, 4);
+                            let oDate = new Date(item.date * 1000);
+                            let sYear = (oDate.getFullYear() + "").substring(2, 4);
                             let sDay = ("0" + oDate.getDate()).slice(-2);
                             let sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
                             aLabels.push(sDay + "." + sMonth + "." + sYear);

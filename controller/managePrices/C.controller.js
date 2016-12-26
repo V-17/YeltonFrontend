@@ -31,7 +31,7 @@ sap.ui.define([
 
             onInit: function()
             {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("init").attachPatternMatched(this.onRouter, this);
                 oRouter.getRoute("prices").attachPatternMatched(this.onRouter, this);
                 oRouter.getRoute("filterProductAndStore").attachPatternMatched(this.onRouterFilterProductAndStore, this);
@@ -52,8 +52,8 @@ sap.ui.define([
             // Поиск
             onFilterLiveSearch: function(oEvent)
             {
-                var sQuery = oEvent.getParameter("newValue");
-                var table = this.getView().byId("tablePrices");
+                let sQuery = oEvent.getParameter("newValue");
+                let table = this.getView().byId("tablePrices");
                 table.getBinding("items").filter(
                     new Filter([
                         new Filter("productName", FilterOperator.Contains, sQuery),

@@ -19,11 +19,11 @@ var unitsEditDialog = {
 
     showEditDialog: function()
     {
-        var path = this.getView().byId("listUnits").getSelectedContexts();
+        let path = this.getView().byId("listUnits").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel("units").getProperty(path[0].sPath);
-            var jsonModel = new sap.ui.model.json.JSONModel(model);
+            let model = this.getView().getModel("units").getProperty(path[0].sPath);
+            let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageUnits.editDialog", this);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
             sap.ui.getCore().byId("inputFullName").setEditable(false);
@@ -37,7 +37,7 @@ var unitsEditDialog = {
 
     showCreateDialog: function()
     {
-        var jsonModel = new sap.ui.model.json.JSONModel();
+        let jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageUnits.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
@@ -56,12 +56,12 @@ var unitsEditDialog = {
 
     save: function()
     {
-        var id = this._oEditDialog.getModel().getProperty("/id");
-        var clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        var fullName = this._oEditDialog.getModel().getProperty("/fullName");
-        var shortName = this._oEditDialog.getModel().getProperty("/shortName");
+        let id = this._oEditDialog.getModel().getProperty("/id");
+        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+        let fullName = this._oEditDialog.getModel().getProperty("/fullName");
+        let shortName = this._oEditDialog.getModel().getProperty("/shortName");
 
-        var canContinue = true;
+        let canContinue = true;
         if (!fullName || !fullName.trim()) {
             sap.ui.getCore().byId("inputFullName").setValueState("Error");
             canContinue = false;
@@ -74,7 +74,7 @@ var unitsEditDialog = {
             return;
         }
 
-        var out;
+        let out;
         // создаем или изменяем
         // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
         // сервис поймет, создавать ему или обновлять
@@ -92,8 +92,7 @@ var unitsEditDialog = {
             };
         }
 
-
-        var that = this;
+        let that = this;
         $.ajax({
                 url: "/backend/web/services/manageUnits.php",
                 type: "POST",
@@ -102,7 +101,7 @@ var unitsEditDialog = {
             .done(function(data)
             {
                 if (!data) data = null; // for "204 - no content" answer
-                new Dict().setUnits(JSON.parse(data));                
+                new Dict().setUnits(JSON.parse(data));
             })
             .fail(function(answer)
             {

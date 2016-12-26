@@ -20,11 +20,11 @@ var pricesDeleteDialog = {
     // нажатие нопки "Удалить"
     show: function()
     {
-        var path = this.getView().byId("tablePrices").getSelectedContexts();
+        let path = this.getView().byId("tablePrices").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel("prices").getProperty(path[0].sPath);
-            var jsonModel = new sap.ui.model.json.JSONModel(model);
+            let model = this.getView().getModel("prices").getProperty(path[0].sPath);
+            let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.managePrices.deleteDialog", this);
             this._oDeleteDialog.setModel(jsonModel);
             this._oDeleteDialog.open();
@@ -35,10 +35,10 @@ var pricesDeleteDialog = {
 
     apply: function()
     {
-        var id = this._oDeleteDialog.getModel().getProperty("/id");
-        var clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
+        let id = this._oDeleteDialog.getModel().getProperty("/id");
+        let clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
 
-        var that = this;
+        let that = this;
         $.ajax({
                 url: "/backend/web/services/managePrices.php",
                 type: "DEL",

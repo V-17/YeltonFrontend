@@ -25,8 +25,8 @@ sap.ui.define([
 
             onChangePasswordPress: function()
             {
-                var textView = sap.ui.getCore().byId("textViewChangePassword");
-                var out = {
+                let textView = sap.ui.getCore().byId("textViewChangePassword");
+                let out = {
                     oldPassword: sap.ui.getCore().byId("inputOldPassword").getValue(),
                     newPassword: sap.ui.getCore().byId("inputNewPassword").getValue()
                 };
@@ -58,9 +58,9 @@ sap.ui.define([
             onChangeEmailPress: function()
             {
                 //FIXME: по нормальному нужно получать id
-                var splitAppID = "__xmlview0--splitApp";
-                var textView = sap.ui.getCore().byId("textViewChangeEmail");
-                var out = {
+                let splitAppID = "__xmlview0--splitApp";
+                let textView = sap.ui.getCore().byId("textViewChangeEmail");
+                let out = {
                     email: sap.ui.getCore().byId("inputNewEmail").getValue()
                 };
                 $.ajax({
@@ -98,11 +98,11 @@ sap.ui.define([
              */
             onDeleteDevice: function(oEvent)
             {
-                var oList = oEvent.getSource();
-                var oItem = oEvent.getParameter("listItem");
-                var iClientID = oItem.getBindingContext("user").getProperty().clientID;
+                let oList = oEvent.getSource();
+                let oItem = oEvent.getParameter("listItem");
+                let iClientID = oItem.getBindingContext("user").getProperty().clientID;
 
-                var dialog = new sap.m.Dialog({
+                let dialog = new sap.m.Dialog({
                     title: "Отключить мобильное устройство?",
                     type: "Message",
                     content: new sap.m.Text({

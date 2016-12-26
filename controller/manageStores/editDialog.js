@@ -19,11 +19,11 @@ var storesEditDialog = {
 
     showEditDialog: function()
     {
-        var path = this.getView().byId("listStores").getSelectedContexts();
+        let path = this.getView().byId("listStores").getSelectedContexts();
 
         if (path.length !== 0) {
-            var model = this.getView().getModel("stores").getProperty(path[0].sPath);
-            var jsonModel = new sap.ui.model.json.JSONModel(model);
+            let model = this.getView().getModel("stores").getProperty(path[0].sPath);
+            let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageStores.editDialog", this);
 
             sap.ui.getCore().byId("inputName").setEditable(false);
@@ -41,7 +41,7 @@ var storesEditDialog = {
     showCreateDialog: function()
     {
         // в начальной модели выставим статус true
-        var jsonModel = new sap.ui.model.json.JSONModel({enabled: true});
+        let jsonModel = new sap.ui.model.json.JSONModel({enabled: true});
 
         this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageStores.editDialog", this);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
@@ -61,18 +61,18 @@ var storesEditDialog = {
 
     save: function()
     {
-        var id = this._oEditDialog.getModel().getProperty("/id");
-        var clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        var name = this._oEditDialog.getModel().getProperty("/name");
-        var address = this._oEditDialog.getModel().getProperty("/address");
-        var enabled = this._oEditDialog.getModel().getProperty("/enabled");
+        let id = this._oEditDialog.getModel().getProperty("/id");
+        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+        let name = this._oEditDialog.getModel().getProperty("/name");
+        let address = this._oEditDialog.getModel().getProperty("/address");
+        let enabled = this._oEditDialog.getModel().getProperty("/enabled");
 
         if (!name || !name.trim()) {
             sap.ui.getCore().byId("inputName").setValueState("Error");
             return;
         }
 
-        var out;
+        let out;
         // создаем или изменяем
         // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
         // сервис поймет, создавать ему или обновлять
@@ -92,7 +92,7 @@ var storesEditDialog = {
             };
         }
 
-        var that = this;
+        let that = this;
         $.ajax({
                 url: "/backend/web/services/manageStores.php",
                 type: "POST",

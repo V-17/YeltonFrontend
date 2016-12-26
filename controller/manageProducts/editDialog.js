@@ -26,11 +26,11 @@ var productsEditDialog = {
      */
     showEditDialog: function()
     {
-        var path = this.getView().byId("listProducts").getSelectedContexts();
+        let path = this.getView().byId("listProducts").getSelectedContexts();
 
         if (path.length !== 0) {
-            var oIntputData = this.getView().getModel("products").getProperty(path[0].sPath);
-            var oFullDataModel;
+            let oIntputData = this.getView().getModel("products").getProperty(path[0].sPath);
+            let oFullDataModel;
 
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageProducts.editDialog", this);
             this.getView().addDependent(this._oEditDialog);
@@ -41,7 +41,7 @@ var productsEditDialog = {
             sap.ui.getCore().byId("inputManufacturer").setEditable(false);
             sap.ui.getCore().byId("inputBarcode").setEditable(false);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
-            var that = this;
+            let that = this;
 
             // идем за полными данными по выбранному товару
             $.ajax({
@@ -88,7 +88,7 @@ var productsEditDialog = {
      */
     showCreateDialog: function()
     {
-        var jsonModel = new sap.ui.model.json.JSONModel();
+        let jsonModel = new sap.ui.model.json.JSONModel();
 
         this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageProducts.editDialog", this);
         this.getView().addDependent(this._oEditDialog);
@@ -106,25 +106,25 @@ var productsEditDialog = {
      */
     save: function()
     {
-        var id = this._oEditDialog.getModel().getProperty("/id");
-        var clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        var name = this._oEditDialog.getModel().getProperty("/name");
-        var manufacturer = this._oEditDialog.getModel().getProperty("/manufacturer");
-        var barcode = this._oEditDialog.getModel().getProperty("/barcode");
+        let id = this._oEditDialog.getModel().getProperty("/id");
+        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+        let name = this._oEditDialog.getModel().getProperty("/name");
+        let manufacturer = this._oEditDialog.getModel().getProperty("/manufacturer");
+        let barcode = this._oEditDialog.getModel().getProperty("/barcode");
 
         if (!name || !name.trim()) {
             sap.ui.getCore().byId("inputName").setValueState("Error");
             return;
         }
 
-        var selectedKey = sap.ui.getCore().byId("selectCategory").getSelectedKey().split(":");
-        var categoryID = selectedKey[0];
-        var categoryClientID = selectedKey[1];
+        let selectedKey = sap.ui.getCore().byId("selectCategory").getSelectedKey().split(":");
+        let categoryID = selectedKey[0];
+        let categoryClientID = selectedKey[1];
         selectedKey = sap.ui.getCore().byId("selectUnit").getSelectedKey().split(":");
-        var unitID = selectedKey[0];
-        var unitClientID = selectedKey[1];
+        let unitID = selectedKey[0];
+        let unitClientID = selectedKey[1];
 
-        var out;
+        let out;
         // создаем или изменяем
         // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
         // сервис поймет, создавать ему или обновлять
@@ -154,7 +154,7 @@ var productsEditDialog = {
             };
         }
 
-        var that = this;
+        let that = this;
         $.ajax({
                 url: "/backend/web/services/manageProducts.php",
                 type: "POST",
@@ -223,7 +223,7 @@ var productsEditDialog = {
      */
     onBarcodeLiveChange: function(oEvent)
     {
-        var value = oEvent.getParameters().value;
+        let value = oEvent.getParameters().value;
         if (value) {
             sap.ui.getCore().byId("buttonBarcodeSearch").setEnabled(true);
         } else {
@@ -234,7 +234,7 @@ var productsEditDialog = {
     // поиск штрих-кода в интернете
     searchBarcode: function()
     {
-        var barcode = this._oEditDialog.getModel().getProperty("/barcode");
+        let barcode = this._oEditDialog.getModel().getProperty("/barcode");
         sap.m.URLHelper.redirect("https://www.google.ru/search?q=" + barcode, true);
     },
 
