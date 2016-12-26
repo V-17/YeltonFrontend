@@ -62,6 +62,15 @@ sap.ui.define([
                 this._oPopover.setModel(model);
             },
 
+            beforePopoverOpen: function(oEvent)
+            {
+                // на телефонах надо показывать заголовок с кнопкой "Закрыть"
+                if (!oEvent.getParameters().openBy) {
+                    let sId = oEvent.getSource().getId();
+                    sap.ui.getCore().byId(sId).setShowHeader(true);
+                }
+            },
+
             _onButtonSignInPress: function()
             {
                 var login = sap.ui.getCore().byId("inputSignInLogin").getValue();

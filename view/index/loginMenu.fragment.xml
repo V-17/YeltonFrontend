@@ -1,42 +1,44 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.ui.commons">
-    <Popover title="{Name}" placement="Left" showHeader="false">
-        <IconTabBar expandable="false" select="_onPopupSelect">
-            <items>
-                <IconTabFilter key="tabSignIn" text="ВХОД">
-                    <VBox alignItems="Center">
-                        <Input id="inputSignInLogin" placeholder="Логин" width="250px" submit="_onButtonSignInPress" value="{/login}"/>
-                        <Input
-                            id="inputSignInPassword"
-                            placeholder="Пароль"
-                            type="Password"
-                            width="250px"
-                            submit="_onButtonSignInPress"
-                            value="{/password}"/>
+    <ResponsivePopover title="{Name}" placement="Left" showHeader="false" beforeOpen="beforePopoverOpen">
+        <content>
+            <IconTabBar expandable="false" select="_onPopupSelect">
+                <items>
+                    <IconTabFilter key="tabSignIn" text="ВХОД">
+                        <VBox alignItems="Center">
+                            <Input id="inputSignInLogin" placeholder="Логин" width="250px" submit="_onButtonSignInPress" value="{/login}"/>
+                            <Input
+                                id="inputSignInPassword"
+                                placeholder="Пароль"
+                                type="Password"
+                                width="250px"
+                                submit="_onButtonSignInPress"
+                                value="{/password}"/>
                             <commons:TextView id="textViewSignIn" semanticColor="Negative" width="250px" textAlign="Center"/>
-                        <Button text="Войти" type="Accept" press="_onButtonSignInPress" width="250px"/>
-                    </VBox>
-                </IconTabFilter>
-                <IconTabFilter key="tabSignUp" text="РЕГИСТРАЦИЯ">
-                    <VBox alignItems="Center">
-                        <Input id="inputSignUpLogin" placeholder="Логин" width="250px" submit="_onButtonSignUpPress" value="{/login}"/>
-                        <Input
-                            id="inputSignUpPassword"
-                            placeholder="Пароль"
-                            type="Password"
-                            width="250px"
-                            submit="_onButtonSignUpPress"
-                            value="{/password}"/>
-                        <Input
-                            id="inputSignUpEmail"
-                            placeholder="Email (не обязательно)"
-                            type="Email"
-                            width="250px"
-                            submit="_onButtonSignUpPress"/>
+                            <Button text="Войти" type="Accept" press="_onButtonSignInPress" width="250px"/>
+                        </VBox>
+                    </IconTabFilter>
+                    <IconTabFilter key="tabSignUp" text="РЕГИСТРАЦИЯ">
+                        <VBox alignItems="Center">
+                            <Input id="inputSignUpLogin" placeholder="Логин" width="250px" submit="_onButtonSignUpPress" value="{/login}"/>
+                            <Input
+                                id="inputSignUpPassword"
+                                placeholder="Пароль"
+                                type="Password"
+                                width="250px"
+                                submit="_onButtonSignUpPress"
+                                value="{/password}"/>
+                            <Input
+                                id="inputSignUpEmail"
+                                placeholder="Email (не обязательно)"
+                                type="Email"
+                                width="250px"
+                                submit="_onButtonSignUpPress"/>
                             <commons:TextView id="textViewSignUp" semanticColor="Negative" width="250px" textAlign="Center"/>
-                        <Button text="Зарегестрироваться" type="Emphasized" press="_onButtonSignUpPress" width="250px"/>
-                    </VBox>
-                </IconTabFilter>
-            </items>
-        </IconTabBar>
-    </Popover>
+                            <Button text="Зарегестрироваться" type="Emphasized" press="_onButtonSignUpPress" width="250px"/>
+                        </VBox>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </ResponsivePopover>
 </core:FragmentDefinition>
