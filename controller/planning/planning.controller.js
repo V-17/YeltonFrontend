@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,7 +54,7 @@ sap.ui.define([
                     url: "backend/web/services/planning.php",
                     type: "GET",
                     data: {
-                        "productsWithPrices": null
+                        "productsWithPrices": "onlyActiveStores"
                     }
                 })
                 .done(function(answer)
