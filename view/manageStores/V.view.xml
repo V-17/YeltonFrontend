@@ -28,7 +28,7 @@
                     <StandardListItem
                         type="Active"
                         title="{stores>name}"
-                        info="{= ${stores>enabled} ? '' : 'Архивный'}"
+                        info="{= ${stores>enabled} ? '' : '{i18n>archived}'}"
                         infoState="Warning"/>
                 </items>
             </List>
@@ -36,7 +36,11 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button icon="sap-icon://add" text="Создать" press="storesEditDialog.showCreateDialog" tooltip="Создать новый магазин"/>
+                <Button
+                    icon="sap-icon://add"
+                    text="{i18n>create}"
+                    press="storesEditDialog.showCreateDialog"
+                    tooltip="{i18n>createNewStore}"/>
             </Toolbar>
         </footer>
     </Page>

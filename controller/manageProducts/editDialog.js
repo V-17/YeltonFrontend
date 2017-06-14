@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,7 +76,7 @@ var productsEditDialog = {
 
             this._oEditDialog.open();
         } else {
-            sap.m.MessageToast.show("Выберите товар");
+            sap.m.MessageToast.show("{i18n>selectProduct}");
         }
     },
 
@@ -172,7 +172,7 @@ var productsEditDialog = {
                         window.location.reload();
                         break;
                     case 500:
-                        sap.m.sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                        sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
                         break;
                 }
             })
@@ -235,7 +235,7 @@ var productsEditDialog = {
     searchBarcode: function()
     {
         let barcode = this._oEditDialog.getModel().getProperty("/barcode");
-        sap.m.URLHelper.redirect("https://www.google.ru/search?q=" + barcode, true);
+        sap.m.URLHelper.redirect("https://www.google.com/search?q=" + barcode, true);
     },
 
     /**

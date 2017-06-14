@@ -4,16 +4,16 @@
             <Toolbar>
                 <ToolbarSpacer/>
                 <core:Icon src="sap-icon://warning2" color="red"/>
-                <Label text='Удалить "{/name}"?'/>
+                <Label text='{i18n>delete} "{/name}"?'/>
                 <ToolbarSpacer/>
             </Toolbar>
         </subHeader>
-        <Text text='Также будут удалены все товары и покупки, связанные с этой категорией'/>
+        <Text text="{i18n>deleteCategoryWarning}"/>
         <beginButton>
-            <Button text="Удалить" type="Reject" press="categoriesDeleteDialog.apply"/>
+            <Button text="{i18n>delete}" type="Reject" press="categoriesDeleteDialog.apply"/>
         </beginButton>
         <endButton>
-            <Button id="buttonCancel" text="Отмена" press="categoriesDeleteDialog.cancel"/>
+            <Button id="buttonCancel" text="{i18n>cancel}" press="categoriesDeleteDialog.cancel"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

@@ -1,8 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Фильтр" afterClose="pricesFilterDialog.close" initialFocus="buttonOK">
+    <Dialog title="{i18n>filter}" afterClose="pricesFilterDialog.close" initialFocus="buttonOK">
         <content>
             <VBox>
-                <Label text="Товар"/>
+                <Label text="{i18n>product}"/>
                 <SearchField
                     id="searchFieldProduct"
                     enableSuggestions="true"
@@ -20,7 +20,7 @@
                     </suggestionItems>
                 </SearchField>
                 <Text/>
-                <Label text="Категория"/>
+                <Label text="{i18n>category}"/>
                 <SearchField
                     id="searchFieldCategory"
                     enableSuggestions="true"
@@ -38,7 +38,7 @@
                     </suggestionItems>
                 </SearchField>
                 <Text/>
-                <Label text="Магазин"/>
+                <Label text="{i18n>store}"/>
                 <SearchField
                     id="searchFieldStore"
                     enableSuggestions="true"
@@ -58,10 +58,10 @@
             </VBox>
         </content>
         <beginButton>
-            <Button id="buttonOK" text="Применить" type="Accept" press="pricesFilterDialog.apply"/>
+            <Button id="buttonOK" text="{i18n>apply}" type="Accept" press="pricesFilterDialog.apply"/>
         </beginButton>
         <endButton>
-            <Button text="Закрыть" press="pricesFilterDialog.close"/>
+            <Button text="{i18n>close}" press="pricesFilterDialog.close"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

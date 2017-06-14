@@ -28,7 +28,7 @@
                 <ToolbarSpacer/>
                 <Button
                     icon="sap-icon://add"
-                    text="Создать"
+                    text="{i18n>create}"
                     press="unitsEditDialog.showCreateDialog"
                     tooltip="Создать новую единицу измерения"/>
             </Toolbar>

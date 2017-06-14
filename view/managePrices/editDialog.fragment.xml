@@ -1,14 +1,14 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Покупка" afterClose="pricesEditDialog.close">
+    <Dialog title="{i18n>price}" afterClose="pricesEditDialog.close">
         <content>
             <VBox>
-                <Label text="Товар"/>
+                <Label text="{i18n>product}"/>
                 <ComboBox
                     id="comboBoxProduct"
                     width="100%"
-                    tooltip="Товар"
+                    tooltip="{i18n>product}"
                     showSecondaryValues="true"
-                    valueStateText="Выберите товар из списка"
+                    valueStateText="{i18n>selectProduct}"
                     change="pricesEditDialog.onProductChange"
                     items="{
                         path: 'products>/',
@@ -21,7 +21,7 @@
                     <core:ListItem key="{products>id}:{products>clientID}" text="{products>name}" additionalText="{products>categoryName}"/>
                 </ComboBox>
 
-                <Label text="Магазин" class="sapUiSmallMarginTop"/>
+                <Label text="{i18n>store}" class="sapUiSmallMarginTop"/>
                 <Select
                     id="selectStore"
                     items="{
@@ -31,35 +31,40 @@
                         }
                     }"
                     width="100%"
-                    tooltip="Товар">
+                    tooltip="{i18n>store}">
                     <core:Item key="{stores>id}:{stores>clientID}" text="{stores>name}" enabled="{stores>enabled}"/>
                 </Select>
 
-                <Label text="Дата" laberlFor="datePicker" class="sapUiSmallMarginTop"/>
-                <DatePicker id="datePicker" placeholder="Выберите дату" displayFormat="long" valueFormat="dd.MM.yyyy"/>
+                <Label text="{i18n>date}" laberlFor="datePicker" class="sapUiSmallMarginTop"/>
+                <DatePicker id="datePicker" placeholder="{i18n>enterDate}" displayFormat="long" valueFormat="dd.MM.yyyy"/>
 
-                <Label text="Стоимость" labelFor="inputPrice" class="sapUiSmallMarginTop"/>
+                <Label text="{i18n>cost}" labelFor="inputPrice" class="sapUiSmallMarginTop"/>
                 <Input
                     id="inputPrice"
-                    placeholder="Стоимость покупки"
+                    placeholder="{i18n>managePrices.costPlaceholder}"
                     value="{/price}"
                     liveChange="pricesEditDialog.onInputPriceLiveChange"/>
                 <Text id="textPriceCalculation"/>
 
-                <Label text="Количество" labelFor="inputAmount" class="sapUiTinyMarginTop"/>
+                <Label text="{i18n>amount}" labelFor="inputAmount" class="sapUiTinyMarginTop"/>
                 <Input
                     id="inputAmount"
-                    placeholder="Количество купленного товара"
+                    placeholder="{i18n>managePrices.amountPlaceholder}"
                     value="{/amount}"
                     liveChange="pricesEditDialog.onInputAmountLiveChange"/>
                 <Text id="textAmountCalculation"/>
             </VBox>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="pricesDeleteDialog.show"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="pricesEditDialog.edit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="pricesEditDialog.save"/>
-            <Button text="Закрыть" press="pricesEditDialog.close"/>
+            <Button
+                id="buttonDelete"
+                tooltip="{i18n>delete}"
+                icon="sap-icon://delete"
+                visible="false"
+                press="pricesDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press="pricesEditDialog.edit"/>
+            <Button id="buttonSave" text="{i18n>save}" type="Accept" press="pricesEditDialog.save"/>
+            <Button text="{i18n>close}" press="pricesEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

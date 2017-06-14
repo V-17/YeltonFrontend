@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,10 +25,11 @@ var storesDeleteDialog = {
             let model = this.getView().getModel("stores").getProperty(path[0].sPath);
             let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.manageStores.deleteDialog", this);
+            this.getView().addDependent(this._oDeleteDialog);
             this._oDeleteDialog.setModel(jsonModel);
             this._oDeleteDialog.open();
         } else {
-            sap.m.MessageToast.show("Выберите магазин");
+            sap.m.MessageToast.show("{i18n>selectStore}");
         }
     },
 
@@ -58,7 +59,7 @@ var storesDeleteDialog = {
                         window.location.reload();
                         break;
                     case 500:
-                        sap.m.sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                        sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
                         break;
                 }
             })

@@ -29,7 +29,11 @@
         <footer>
             <Toolbar>
                 <ToolbarSpacer/>
-                <Button icon="sap-icon://add" text="Создать" press="productsEditDialog.showCreateDialog" tooltip="Создать новый товар"/>
+                <Button
+                    icon="sap-icon://add"
+                    text="{i18n>create}"
+                    press="productsEditDialog.showCreateDialog"
+                    tooltip="{i18n>createNewProduct}"/>
             </Toolbar>
         </footer>
     </Page>

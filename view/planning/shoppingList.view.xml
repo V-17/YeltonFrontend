@@ -1,5 +1,5 @@
 <!--
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,10 +21,10 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
-    <Page title="Список покупок" showNavButton="true" navButtonPress="onNavBackPress">
+    <Page title="{i18n>shoppingList}" showNavButton="true" navButtonPress="onNavBackPress">
         <content>
             <NavContainer id="navCon" busyIndicatorDelay="500">
-                <Page id="page1" title="Выберите товары, которые собираетесь покупать">
+                <Page id="page1" title="{i18n>planning.shoppingList.header}">
                     <content>
                         <List
                             id="listUnselectedProducts"
@@ -55,17 +55,17 @@
                                 icon="sap-icon://basket"
                                 enabled="false"
                                 type="Emphasized"
-                                tooltip="Выбранные товары"
+                                tooltip="{i18n>selectedProducts}"
                                 press="onShowSelectedProductsPress"/>
                             <ToolbarSpacer/>
-                            <Button id="buttonNext" text="Далее" press="onGetResultPress" type="Accept" enabled="false"/>
+                            <Button id="buttonNext" text="{i18n>next}" press="onGetResultPress" type="Accept" enabled="false"/>
                         </Toolbar>
                     </footer>
                 </Page>
-                <Page id="page2" title="Товары, сгруппированные по магазинам">
+                <Page id="page2" title="{i18n>productsGroupedByStores}">
                     <content>
                         <List
-                            headerText="Список покупок"
+                            headerText="{i18n>shoppingList}"
                             items="{
                                 path : 'shoppingList>/',
                                 sorter : [{
@@ -90,7 +90,7 @@
                     </content>
                     <footer>
                         <Toolbar>
-                            <Button text="Назад" press="onBackPress"/>
+                            <Button text="{i18n>back}" press="onBackPress"/>
                             <ToolbarSpacer/>
                         </Toolbar>
                     </footer>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +39,7 @@ sap.ui.define([
                     })
                     .done(function() {
                         textView.setSemanticColor("Positive");
-                        textView.setText("Пароль успешно изменен");
+                        textView.setText("{i18n>passwordChanged}");
                     })
                     .fail(function(answer) {
                         if (answer.status === 401) {
@@ -72,7 +72,7 @@ sap.ui.define([
                     })
                     .done(function() {
                         textView.setSemanticColor("Positive");
-                        textView.setText("Email успешно изменен");
+                        textView.setText("{i18n>emailChanged}");
                         sap.ui.getCore().byId(splitAppID).getModel("user").loadData("backend/web/services/user.php");
                     })
                     .fail(function(answer) {
@@ -103,15 +103,14 @@ sap.ui.define([
                 let iClientID = oItem.getBindingContext("user").getProperty().clientID;
 
                 let dialog = new sap.m.Dialog({
-                    title: "Отключить мобильное устройство?",
+                    title: "{i18n>deleteDeviceQuestion}",
                     type: "Message",
                     content: new sap.m.Text({
-                        text: "Все несинхронизированные на нём данные будут утеряны.\n" +
-                            "А также потребуется повторный вход в аккаунт"
+                        text: "{i18n>deleteDeviceWarning}"
                     }),
                     initialFocus: "buttonNo",
                     beginButton: new sap.m.Button({
-                        text: "Да",
+                        text: "{i18n>yes}",
                         type: "Reject",
                         press: function() {
                             $.ajax({
@@ -123,8 +122,7 @@ sap.ui.define([
                                         })
                                     },
                                 })
-                                .done(function(data, textStatus, jqXHR)
-                                {
+                                .done(function(data, textStatus, jqXHR) {
                                     switch (jqXHR.status) {
                                         case 200:
                                             sap.ui.getCore().byId("dialogSettings").getModel("user").setData(
@@ -132,14 +130,13 @@ sap.ui.define([
                                             break;
                                     }
                                 })
-                                .fail(function(answer)
-                                {
+                                .fail(function(answer) {
                                     switch (answer.status) {
                                         case 401:
                                             window.location.reload();
                                             break;
                                         case 500:
-                                            sap.m.sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                                            sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
                                             break;
                                     }
                                 });
@@ -148,7 +145,7 @@ sap.ui.define([
                         }
                     }),
                     endButton: new sap.m.Button("buttonNo", {
-                        text: "Нет",
+                        text: "{i18n>no}",
                         press: function() {
                             dialog.close();
                         }
@@ -157,7 +154,7 @@ sap.ui.define([
                         dialog.destroy();
                     }
                 });
-
+                //this.getView().addDependent(dialog);
                 dialog.open();
             }
         });

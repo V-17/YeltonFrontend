@@ -1,24 +1,25 @@
-<core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <Dialog
-        title="Категория"
-        afterClose="categoriesEditDialog.close">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="{i18n>category}" afterClose="categoriesEditDialog.close">
         <content>
-                <Input
-                    id="inputName"
-                    value="{/name}"
-                    placeholder="Введите название"
-                    valueStateText="Укажите название категории"
-                    submit="categoriesEditDialog.save"
-                    liveChange="_onInputNameLiveChange"
-                    maxLength="50"/>
+            <Input
+                id="inputName"
+                value="{/name}"
+                placeholder="{i18n>enterCategoryName}"
+                valueStateText="{i18n>enterCategoryName}"
+                submit="categoriesEditDialog.save"
+                liveChange="_onInputNameLiveChange"
+                maxLength="50"/>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="categoriesDeleteDialog.show"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="categoriesEditDialog.edit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="categoriesEditDialog.save"/>
-            <Button text="Закрыть" press="categoriesEditDialog.close"/>
+            <Button
+                id="buttonDelete"
+                tooltip="{i18n>delete}"
+                icon="sap-icon://delete"
+                visible="false"
+                press="categoriesDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press="categoriesEditDialog.edit"/>
+            <Button id="buttonSave" text="{i18n>save}" type="Accept" press="categoriesEditDialog.save"/>
+            <Button text="{i18n>close}" press="categoriesEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

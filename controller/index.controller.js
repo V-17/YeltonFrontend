@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,20 @@
 sap.ui.define([
         "sap/ui/core/mvc/Controller",
         "sap/ui/model/json/JSONModel",
+        "sap/ui/model/resource/ResourceModel"
     ],
-    function(Controller, JSONModel) {
+    function(Controller, JSONModel, ResourceModel) {
         "use strict";
         return Controller.extend("yelton.controller.index", {
 
-            onInit: function() {},
+            onInit: function()
+            {
+                // index-page не юзает Component.js, поэтому тут нужо "вручную" прицепить локализацию
+                var i18nModel = new ResourceModel({
+                    bundleName: "yelton.i18n.i18n"
+                });
+                this.getView().setModel(i18nModel, "i18n");
+            },
 
             gotoGooglePlay: function()
             {
@@ -38,12 +46,10 @@ sap.ui.define([
                 sap.m.URLHelper.redirect("https://github.com/msproduction", true);
             },
 
-
             gotoVK: function()
             {
                 sap.m.URLHelper.redirect("https://vk.com/yelton", true);
             },
-
 
             handlePopoverPress: function(oEvent)
             {
@@ -51,6 +57,7 @@ sap.ui.define([
                 if (!this._oPopover) {
                     this._oPopover = sap.ui.xmlfragment("yelton.view.index.loginMenu", this);
                 }
+                this.getView().addDependent(this._oPopover);
                 this._oPopover.openBy(oEvent.getSource());
 
                 // это чтобы логин и пароль на обоих вкладках одновременно одинаковыми были
@@ -76,6 +83,7 @@ sap.ui.define([
                 let login = sap.ui.getCore().byId("inputSignInLogin").getValue();
                 let password = sap.ui.getCore().byId("inputSignInPassword").getValue();
                 let textView = sap.ui.getCore().byId("textViewSignIn");
+                let that = this;
 
                 $.ajax({
                         url: "/backend/web/services/signIn.php",
@@ -94,6 +102,9 @@ sap.ui.define([
                     });
             },
 
+            /**
+             * При нажании на кнопку "Зарегестрироваться"
+             */
             _onButtonSignUpPress: function()
             {
                 let login = sap.ui.getCore().byId("inputSignUpLogin").getValue();
@@ -102,6 +113,7 @@ sap.ui.define([
                 let textView = sap.ui.getCore().byId("textViewSignUp");
 
                 let out;
+                let that = this;
                 if (email.length > 0) {
                     out = {
                         login: login,

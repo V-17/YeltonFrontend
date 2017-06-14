@@ -28,9 +28,9 @@
                 <ToolbarSpacer/>
                 <Button
                     icon="sap-icon://add"
-                    text="Создать"
+                    text="{i18n>create}"
                     press="categoriesEditDialog.showCreateDialog"
-                    tooltip="Создать новую категорию"/>
+                    tooltip="{i18n>createNewCategory}"/>
             </Toolbar>
         </footer>
     </Page>

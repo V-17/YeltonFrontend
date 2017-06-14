@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,12 +26,13 @@ var categoriesEditDialog = {
             let model = this.getView().getModel("categories").getProperty(path[0].sPath);
             let jsonModel = new sap.ui.model.json.JSONModel(model);
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
+            this.getView().addDependent(this._oEditDialog);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
             sap.ui.getCore().byId("inputName").setEditable(false);
             this._oEditDialog.setModel(jsonModel);
             this._oEditDialog.open();
         } else {
-            sap.m.MessageToast.show("Выберите категорию");
+            sap.m.MessageToast.show("{i18n>selectCategory}");
         }
     },
 
@@ -40,6 +41,7 @@ var categoriesEditDialog = {
     {
         let jsonModel = new sap.ui.model.json.JSONModel();
         this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
+        this.getView().addDependent(this._oEditDialog);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
         this._oEditDialog.setModel(jsonModel);
         this._oEditDialog.open();
@@ -98,7 +100,7 @@ var categoriesEditDialog = {
                         window.location.reload();
                         break;
                     case 500:
-                        sap.m.sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                        sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
                         break;
                 }
             })

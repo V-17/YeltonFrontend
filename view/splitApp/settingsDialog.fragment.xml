@@ -1,33 +1,33 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.ui.commons">
-    <Dialog id="dialogSettings" title="Настройки" stretch="true" afterClose="onClose">
+    <Dialog id="dialogSettings" title="{i18n>settings}" stretch="true" afterClose="onClose">
         <content>
             <IconTabBar expandable="false" select="_onPopupSelect">
                 <items>
-                    <IconTabFilter key="tabUser" text="ПОЛЬЗОВАТЕЛЬ">
+                    <IconTabFilter key="tabUser" text="{i18n>USER}">
                         <Panel headerText="Email" expandable="true" expanded="true" backgroundDesign="Transparent">
                             <VBox>
                                 <Label text="{user>/userInfo/email}"/>
-                                <Input id="inputNewEmail" placeholder="Новый email" type="Email"/>
-                                <Button text="Сменить" width="100%" press="onChangeEmailPress"/>
+                                <Input id="inputNewEmail" placeholder="{i18n>newEmail}" type="Email"/>
+                                <Button text="{i18n>change}" width="100%" press="onChangeEmailPress"/>
                                 <commons:TextView id="textViewChangeEmail"/>
                             </VBox>
                         </Panel>
-                        <Panel headerText="Пароль" expandable="true" expanded="true" backgroundDesign="Transparent">
+                        <Panel headerText="{i18n>password}" expandable="true" expanded="true" backgroundDesign="Transparent">
                             <VBox>
-                                <Input id="inputOldPassword" placeholder="Старый пароль" type="Password"/>
-                                <Input id="inputNewPassword" placeholder="Новый пароль" type="Password"/>
-                                <Button text="Сменить" width="100%" press="onChangePasswordPress"/>
+                                <Input id="inputOldPassword" placeholder="{i18n>oldPassword}" type="Password"/>
+                                <Input id="inputNewPassword" placeholder="{i18n>newPassword}" type="Password"/>
+                                <Button text="{i18n>change}" width="100%" press="onChangePasswordPress"/>
                                 <commons:TextView id="textViewChangePassword"/>
                             </VBox>
                         </Panel>
                     </IconTabFilter>
-                    <IconTabFilter key="tabDevices" text="УСТРОЙСТВА">
+                    <IconTabFilter key="tabDevices" text="{i18n>DEVICES}">
                         <List
                             id="tableDevices"
                             items="{user>/deviceInfo}"
                             mode="Delete"
                             delete="onDeleteDevice"
-                            noDataText="Нет мобильных устройств">
+                            noDataText="{i18n>noMobileDevices}">
                             <items>
                                 <ObjectListItem title="{user>deviceName}" icon="img/AndroidRobot.png">
                                     <firstStatus>
@@ -44,7 +44,7 @@
             </IconTabBar>
         </content>
         <beginButton>
-            <Button text="Закрыть" press="onClose"/>
+            <Button text="{i18n>close}" press="onClose"/>
         </beginButton>
     </Dialog>
 </core:FragmentDefinition>

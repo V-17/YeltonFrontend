@@ -1,5 +1,5 @@
 <!--
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,7 @@
         </subHeader>
         <SearchField
             id="searchField"
-            placeholder="Выберите товар ..."
+            placeholder="{i18n>selectProduct}"
             enableSuggestions="true"
             suggest="onSuggest"
             search="onSearch"
@@ -45,13 +45,13 @@
             </suggestionItems>
         </SearchField>
 
-        <f:SimpleForm id="formBestPrice" title="Лучшая цена для товара" visible="false">
+        <f:SimpleForm id="formBestPrice" title="{i18n>bestPriceForProduct}" visible="false">
             <f:content>
-                <Label text="Магазин"/>
+                <Label text="{i18n>store}"/>
                 <Text text="{bestPrice>/storeName}"/>
-                <Label text="Стоимость"/>
+                <Label text="{i18n>cost}"/>
                 <Text text="{bestPrice>/price} {bestPrice>/currency} за {bestPrice>/unitFullName}"/>
-                <Label text="Дата"/>
+                <Label text="{i18n>Date}"/>
                 <Text
                     text="{
                         path: 'bestPrice>/date',

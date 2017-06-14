@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Yelton Выгодные покупки</title>
+        <title>Yelton</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="UTF-8">
         <meta NAME="description" CONTENT="Ваш личный помощник в планировании выгодных покупок">
@@ -19,7 +19,8 @@
                 "yelton.view": "./view",
                 "yelton.controller": "./controller",
                 "yelton": "./",
-                "yelton.control": "./control"
+                "yelton.control": "./control",
+                "yelton.i18n": "./i18n"
             }'></script>
         <script src="lib/YeltonLib.js"></script>
 

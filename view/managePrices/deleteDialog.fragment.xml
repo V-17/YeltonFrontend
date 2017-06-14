@@ -1,10 +1,10 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Покупка" afterClose="pricesDeleteDialog.cancel" initialFocus="buttonCancel">
+    <Dialog title="{i18n>price}" afterClose="pricesDeleteDialog.cancel" initialFocus="buttonCancel">
         <content>
-            <Label text='Удалить покупку?' textAlign="Center" width="100%"/>
+            <Label text="{i18n>deletePriceWarning}" textAlign="Center" width="100%"/>
         </content>
         <beginButton>
-            <Button text="Удалить" type="Reject" press="pricesDeleteDialog.apply"/>
+            <Button text="{i18n>delete}" type="Reject" press="pricesDeleteDialog.apply"/>
         </beginButton>
         <endButton>
             <Button id="buttonCancel" text="Отмена" press="pricesDeleteDialog.cancel"/>

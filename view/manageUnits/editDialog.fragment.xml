@@ -1,31 +1,31 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Мера" afterClose="unitsEditDialog.close">
+    <Dialog title="{i18n>unit}" afterClose="unitsEditDialog.close">
         <content>
             <VBox>
-                <Label text="Полное название" labelFor="inputFullName"/>
+                <Label text="{i18n>fullName}" labelFor="inputFullName"/>
                 <Input
                     id="inputFullName"
                     value="{/fullName}"
-                    placeholder="Полное название"
-                    valueStateText="Укажите полное название"
+                    placeholder="{i18n>fullName}"
+                    valueStateText="{i18n>enterFullName}"
                     liveChange="_onInputFullNameLiveChange"
                     maxLength="50"/>
 
-                <Label text="Краткое название" labelFor="inputShortName" class="sapUiSmallMarginTop"/>
+                <Label text="{i18n>shortName}" labelFor="inputShortName" class="sapUiSmallMarginTop"/>
                 <Input
                     id="inputShortName"
                     value="{/shortName}"
-                    placeholder="Краткое название"
-                    valueStateText="Укажите краткое название"
+                    placeholder="{i18n>shortName}"
+                    valueStateText="{i18n>enterShortName}"
                     liveChange="_onInputShortNameLiveChange"
                     maxLength="5"/>
             </VBox>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="unitsDeleteDialog.show"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="unitsEditDialog.edit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="unitsEditDialog.save"/>
-            <Button text="Закрыть" press="unitsEditDialog.close"/>
+            <Button id="buttonDelete" tooltip="{i18n>delete}" icon="sap-icon://delete" visible="false" press="unitsDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press="unitsEditDialog.edit"/>
+            <Button id="buttonSave" text="{i18n>save}" type="Accept" press="unitsEditDialog.save"/>
+            <Button text="{i18n>close}" press="unitsEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

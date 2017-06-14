@@ -12,19 +12,19 @@
                 objectImageURI="./img/logo_square_padding_256.png"
                 objectTitle="¥elton"
                 objectImageShape="Circle"
-                objectSubtitle="Выгодные покупки"
+                objectSubtitle="{i18n>yeltonTagline}"
                 isObjectIconAlwaysVisible="false"
                 isObjectTitleAlwaysVisible="false"
                 isObjectSubtitleAlwaysVisible="false">
                 <ux:actions>
-                    <Button text="Вход" icon="sap-icon://log" type="Reject" press="handlePopoverPress"/>
+                    <Button text="{i18n>signInAsNoun}" icon="sap-icon://log" type="Reject" press="handlePopoverPress"/>
                 </ux:actions>
             </ux:ObjectPageHeader>
         </ux:headerTitle>
 
         <ux:headerContent>
             <layout:VerticalLayout>
-                <Text text="Ваш личный помощник в планировании выгодных покупок"/>
+                <Text text="{i18n>yeltonTagline2}"/>
             </layout:VerticalLayout>
 
             <layout:VerticalLayout>
@@ -44,7 +44,12 @@
                         press="gotoGooglePlay"
                         class="sapUiTinyMarginEnd"/>
                     <Image src="img/social/github_32.png" tooltip="GitHub" press="gotoGitHub" class="sapUiTinyMarginEnd"/>
-                    <Image src="img/social/paypal.png" width="32px" height="32px" tooltip="Поддержать проект" press="onDonateButtonPress"/>
+                    <Image
+                        src="img/social/paypal.png"
+                        width="32px"
+                        height="32px"
+                        tooltip="{i18n>supportProject}"
+                        press="onDonateButtonPress"/>
                 </HBox>
             </layout:VerticalLayout>
         </ux:headerContent>
@@ -101,7 +106,7 @@
                                     </forms:SimpleForm>
                                     <HBox alignItems="Center" justifyContent="Center">
                                         <Image
-                                            src="https://play.google.com/intl/ru_ru/badges/images/generic/ru_badge_web_generic.png"
+                                            src="{i18n>gpBannerUrl}"
                                             width="210px"
                                             height="80px"
                                             press="gotoGooglePlay"/>

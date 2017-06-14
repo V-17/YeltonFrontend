@@ -10,9 +10,9 @@
                 id="buttonResetFilter"
                 icon="sap-icon://decline"
                 press="pricesFilterDialog.reset"
-                tooltip="Сбросить фильтр"
+                tooltip="{i18n>resetFilter}"
                 visible="false"/>
-            <Button icon="sap-icon://filter" press="pricesFilterDialog.show" tooltip="Фильтр"/>
+            <Button icon="sap-icon://filter" press="pricesFilterDialog.show" tooltip="{i18n>filter}"/>
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
         <content>
@@ -58,9 +58,9 @@
                 <ToolbarSpacer/>
                 <Button
                     icon="sap-icon://add"
-                    text="Добавить"
+                    text="{i18n>add}"
                     press="pricesEditDialog.showCreateDialog"
-                    tooltip="Добавить новую покупку"/>
+                    tooltip="{i18n>addNewPrice}"/>
             </Toolbar>
         </footer>
     </Page>

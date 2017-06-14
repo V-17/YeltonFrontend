@@ -3,18 +3,18 @@
         <content>
             <IconTabBar id="iconTabBar" expandable="false" select="_onEditDialogSelectTab">
                 <items>
-                    <IconTabFilter id="tabMain" key="tabMain" text="Товар">
+                    <IconTabFilter id="tabMain" key="tabMain" text="{i18n>product}">
                         <VBox>
-                            <Label text="Название" labelFor="inputName"/>
+                            <Label text="{i18n>name}" labelFor="inputName"/>
                             <Input
                                 id="inputName"
                                 value="{/name}"
-                                placeholder="Введите название товара"
-                                valueStateText="Укажите название товара"
+                                placeholder="{i18n>enterProductName}"
+                                valueStateText="{i18n>enterProductName}"
                                 maxLength="50"
                                 liveChange="_onInputNameLiveChange"/>
 
-                            <Label text="Категория" labelFor="selectCategory" class="sapUiSmallMarginTop"/>
+                            <Label text="{i18n>category}" labelFor="selectCategory" class="sapUiSmallMarginTop"/>
                             <Select
                                 id="selectCategory"
                                 items="{
@@ -24,11 +24,11 @@
                                     }
                                 }"
                                 width="100%"
-                                tooltip="Категория">
+                                tooltip="{i18n>category}">
                                 <core:Item key="{categories>id}:{categories>clientID}" text="{categories>name}"/>
                             </Select>
 
-                            <Label text="Мера" labelFor="selectUnit" class="sapUiSmallMarginTop"/>
+                            <Label text="{i18n>unit}" labelFor="selectUnit" class="sapUiSmallMarginTop"/>
                             <Select
                                 id="selectUnit"
                                 items="{
@@ -38,14 +38,14 @@
                                     }
                                 }"
                                 width="100%"
-                                tooltip="Единица измерения">
+                                tooltip="{i18n>unit}">
                                 <core:Item key="{units>id}:{units>clientID}" text="{units>fullName}"/>
                             </Select>
 
-                            <Label text="Производитель" labelFor="inputManufacturer" class="sapUiSmallMarginTop"/>
-                            <Input id="inputManufacturer" value="{/manufacturer}" placeholder="Производитель товара" maxLength="50"/>
+                            <Label text="{i18n>manufacturer}" labelFor="inputManufacturer" class="sapUiSmallMarginTop"/>
+                            <Input id="inputManufacturer" value="{/manufacturer}" placeholder="{i18n>manufacturerOfProduct}" maxLength="50"/>
 
-                            <Label text="Штрих-код" labelFor="inputBarcode" class="sapUiSmallMarginTop"/>
+                            <Label text="{i18n>barCode}" labelFor="inputBarcode" class="sapUiSmallMarginTop"/>
                             <HBox>
                                 <Input
                                     id="inputBarcode"
@@ -56,13 +56,13 @@
                                 <Button
                                     id="buttonBarcodeSearch"
                                     icon="sap-icon://globe"
-                                    tooltip="Поиск в интернете"
+                                    tooltip="{i18n>searchInWeb}"
                                     press="productsEditDialog.searchBarcode"
                                     enabled="false"/>
                             </HBox>
                         </VBox>
                     </IconTabFilter>
-                    <IconTabFilter id="tabPrices" text="Цены">
+                    <IconTabFilter id="tabPrices" text="{i18n>prices}">
                         <List visible="{= ${/minPrice} === undefined ? false : true}">
                             <items>
                                 <StandardListItem
@@ -70,23 +70,23 @@
                                     icon="sap-icon://thumb-up"
                                     info="{/minPrice/price} {/minPrice/currency}/{/minPrice/unitShortName}"
                                     infoState="Success"
-                                    tooltip="Минимальная цена"
+                                    tooltip="{i18n>minPrice}"
                                     description="{/minPrice/date}"/>
                                 <StandardListItem
                                     title="{/maxPrice/storeName}"
                                     icon="sap-icon://thumb-down"
                                     info="{/maxPrice/price} {/maxPrice/currency}/{/maxPrice/unitShortName}"
                                     infoState="Error"
-                                    tooltip="Максимальная цена"
+                                    tooltip="{i18n>maxPrice}"
                                     description="{/maxPrice/date}"/>
                             </items>
                         </List>
-                        <List noDataText="Нет покупок" visible="{= ${/minPrice} === undefined ? true : false}"/>
+                        <List noDataText="{i18n>noPrices}" visible="{= ${/minPrice} === undefined ? true : false}"/>
                     </IconTabFilter>
-                    <IconTabFilter id="tabStores" text="Магазины">
-                        <Text text="Где и сколько раз данный товар  был куплен"/>
+                    <IconTabFilter id="tabStores" text="{i18n>stores}">
+                        <Text text="{i18n>manageProducts.storesForProductTooltip}"/>
                         <List
-                            noDataText="Нет покупок"
+                            noDataText="{i18n>noPrices}"
                             items="{
                                 path: '/stores',
                                 sorter: {
@@ -99,17 +99,17 @@
                                 counter="{count}"
                                 type="Active"
                                 press="productsEditDialog.navToPricesFilter"
-                                tooltip="Перейти к просмотру истории покупок"/>
+                                tooltip="{i18n>goToPurchaseHistory}"/>
                         </List>
                     </IconTabFilter>
                 </items>
             </IconTabBar>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="productsDeleteDialog.show"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="productsEditDialog.edit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="productsEditDialog.save"/>
-            <Button text="Закрыть" press="productsEditDialog.close"/>
+            <Button id="buttonDelete" tooltip="{i18n>delete}" icon="sap-icon://delete" visible="false" press="productsDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press="productsEditDialog.edit"/>
+            <Button id="buttonSave" text="{i18n>save}" type="Accept" press="productsEditDialog.save"/>
+            <Button text="{i18n>close}" press="productsEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

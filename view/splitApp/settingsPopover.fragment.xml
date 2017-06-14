@@ -2,13 +2,13 @@
     <Popover title="{Name}" placement="Right" showHeader="false">
         <List>
             <StandardListItem
-                title="Настройки"
+                title="{i18n>settings}"
                 description="{user>/userInfo/login}"
                 type="Active"
                 icon="sap-icon://account"
                press="settings.showSettings"/>
             <StandardListItem
-                title="Выход"
+                title="{i18n>exit}"
                 type="Active"
                 icon="sap-icon://log"
                 press="settings.logout"/>

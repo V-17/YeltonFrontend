@@ -1,5 +1,5 @@
 <!--
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,8 +27,8 @@
         </subHeader>
         <TileContainer id="reportsContainer">
             <tiles>
-                <StandardTile icon="sap-icon://cart-2" title="Поиск лучшей цены для товара" press="onTileBestPriceClick"/>
-                <StandardTile icon="sap-icon://line-chart-time-axis" title="Динамика цен на товар" press="onTileProductLineChartClick"/>
+                <StandardTile icon="sap-icon://cart-2" title="{i18n>findBestPriceForProduct}" press="onTileBestPriceClick"/>
+                <StandardTile icon="sap-icon://line-chart-time-axis" title="{i18n>dynamicsChart}" press="onTileProductLineChartClick"/>
             </tiles>
         </TileContainer>
     </Page>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-], function(Controller, JSONModel) {
+    "sap/ui/model/Filter"
+], function(Controller, JSONModel, Filter) {
     "use strict";
     return Controller.extend("yelton.controller.reports.productLineChart", {
 
@@ -33,11 +34,11 @@ sap.ui.define([
             let value = event.getParameter("suggestValue");
             let filters = [];
             if (value) {
-                filters = [new sap.ui.model.Filter([
-                    new sap.ui.model.Filter("name", function(sText) {
+                filters = [new Filter([
+                    new Filter("name", function(sText) {
                         return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
                     }),
-                    new sap.ui.model.Filter("categoryName", function(sDes) {
+                    new Filter("categoryName", function(sDes) {
                         return (sDes || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
                     })
                 ], false)];

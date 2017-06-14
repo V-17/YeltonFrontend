@@ -1,5 +1,5 @@
 <!--
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@
         </subHeader>
         <SearchField
             id="searchField"
-            placeholder="Выберите товар ..."
+            placeholder="{i18n>selectProduct}"
             enableSuggestions="true"
             suggest="onSuggest"
             search="onSearch"

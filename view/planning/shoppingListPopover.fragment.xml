@@ -1,5 +1,5 @@
 <!--
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 -->
 
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <ResponsivePopover title="Выбранные товары" placement="Top">
+    <ResponsivePopover title="{i18n>selectedProducts}" placement="Top">
         <content>
             <List id="listSelectedProducts" mode="Delete" delete="onDeleteProduct" items="{selected>/}">
                 <StandardListItem title="{selected>name}" description="{selected>categoryName}"/>

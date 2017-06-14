@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2017 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -76,7 +76,7 @@ var pricesEditDialog = {
 
             this._oEditDialog.open();
         } else {
-            sap.m.MessageToast.show("Выберите покупку");
+            sap.m.MessageToast.show("{i18n>selectPrice}");
         }
     },
 
@@ -238,22 +238,22 @@ var pricesEditDialog = {
             comboBoxProduct.setValueState("None");
         }
         if (!isNumeric(price)) {
-            inputPrice.setValueStateText("Вводите числа и простые операции, например (2+2)/4");
+            inputPrice.setValueStateText("{i18n>enterNumberOrOperaion}");
             inputPrice.setValueState("Error");
             canContinue = false;
         } else if (price <= 0 || price > 9999999) {
-            inputPrice.setValueStateText("Введите число в диапазоне 0 – 9 999 999");
+            inputPrice.setValueStateText("{i18n>enterNumber}");
             inputPrice.setValueState("Error");
             canContinue = false;
         } else {
             inputPrice.setValueState("None");
         }
         if (!isNumeric(amount)) {
-            inputAmount.setValueStateText("Вводите числа и простые операции, например (2+2)/4");
+            inputAmount.setValueStateText("{i18n>enterNumberOrOperaion}");
             inputAmount.setValueState("Error");
             canContinue = false;
         } else if (amount <= 0 || amount > 9999999) {
-            inputAmount.setValueStateText("Введите число в диапазоне 0 – 9 999 999");
+            inputAmount.setValueStateText("{i18n>enterNumber}");
             inputAmount.setValueState("Error");
             canContinue = false;
         } else {
@@ -313,7 +313,7 @@ var pricesEditDialog = {
                         window.location.reload();
                         break;
                     case 500:
-                        sap.m.MessageToast.show("Произошла непредвиденная ошибка");
+                        sap.m.MessageToast.show("{i18n>unexpectedError}");
                         break;
                 }
             })

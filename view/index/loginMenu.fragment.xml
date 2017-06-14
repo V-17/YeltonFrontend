@@ -3,38 +3,38 @@
         <content>
             <IconTabBar expandable="false" select="_onPopupSelect">
                 <items>
-                    <IconTabFilter key="tabSignIn" text="ВХОД">
+                    <IconTabFilter key="tabSignIn" text="{i18n>SIGNIN}">
                         <VBox alignItems="Center">
-                            <Input id="inputSignInLogin" placeholder="Логин" width="250px" submit="_onButtonSignInPress" value="{/login}"/>
+                            <Input id="inputSignInLogin" placeholder="{i18n>login}" width="250px" submit="_onButtonSignInPress" value="{/login}"/>
                             <Input
                                 id="inputSignInPassword"
-                                placeholder="Пароль"
+                                placeholder="{i18n>password}"
                                 type="Password"
                                 width="250px"
                                 submit="_onButtonSignInPress"
                                 value="{/password}"/>
                             <commons:TextView id="textViewSignIn" semanticColor="Negative" width="250px" textAlign="Center"/>
-                            <Button text="Войти" type="Accept" press="_onButtonSignInPress" width="250px"/>
+                            <Button text="{i18n>signIn}" type="Accept" press="_onButtonSignInPress" width="250px"/>
                         </VBox>
                     </IconTabFilter>
-                    <IconTabFilter key="tabSignUp" text="РЕГИСТРАЦИЯ">
+                    <IconTabFilter key="tabSignUp" text="{i18n>SIGNUP}">
                         <VBox alignItems="Center">
-                            <Input id="inputSignUpLogin" placeholder="Логин" width="250px" submit="_onButtonSignUpPress" value="{/login}"/>
+                            <Input id="inputSignUpLogin" placeholder="{i18n>login}" width="250px" submit="_onButtonSignUpPress" value="{/login}"/>
                             <Input
                                 id="inputSignUpPassword"
-                                placeholder="Пароль"
+                                placeholder="{i18n>password}"
                                 type="Password"
                                 width="250px"
                                 submit="_onButtonSignUpPress"
                                 value="{/password}"/>
                             <Input
                                 id="inputSignUpEmail"
-                                placeholder="Email (не обязательно)"
+                                placeholder="{i18n>emailOptional}"
                                 type="Email"
                                 width="250px"
                                 submit="_onButtonSignUpPress"/>
                             <commons:TextView id="textViewSignUp" semanticColor="Negative" width="250px" textAlign="Center"/>
-                            <Button text="Зарегестрироваться" type="Emphasized" press="_onButtonSignUpPress" width="250px"/>
+                            <Button text="{i18n>signUp}" type="Emphasized" press="_onButtonSignUpPress" width="250px"/>
                         </VBox>
                     </IconTabFilter>
                 </items>

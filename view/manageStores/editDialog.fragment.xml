@@ -1,32 +1,32 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Магазин" afterClose="storesEditDialog.close">
+    <Dialog title="{i18n>store}" afterClose="storesEditDialog.close">
         <content>
-            <Label text="Название" labelFor="inputBarcode"/>
+            <Label text="{i18n>name}" labelFor="inputName"/>
             <Input
                 id="inputName"
                 value="{/name}"
-                placeholder="Введите название магазина"
-                valueStateText="Укажите название магазина"
+                placeholder="{i18n>enterStoreName}"
+                valueStateText="{i18n>enterStoreName}"
                 liveChange="_onInputNameLiveChange"
                 maxLength="50"/>
 
-            <Label text="Адрес" labelFor="inputAddress" class="sapUiSmallMarginTop"/>
-            <Input id="inputAddress" value="{/address}" placeholder="Введите адрес магазина" maxLength="255"/>
+            <Label text="{i18n>adress}" labelFor="inputAddress" class="sapUiSmallMarginTop"/>
+            <Input id="inputAddress" value="{/address}" placeholder="{i18n>enterStoreAddress}" maxLength="255"/>
 
             <HBox alignItems="Center" class="sapUiSmallMarginTop">
-                <Label text="Статус" tooltip="Архивный магазин будет скрыт при добавлении новой покупки"/>
+                <Label text="{i18n>status}" tooltip="{i18n>archivedStoreTooltip}"/>
                 <Switch
                     id="switchStatus"
                     state="{/enabled}"
-                    tooltip="Архивный магазин будет скрыт при добавлении новой покупки"
+                    tooltip="{i18n>archivedStoreTooltip}"
                     class="sapUiTinyMarginBegin"/>
             </HBox>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="Удалить" icon="sap-icon://delete" visible="false" press="storesDeleteDialog.show"/>
-            <Button id="buttonEdit" tooltip="Изменить" icon="sap-icon://edit" press="storesEditDialog.edit"/>
-            <Button id="buttonSave" text="Сохранить" type="Accept" press="storesEditDialog.save"/>
-            <Button text="Закрыть" press="storesEditDialog.close"/>
+            <Button id="buttonDelete" tooltip="{i18n>delete}" icon="sap-icon://delete" visible="false" press="storesDeleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press="storesEditDialog.edit"/>
+            <Button id="buttonSave" text="{i18n>save}" type="Accept" press="storesEditDialog.save"/>
+            <Button text="{i18n>close}" press="storesEditDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
