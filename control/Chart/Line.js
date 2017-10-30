@@ -33,7 +33,7 @@ sap.ui.define([
 
         init: function()
         {
-            jQuery.sap.require("yelton.lib.3rd.chartjs.2_5_0.Chart");
+            jQuery.sap.require("yelton.lib.3rd.chartjs.2_7_1.Chart");
         },
 
         onAfterRendering: function()
