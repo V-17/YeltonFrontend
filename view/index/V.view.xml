@@ -44,12 +44,12 @@
                         press="gotoGooglePlay"
                         class="sapUiTinyMarginEnd"/>
                     <Image src="img/social/github_32.png" tooltip="GitHub" press="gotoGitHub" class="sapUiTinyMarginEnd"/>
-                    <Image
+                    <!-- <Image
                         src="img/social/paypal.png"
                         width="32px"
                         height="32px"
                         tooltip="{i18n>supportProject}"
-                        press="onDonateButtonPress"/>
+                        press="onDonateButtonPress"/> -->
                 </HBox>
             </layout:VerticalLayout>
         </ux:headerContent>

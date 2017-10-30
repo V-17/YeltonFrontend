@@ -154,11 +154,11 @@ sap.ui.define([
                 }
             },
 
-            onDonateButtonPress: function()
-            {
-                sap.m.URLHelper.redirect(
-                    "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=USC23UYZAKQXA&lc=RU&item_name=Yelton%2eru&currency_code=RUB&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted",
-                    true);
-            }
+            // onDonateButtonPress: function()
+            // {
+            //     sap.m.URLHelper.redirect(
+            //         "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=USC23UYZAKQXA&lc=RU&item_name=Yelton%2eru&currency_code=RUB&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted",
+            //         true);
+            // }
         });
     });
