@@ -55,6 +55,10 @@ var pricesEditDialog = {
                     let productClientID = oFullModel.getProperty("/productClientID");
                     sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(productID + ":" + productClientID);
 
+                    if (sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").getSelectedItem().getBindingContext("products").getObject().fixedAmount) {
+                        sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEnabled(false);
+                    }
+
                     // из магазинов, выбираем в списке нужный
                     let storeID = oFullModel.getProperty("/storeID");
                     let storeClientID = oFullModel.getProperty("/storeClientID");
@@ -91,10 +95,9 @@ var pricesEditDialog = {
         this._oEditDialog.setModel(jsonModel);
 
         // Оставим только активные (не архивные) магазины
-        sap.ui.core.Fragment.byId("editDialog", "selectStore")
-            .getBinding("items").filter(
-                new sap.ui.model.Filter("enabled", sap.ui.model.FilterOperator.EQ, true)
-            );
+        sap.ui.core.Fragment.byId("editDialog", "selectStore").getBinding("items").filter(
+            new sap.ui.model.Filter("enabled", sap.ui.model.FilterOperator.EQ, true)
+        );
 
         // ставим текущую дату
         let dd = new Date().getDate();
@@ -105,8 +108,19 @@ var pricesEditDialog = {
         this._oEditDialog.open();
     },
 
-    onProductChange: function(event)
+    /**
+     * При выборе товара из списка
+     */
+    onProductChange: function(oEvent)
     {
+        const iFixedAmount = oEvent.getSource().getSelectedItem().getBindingContext("products").getObject().fixedAmount;
+        if (iFixedAmount) {
+            sap.ui.core.Fragment.byId("editDialog", "inputAmount").setValue(iFixedAmount);
+            sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEnabled(false);
+            sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation").setText();
+        } else {
+            sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEnabled(true);
+        }
         // сбрасываем статус
         sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setValueState("None");
     },

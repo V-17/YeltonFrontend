@@ -40,8 +40,9 @@ var productsEditDialog = {
             sap.ui.getCore().byId("selectUnit").setEnabled(false);
             sap.ui.getCore().byId("inputManufacturer").setEditable(false);
             sap.ui.getCore().byId("inputBarcode").setEditable(false);
+            sap.ui.getCore().byId('inputFixedAmount').setEditable(false);
             sap.ui.getCore().byId("buttonSave").setVisible(false);
-            let that = this;
+            const that = this;
 
             // идем за полными данными по выбранному товару
             $.ajax({
@@ -111,6 +112,7 @@ var productsEditDialog = {
         let name = this._oEditDialog.getModel().getProperty("/name");
         let manufacturer = this._oEditDialog.getModel().getProperty("/manufacturer");
         let barcode = this._oEditDialog.getModel().getProperty("/barcode");
+        let fixedAmount = this._oEditDialog.getModel().getProperty('/fixedAmount');
 
         if (!name || !name.trim()) {
             sap.ui.getCore().byId("inputName").setValueState("Error");
@@ -137,7 +139,8 @@ var productsEditDialog = {
                 "categoryID": categoryID,
                 "categoryClientID": categoryClientID,
                 "unitID": unitID,
-                "unitClientID": unitClientID
+                "unitClientID": unitClientID,
+                'fixedAmount': fixedAmount
             };
         } else {
             // изменяем
@@ -150,7 +153,8 @@ var productsEditDialog = {
                 "categoryID": categoryID,
                 "categoryClientID": categoryClientID,
                 "unitID": unitID,
-                "unitClientID": unitClientID
+                "unitClientID": unitClientID,
+                'fixedAmount': fixedAmount
             };
         }
 
@@ -187,6 +191,7 @@ var productsEditDialog = {
                     sap.ui.getCore().byId("selectUnit").setEnabled(false);
                     sap.ui.getCore().byId("inputManufacturer").setEditable(false);
                     sap.ui.getCore().byId("inputBarcode").setEditable(false);
+                    sap.ui.getCore().byId('inputFixedAmount').setEditable(false);
                     sap.ui.getCore().byId("buttonDelete").setVisible(false);
                     sap.ui.getCore().byId("buttonEdit").setVisible(true);
                     sap.ui.getCore().byId("buttonSave").setVisible(false);
@@ -209,6 +214,7 @@ var productsEditDialog = {
         sap.ui.getCore().byId("selectUnit").setEnabled(true);
         sap.ui.getCore().byId("inputManufacturer").setEditable(true);
         sap.ui.getCore().byId("inputBarcode").setEditable(true);
+        sap.ui.getCore().byId('inputFixedAmount').setEditable(true);
         sap.ui.getCore().byId("buttonDelete").setVisible(true);
         sap.ui.getCore().byId("buttonEdit").setVisible(false);
         sap.ui.getCore().byId("buttonSave").setVisible(true);
