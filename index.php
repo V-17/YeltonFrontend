@@ -9,10 +9,10 @@
         <meta name="google-play-app" content="app-id=ru.yelton.android">
 
         <script
-            src="/lib/3rd/openui5/1.48.12/resources/sap-ui-core.js"
+            src="/lib/3rd/openui5/1.60.02/resources/sap-ui-core.js"
             id="sap-ui-bootstrap"
             data-sap-ui-libs="sap.m"
-            data-sap-ui-theme="sap_bluecrystal"
+            data-sap-ui-theme="sap_belize"
             data-sap-ui-bindingSyntax="complex"
             data-sap-ui-preload="async"
             data-sap-ui-resourceroots='{
