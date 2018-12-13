@@ -17,8 +17,8 @@
 
 
 sap.ui.define([
-    "sap/ui/core/Control"
-
+    "sap/ui/core/Control",
+    'yelton/lib/3rd/chartjs/2.7.1/Chart.min'
 ], function(Control) {
     "use strict";
     return Control.extend("yelton.control.Chart.Line", {
@@ -29,11 +29,6 @@ sap.ui.define([
                     defaultValue: false
                 }
             }
-        },
-
-        init: function()
-        {
-            jQuery.sap.require("yelton.lib.3rd.chartjs.2_7_1.Chart");
         },
 
         onAfterRendering: function()
