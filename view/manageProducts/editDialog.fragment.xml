@@ -60,13 +60,6 @@
                                     press="productsEditDialog.searchBarcode"
                                     enabled="false"/>
                             </HBox>
-
-                            <Label text="{i18n>fixedAmount}" labelFor="inputFixedAmount" class="sapUiSmallMarginTop"/>
-                            <Input
-                                id="inputFixedAmount"
-                                placeholder="{i18n>amount}"
-                                value="{/fixedAmount}"
-                                type="Number"/>
                         </VBox>
                     </IconTabFilter>
                     <IconTabFilter id="tabPrices" text="{i18n>prices}">
