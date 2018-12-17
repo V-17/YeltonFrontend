@@ -25,7 +25,7 @@
         <script src="lib/YeltonLib.js"></script>
 
         <?php
-            include $_SERVER ['DOCUMENT_ROOT'].'/../backend_php/'.'web/services/internal/sessions.php';
+            include $_SERVER ['DOCUMENT_ROOT'].'/backend/'.'web/services/internal/sessions.php';
 
             // если пользователь залогинен - показыаем ему приложение
             if (\yelton\isSetUserID() === true) {
