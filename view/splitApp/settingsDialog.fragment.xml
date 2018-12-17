@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.ui.commons">
     <Dialog id="dialogSettings" title="{i18n>settings}" stretch="true" afterClose="onClose">
         <content>
-            <IconTabBar expandable="false" select="_onPopupSelect">
+            <IconTabBar expandable="false" select="_onPopupSelect" upperCase='true'>
                 <items>
                     <IconTabFilter key="tabUser" text="{i18n>USER}">
                         <Panel headerText="Email" expandable="true" expanded="true" backgroundDesign="Transparent">
@@ -39,6 +39,9 @@
                                 </ObjectListItem>
                             </items>
                         </List>
+                    </IconTabFilter>
+                    <IconTabFilter key="tabPremium" text="{i18n>premium}">
+                        <Label text="{i18n>premiumPeriodUntil}: {user>/premiumInfo/until}"/>
                     </IconTabFilter>
                 </items>
             </IconTabBar>
