@@ -2,8 +2,8 @@
 <html>
     <head>
         <?php
-            $y = $_SERVER ['DOCUMENT_ROOT'].'_yandexMetrika.php';
-            $g = $_SERVER ['DOCUMENT_ROOT'].'_googleAnalytics.php';
+            $y = '_yandexMetrika.php';
+            $g = '_googleAnalytics.php';
             if(file_exists($y))
                 include $y;
             if(file_exists($g))
