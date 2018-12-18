@@ -2,10 +2,14 @@
 <html>
     <head>
         <?php
-            include $_SERVER ['DOCUMENT_ROOT'].'yandexMetrika.php';
-            include $_SERVER ['DOCUMENT_ROOT'].'googleAnalytics.php';
+            $y = $_SERVER ['DOCUMENT_ROOT'].'_yandexMetrika.php';
+            $g = $_SERVER ['DOCUMENT_ROOT'].'_googleAnalytics.php';
+            if(file_exists($y))
+                include $y;
+            if(file_exists($g))
+                include $g;
         ?>
-        
+
         <title>Yelton</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="UTF-8">
