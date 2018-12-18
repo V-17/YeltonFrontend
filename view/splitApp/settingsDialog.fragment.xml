@@ -1,4 +1,9 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:commons="sap.ui.commons">
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:commons="sap.ui.commons"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout">
     <Dialog id="dialogSettings" title="{i18n>settings}" stretch="true" afterClose="onClose">
         <content>
             <IconTabBar expandable="false" select="_onPopupSelect" upperCase='true'>
@@ -22,12 +27,7 @@
                         </Panel>
                     </IconTabFilter>
                     <IconTabFilter key="tabDevices" text="{i18n>DEVICES}">
-                        <List
-                            id="tableDevices"
-                            items="{user>/deviceInfo}"
-                            mode="Delete"
-                            delete="onDeleteDevice"
-                            noDataText="{i18n>noMobileDevices}">
+                        <List id="tableDevices" items="{user>/deviceInfo}" mode="Delete" delete="onDeleteDevice" noDataText="{i18n>noMobileDevices}">
                             <items>
                                 <ObjectListItem title="{user>deviceName}" icon="img/AndroidRobot.png">
                                     <firstStatus>
@@ -40,8 +40,33 @@
                             </items>
                         </List>
                     </IconTabFilter>
-                    <IconTabFilter key="tabPremium" text="{i18n>premium}">
-                        <Label text="{i18n>premiumPeriodUntil}: {user>/premiumInfo/until}"/>
+                    <IconTabFilter id="tabPremium" text="{i18n>premium}">
+
+                        <f:SimpleForm
+                            editable="true"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="3"
+                            labelSpanL="3"
+                            labelSpanM="3"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="4"
+                            emptySpanL="4"
+                            emptySpanM="4"
+                            emptySpanS="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false">
+                            <f:content>
+                                <Label text="{i18n>premiumPeriodUntil}"/>
+                                <Text text="{user>/premiumInfo/until}"/>
+                                <!-- Раскомменить позже, когда продолжу работы в этом направлении -->
+
+                                <!-- <Label text="Продлить подписку"/> <SegmentedButton items='{orders>/types}' class='sapUiSizeCompact'> <items> <SegmentedButtonItem
+                                text="{orders>name}" key="{orders>id}"/> </items> <layoutData> <l:GridData span="XL2 L2 M2 S2"/> </layoutData> </SegmentedButton> -->
+                            </f:content>
+                        </f:SimpleForm>
                     </IconTabFilter>
                 </items>
             </IconTabBar>
