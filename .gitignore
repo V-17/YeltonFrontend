@@ -4,8 +4,9 @@ backend/
 # htaccess
 .htaccess
 
-# idea
-.idea/
+# analytics
+_googleAnalytics.php
+_yandexMetrika.php
 
 # 3rd party libs
 lib/3rd/
