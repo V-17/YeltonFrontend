@@ -44,12 +44,8 @@
                         press="gotoGooglePlay"
                         class="sapUiTinyMarginEnd"/>
                     <Image src="img/social/github_32.png" tooltip="GitHub" press="gotoGitHub" class="sapUiTinyMarginEnd"/>
-                    <!-- <Image
-                        src="img/social/paypal.png"
-                        width="32px"
-                        height="32px"
-                        tooltip="{i18n>supportProject}"
-                        press="onDonateButtonPress"/> -->
+                    <!-- <Image src="img/social/paypal.png" width="32px" height="32px" tooltip="{i18n>supportProject}"
+                    press="onDonateButtonPress"/> -->
                 </HBox>
             </layout:VerticalLayout>
         </ux:headerContent>
@@ -105,11 +101,7 @@
 
                                     </forms:SimpleForm>
                                     <HBox alignItems="Center" justifyContent="Center">
-                                        <Image
-                                            src="{i18n>gpBannerUrl}"
-                                            width="210px"
-                                            height="80px"
-                                            press="gotoGooglePlay"/>
+                                        <Image src="{i18n>gpBannerUrl}" width="210px" height="80px" press="gotoGooglePlay"/>
                                     </HBox>
                                 </VBox>
                             </HBox>
@@ -140,6 +132,27 @@
                                     </forms:SimpleForm>
                                 </VBox>
                             </HBox>
+                        </ux:blocks>
+                    </ux:ObjectPageSubSection>
+                </ux:subSections>
+            </ux:ObjectPageSection>
+
+            <ux:ObjectPageSection title="Новости">
+                <ux:subSections>
+                    <ux:ObjectPageSubSection>
+                        <ux:blocks>
+                            <VBox items='{news>/}'>
+                                <Panel expandable='true' expanded='{news>expanded}'>
+                                    <headerToolbar>
+                                        <Toolbar>
+                                            <Title text='{news>subject}'/>
+                                            <ToolbarSpacer/>
+                                            <Text text='{news>date}'/>
+                                        </Toolbar>
+                                    </headerToolbar>
+                                    <FormattedText htmlText="{news>content}"/>
+                                </Panel>
+                            </VBox>
                         </ux:blocks>
                     </ux:ObjectPageSubSection>
                 </ux:subSections>
