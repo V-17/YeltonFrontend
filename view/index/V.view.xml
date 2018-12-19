@@ -77,9 +77,7 @@
                     <ux:ObjectPageSubSection>
                         <ux:blocks>
                             <HBox>
-                                <VBox>
-                                    <Image id="imageSlideShow" src="img/android_screen1.png" class="sapUiHideOnPhone"/>
-                                </VBox>
+
                                 <VBox width="100%">
                                     <forms:SimpleForm maxContainerCols="1" layout="ResponsiveLayout">
                                         <core:Title text="Всегда под рукой"/>
@@ -96,6 +94,7 @@
                                             <Text text="- Поиск лучшего предложения"/>
                                             <Text text="- Фильтр покупок по различным критериям"/>
                                             <Text text="- Сканер штрих кодов для быстрого поиска товаров"/>
+                                            <Text text="- Анализируйте графики"/>
                                             <Text text="- Синхронизация с другими устройствам"/>
                                         </VBox>
 
@@ -103,6 +102,9 @@
                                     <HBox alignItems="Center" justifyContent="Center">
                                         <Image src="{i18n>gpBannerUrl}" width="210px" height="80px" press="gotoGooglePlay"/>
                                     </HBox>
+                                </VBox>
+                                <VBox>
+                                    <Image src="img/android_phone_and_tablet.png" width='80%' height='80%' class="sapUiHideOnPhone"/>
                                 </VBox>
                             </HBox>
 
