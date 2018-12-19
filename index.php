@@ -10,10 +10,10 @@
                 include $g;
         ?>
 
-        <title>Yelton</title>
+        <title>Yelton - учет покупок, сравнение цен, поиск дешевых товаров и экономия денег</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="UTF-8">
-        <meta NAME="description" CONTENT="Ваш личный помощник в планировании выгодных покупок">
+        <meta NAME="description" CONTENT="Сравнивайте цены на товары, ищите самые дешевые. Планируйте походы по магазинам и смотрите подробные отчеты">
         <meta NAME="keywords" CONTENT="покупки, шопинг, экономия, планирование, выгода">
         <meta name="google-play-app" content="app-id=ru.yelton.android">
 
@@ -64,7 +64,6 @@
                 </script>';
             }
          ?>
-         <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
     </head>
     <body class="sapUiBody" role="application">
         <div id="content"/>
