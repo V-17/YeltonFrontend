@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
-    <Dialog showHeader="false" afterClose="productsEditDialog.close">
+    <Dialog showHeader="false" afterClose=".editDialog.close">
         <content>
             <IconTabBar id="iconTabBar" expandable="false" select="_onEditDialogSelectTab">
                 <items>
@@ -52,12 +52,12 @@
                                     value="{/barcode}"
                                     maxLength="255"
                                     width="100%"
-                                    liveChange="productsEditDialog.onBarcodeLiveChange"/>
+                                    liveChange=".editDialog.onBarcodeLiveChange"/>
                                 <Button
                                     id="buttonBarcodeSearch"
                                     icon="sap-icon://globe"
                                     tooltip="{i18n>searchInWeb}"
-                                    press="productsEditDialog.searchBarcode"
+                                    press=".editDialog.searchBarcode"
                                     enabled="false"/>
                             </HBox>
                         </VBox>
@@ -98,7 +98,7 @@
                                 title="{name}"
                                 counter="{count}"
                                 type="Active"
-                                press="productsEditDialog.navToPricesFilter"
+                                press=".editDialog.navToPricesFilter"
                                 tooltip="{i18n>goToPurchaseHistory}"/>
                         </List>
                     </IconTabFilter>
@@ -106,10 +106,10 @@
             </IconTabBar>
         </content>
         <buttons>
-            <Button id="buttonDelete" tooltip="{i18n>delete}" icon="sap-icon://delete" visible="false" press="productsDeleteDialog.show"/>
-            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press="productsEditDialog.edit"/>
-            <Button id="buttonSave" text="{i18n>save}" type="Accept" press="productsEditDialog.save"/>
-            <Button text="{i18n>close}" press="productsEditDialog.close"/>
+            <Button id="buttonDelete" tooltip="{i18n>delete}" icon="sap-icon://delete" visible="false" press=".deleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press=".editDialog.edit"/>
+            <Button id="buttonSave" text="{i18n>save}" type="Accept" press=".editDialog.save"/>
+            <Button text="{i18n>close}" press=".editDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

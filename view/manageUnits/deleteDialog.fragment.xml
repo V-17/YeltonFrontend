@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog afterClose="unitsDeleteDialog.cancel" initialFocus="buttonCancel" showHeader="false">
+    <Dialog afterClose=".deleteDialog.cancel" initialFocus="buttonCancel" showHeader="false">
         <subHeader>
             <Toolbar>
                 <ToolbarSpacer/>
@@ -10,10 +10,10 @@
         </subHeader>
         <Text text="{i18n>deleteUnitWaning}"/>
         <beginButton>
-            <Button text="{i18n>delete}" type="Reject" press="unitsDeleteDialog.apply"/>
+            <Button text="{i18n>delete}" type="Reject" press=".deleteDialog.apply"/>
         </beginButton>
         <endButton>
-            <Button id="buttonCancel" text="{i18n>cancel}" press="unitsDeleteDialog.cancel"/>
+            <Button id="buttonCancel" text="{i18n>cancel}" press=".deleteDialog.cancel"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

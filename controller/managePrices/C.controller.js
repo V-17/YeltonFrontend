@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,55 +15,57 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("yelton.controller.managePrices.editDialog");
-jQuery.sap.require("yelton.controller.managePrices.deleteDialog");
-jQuery.sap.require("yelton.controller.managePrices.filterDialog");
-
 sap.ui.define([
-        "sap/ui/core/mvc/Controller",
-        "sap/ui/model/json/JSONModel",
-        "sap/ui/model/Filter",
-        "sap/ui/model/FilterOperator"
-    ],
-    function(Controller, JSONModel, Filter, FilterOperator) {
-        "use strict";
-        return Controller.extend("yelton.controller.managePrices.C", {
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    'yelton/lib/lib',
+    './editDialog',
+    './deleteDialog',
+    './filterDialog'
+], function(Controller, JSONModel, Filter, FilterOperator, lib, editDialog, deleteDialog, filterDialog) {
+    "use strict";
+    return Controller.extend("yelton.controller.managePrices.C", {
+        editDialog: editDialog,
+        deleteDialog: deleteDialog,
+        filterDialog: filterDialog,
 
-            onInit: function()
-            {
-                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.getRoute("init").attachPatternMatched(this.onRouter, this);
-                oRouter.getRoute("prices").attachPatternMatched(this.onRouter, this);
-                oRouter.getRoute("filterProductAndStore").attachPatternMatched(this.onRouterFilterProductAndStore, this);
-            },
+        onInit: function()
+        {
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.getRoute("init").attachPatternMatched(this.onRouter, this);
+            oRouter.getRoute("prices").attachPatternMatched(this.onRouter, this);
+            oRouter.getRoute("filterProductAndStore").attachPatternMatched(this.onRouterFilterProductAndStore, this);
+        },
 
-            onRouter: function(oEvent)
-            {
-                // FIXME: id
-                sap.ui.getCore().byId("__xmlview0--listMainMenu").setSelectedItemById("__item0");
-            },
+        onRouter: function(oEvent)
+        {
+            // FIXME: id
+            lib.getMainMenu().top.setSelectedItemById("__item0");
+        },
 
-            onRouterFilterProductAndStore: function(oEvent)
-            {
-                this.onRouter();
-                pricesFilterDialog.onRouterFilterProductAndStore.apply(this, [oEvent]);
-            },
+        onRouterFilterProductAndStore: function(oEvent)
+        {
+            this.onRouter(oEvent);
+            filterDialog.onRouterFilterProductAndStore.apply(this, [oEvent]);
+        },
 
-            // Поиск
-            onFilterLiveSearch: function(oEvent)
-            {
-                let sQuery = oEvent.getParameter("newValue");
-                let table = this.getView().byId("tablePrices");
-                table.getBinding("items").filter(
-                    new Filter([
-                        new Filter("productName", FilterOperator.Contains, sQuery),
-                        new Filter("categoryName", FilterOperator.Contains, sQuery),
-                        new Filter("storeName", FilterOperator.Contains, sQuery),
-                        new Filter("date", FilterOperator.Contains, sQuery),
-                        new Filter("price", FilterOperator.EQ, sQuery),
-                        new Filter("amount", FilterOperator.EQ, sQuery),
-                    ])
-                );
-            }
-        });
+        // Поиск
+        onFilterLiveSearch: function(oEvent)
+        {
+            let sQuery = oEvent.getParameter("newValue");
+            let table = this.getView().byId("tablePrices");
+            table.getBinding("items").filter(
+                new Filter([
+                    new Filter("productName", FilterOperator.Contains, sQuery),
+                    new Filter("categoryName", FilterOperator.Contains, sQuery),
+                    new Filter("storeName", FilterOperator.Contains, sQuery),
+                    new Filter("date", FilterOperator.Contains, sQuery),
+                    new Filter("price", FilterOperator.EQ, sQuery),
+                    new Filter("amount", FilterOperator.EQ, sQuery),
+                ])
+            );
+        }
     });
+});

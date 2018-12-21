@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,73 +15,73 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("yelton.controller.splitApp.settingsPopover");
-jQuery.sap.require("yelton.controller.Dict");
-
 sap.ui.define([
-        "sap/ui/core/mvc/Controller",
-        "sap/ui/model/json/JSONModel"
-    ],
-    function(Controller, JSONModel) {
-        "use strict";
-        return Controller.extend("yelton.controller.splitApp.C", {
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    'yelton/controller/splitApp/settingsPopover',
+    'yelton/lib/dict',
+    'yelton/lib/lib'
+], function(Controller, JSONModel, settings, dict, lib) {
+    "use strict";
+    return Controller.extend("yelton.controller.splitApp.C", {
+        settings: settings,
 
-            onInit: function()
-            {
-                let d = new Dict();
-                d.refreshPrices();
-                d.refreshCategories();
-                d.refreshProducts();
-                d.refreshStores();
-                d.refreshUnits();
-            },
+        onInit: function()
+        {
+            dict
+                .refreshPrices()
+                .refreshCategories()
+                .refreshProducts()
+                .refreshStores()
+                .refreshUnits();
+        },
 
-            onNavToDetail: function(oEvent)
-            {
-                let id = this.getView().byId("listMainMenu").getSelectedItem().sId;
-                this.getView().byId("listMenuBottom").removeSelections();
-                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        onNavToDetail: function(oEvent)
+        {
+            let id = this.getView().byId("listMainMenu").getSelectedItem().sId;
+            lib.getMainMenu().bottom.removeSelections();
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-                //FIXME: можно же как то с нормальными ID сделать это
-                switch (id) {
-                    case "__item0":
-                        oRouter.navTo("prices");
-                        break;
-                    case "__item1":
-                        oRouter.navTo("categories");
-                        break;
-                    case "__item2":
-                        oRouter.navTo("products");
-                        break;
-                    case "__item3":
-                        oRouter.navTo("stores");
-                        break;
-                    case "__item4":
-                        oRouter.navTo("units");
-                        break;
-                }
-            },
+            //FIXME: можно же как то с нормальными ID сделать это
+            switch (id) {
+                case "__item0":
+                    oRouter.navTo("prices");
+                    break;
+                case "__item1":
+                    oRouter.navTo("categories");
+                    break;
+                case "__item2":
+                    oRouter.navTo("products");
+                    break;
+                case "__item3":
+                    oRouter.navTo("stores");
+                    break;
+                case "__item4":
+                    oRouter.navTo("units");
+                    break;
+            }
+        },
 
-            onNavToReports: function()
-            {
-                //FIXME: можно же как то с нормальными ID сделать это
-                let id = this.getView().byId("listMenuBottom").getSelectedItem().sId;
-                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                this.getView().byId("listMainMenu").removeSelections();
+        onNavToReports: function()
+        {
+            //FIXME: можно же как то с нормальными ID сделать это
+            let id = this.getView().byId("listMenuBottom").getSelectedItem().sId;
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            this.getView().byId("listMainMenu").removeSelections();
 
-                switch (id) {
-                    case "__item5":
-                        oRouter.navTo("reports");
-                        break;
-                    case "__item6":
-                        oRouter.navTo("planning");
-                        break;
-                }
-            },
+            switch (id) {
+                case "__item5":
+                    oRouter.navTo("reports");
+                    break;
+                case "__item6":
+                    oRouter.navTo("planning");
+                    break;
+            }
+        },
 
-            onSettingsButtonPress: function()
-            {
-                settings.showPopover.apply(this);
-            },
-        });
+        onSettingsButtonPress: function()
+        {
+            settings.showPopover.apply(this);
+        },
     });
+});

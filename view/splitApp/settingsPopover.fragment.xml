@@ -6,12 +6,12 @@
                 description="{user>/userInfo/login}"
                 type="Active"
                 icon="sap-icon://account"
-               press="settings.showSettings"/>
+               press=".settings.showSettings"/>
             <StandardListItem
                 title="{i18n>exit}"
                 type="Active"
                 icon="sap-icon://log"
-                press="settings.logout"/>
+                press=".settings.logout"/>
         </List>
     </Popover>
 </core:FragmentDefinition>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,45 +15,48 @@
  * limitations under the License.
  */
 
-var categoriesDeleteDialog = {
 
-    show: function()
-    {
-        let path = this.getView().byId("listCategories").getSelectedContexts();
+sap.ui.define([
+    'sap/ui/model/json/JSONModel',
+    'yelton/lib/dict'
+], function(JSONModel, dict) {
+    "use strict";
 
-        if (path.length !== 0) {
-            let model = this.getView().getModel("categories").getProperty(path[0].sPath);
-            let jsonModel = new sap.ui.model.json.JSONModel(model);
-            this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.manageCategories.deleteDialog", this);
-            this.getView().addDependent(this._oDeleteDialog);
-            this._oDeleteDialog.setModel(jsonModel);
-            this._oDeleteDialog.open();
-        } else {
-            sap.m.MessageToast.show("{i18n>selectCategory}");
-        }
-    },
+    return {
 
-    apply: function()
-    {
-        let id = this._oDeleteDialog.getModel().getProperty("/id");
-        let clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
+        show: function()
+        {
+            let path = this.getView().byId("listCategories").getSelectedContexts();
 
-        let that = this;
-        $.ajax({
+            if (path.length !== 0) {
+                let model = this.getView().getModel("categories").getProperty(path[0].sPath);
+                let jsonModel = new JSONModel(model);
+                this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.manageCategories.deleteDialog", this);
+                this.getView().addDependent(this._oDeleteDialog);
+                this._oDeleteDialog.setModel(jsonModel);
+                this._oDeleteDialog.open();
+            } else {
+                sap.m.MessageToast.show("{i18n>selectCategory}");
+            }
+        },
+
+        apply: function()
+        {
+            let id = this._oDeleteDialog.getModel().getProperty("/id");
+            let clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
+
+            let that = this;
+            $.ajax({
                 url: "/backend/web/services/manageCategories.php",
                 type: "DEL",
                 data: {
                     id: id,
                     clientID: clientID
                 }
-            })
-            .done(function(data)
-            {
+            }).done(function(data) {
                 if (!data) data = null; // for "204 - no content" answer
-                new Dict().setCategories(JSON.parse(data));
-            })
-            .fail(function(answer)
-            {
+                dict.setCategories(JSON.parse(data));
+            }).fail(function(answer) {
                 switch (answer.status) {
                     case 401:
                         window.location.reload();
@@ -62,15 +65,15 @@ var categoriesDeleteDialog = {
                         sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
                         break;
                 }
-            })
-            .always(function() {
+            }).always(function() {
                 that._oDeleteDialog.destroy();
                 that._oEditDialog.destroy();
             });
-    },
+        },
 
-    cancel: function()
-    {
-        this._oDeleteDialog.destroy();
-    }
-};
+        cancel: function()
+        {
+            this._oDeleteDialog.destroy();
+        }
+    };
+});

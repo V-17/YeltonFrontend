@@ -17,7 +17,7 @@
                 growing="true"
                 growingThreshold="50"
                 growingScrollToLoad="true"
-                itemPress="categoriesEditDialog.showEditDialog">
+                itemPress=".editDialog.showEditDialog">
                 <items>
                     <StandardListItem type="Active" title="{categories>name}"/>
                 </items>
@@ -29,7 +29,7 @@
                 <Button
                     icon="sap-icon://add"
                     text="{i18n>create}"
-                    press="categoriesEditDialog.showCreateDialog"
+                    press=".editDialog.showCreateDialog"
                     tooltip="{i18n>createNewCategory}"/>
             </Toolbar>
         </footer>

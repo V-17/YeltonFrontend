@@ -1,7 +1,11 @@
 {
     "_version": "0.5.1",
     "sap.ui5": {
-        "rootView": "yelton.view.splitApp.V",
+        "rootView": {
+            "id": "splitAppView",
+            "viewName": "yelton.view.splitApp.V",
+            "type": "XML"
+        },
         "routing": {
             "config": {
                 "routerClass": "sap.m.routing.Router",

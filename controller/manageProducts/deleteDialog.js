@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,62 +15,69 @@
  * limitations under the License.
  */
 
-var productsDeleteDialog = {
+sap.ui.define([
+    'sap/ui/model/json/JSONModel',
+    'yelton/lib/dict'
+], function(JSONModel, dict) {
+    "use strict";
 
-    show: function()
-    {
-        let path = this.getView().byId("listProducts").getSelectedContexts();
+    return {
 
-        if (path.length !== 0) {
-            let model = this.getView().getModel("products").getProperty(path[0].sPath);
-            let jsonModel = new sap.ui.model.json.JSONModel(model);
-            this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.manageProducts.deleteDialog", this);
-            this.getView().addDependent(this._oDeleteDialog);
-            this._oDeleteDialog.setModel(jsonModel);
-            this._oDeleteDialog.open();
-        } else {
-            sap.m.MessageToast.show("{i18n>selectProduct}");
+        show: function()
+        {
+            let path = this.getView().byId("listProducts").getSelectedContexts();
+
+            if (path.length !== 0) {
+                let model = this.getView().getModel("products").getProperty(path[0].sPath);
+                let jsonModel = new sap.ui.model.json.JSONModel(model);
+                this._oDeleteDialog = sap.ui.xmlfragment("yelton.view.manageProducts.deleteDialog", this);
+                this.getView().addDependent(this._oDeleteDialog);
+                this._oDeleteDialog.setModel(jsonModel);
+                this._oDeleteDialog.open();
+            } else {
+                sap.m.MessageToast.show("{i18n>selectProduct}");
+            }
+        },
+
+        apply: function()
+        {
+            let id = this._oDeleteDialog.getModel().getProperty("/id");
+            let clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
+
+            let that = this;
+            $.ajax({
+                    url: "/backend/web/services/manageProducts.php",
+                    type: "DEL",
+                    data: {
+                        id: id,
+                        clientID: clientID
+                    }
+                })
+                .done(function(data)
+                {
+                    if (!data) data = null; // for "204 - no content" answer
+                    dict.setProducts(JSON.parse(data));
+                })
+                .fail(function(answer)
+                {
+                    switch (answer.status) {
+                        case 401:
+                            window.location.reload();
+                            break;
+                        case 500:
+                            sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
+                            break;
+                    }
+                })
+                .always(function() {
+                    that._oEditDialog.destroy();
+                    that._oDeleteDialog.destroy();
+                });
+        },
+
+        cancel: function()
+        {
+            this._oDeleteDialog.destroy();
         }
-    },
-
-    apply: function()
-    {
-        let id = this._oDeleteDialog.getModel().getProperty("/id");
-        let clientID = this._oDeleteDialog.getModel().getProperty("/clientID");
-
-        let that = this;
-        $.ajax({
-                url: "/backend/web/services/manageProducts.php",
-                type: "DEL",
-                data: {
-                    id: id,
-                    clientID: clientID
-                }
-            })
-            .done(function(data)
-            {
-                if (!data) data = null; // for "204 - no content" answer
-                new Dict().setProducts(JSON.parse(data));
-            })
-            .fail(function(answer)
-            {
-                switch (answer.status) {
-                    case 401:
-                        window.location.reload();
-                        break;
-                    case 500:
-                        sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
-                        break;
-                }
-            })
-            .always(function() {
-                that._oEditDialog.destroy();
-                that._oDeleteDialog.destroy();
-            });
-    },
-
-    cancel: function()
-    {
-        this._oDeleteDialog.destroy();
-    }
-};
+    };
+});

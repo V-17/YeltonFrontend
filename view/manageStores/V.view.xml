@@ -23,7 +23,7 @@
                 growing="true"
                 growingThreshold="50"
                 growingScrollToLoad="true"
-                itemPress="storesEditDialog.showEditDialog">
+                itemPress=".editDialog.showEditDialog">
                 <items>
                     <StandardListItem
                         type="Active"
@@ -39,7 +39,7 @@
                 <Button
                     icon="sap-icon://add"
                     text="{i18n>create}"
-                    press="storesEditDialog.showCreateDialog"
+                    press=".editDialog.showCreateDialog"
                     tooltip="{i18n>createNewStore}"/>
             </Toolbar>
         </footer>

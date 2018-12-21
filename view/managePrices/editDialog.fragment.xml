@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="{i18n>price}" afterClose="pricesEditDialog.close">
+    <Dialog title="{i18n>price}" afterClose=".editDialog.close">
         <content>
             <VBox>
                 <Label text="{i18n>product}"/>
@@ -9,7 +9,7 @@
                     tooltip="{i18n>product}"
                     showSecondaryValues="true"
                     valueStateText="{i18n>selectProduct}"
-                    change="pricesEditDialog.onProductChange"
+                    change=".editDialog.onProductChange"
                     items="{
                         path: 'products>/',
                         sorter: [{
@@ -43,7 +43,7 @@
                     id="inputPrice"
                     placeholder="{i18n>managePrices.costPlaceholder}"
                     value="{/price}"
-                    liveChange="pricesEditDialog.onInputPriceLiveChange"/>
+                    liveChange=".editDialog.onInputPriceLiveChange"/>
                 <Text id="textPriceCalculation"/>
 
                 <Label text="{i18n>amount}" labelFor="inputAmount" class="sapUiTinyMarginTop"/>
@@ -51,7 +51,7 @@
                     id="inputAmount"
                     placeholder="{i18n>managePrices.amountPlaceholder}"
                     value="{/amount}"
-                    liveChange="pricesEditDialog.onInputAmountLiveChange"/>
+                    liveChange=".editDialog.onInputAmountLiveChange"/>
                 <Text id="textAmountCalculation"/>
             </VBox>
         </content>
@@ -61,10 +61,10 @@
                 tooltip="{i18n>delete}"
                 icon="sap-icon://delete"
                 visible="false"
-                press="pricesDeleteDialog.show"/>
-            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press="pricesEditDialog.edit"/>
-            <Button id="buttonSave" text="{i18n>save}" type="Accept" press="pricesEditDialog.save"/>
-            <Button text="{i18n>close}" press="pricesEditDialog.close"/>
+                press=".deleteDialog.show"/>
+            <Button id="buttonEdit" tooltip="{i18n>edit}" icon="sap-icon://edit" press=".editDialog.edit"/>
+            <Button id="buttonSave" text="{i18n>save}" type="Accept" press=".editDialog.save"/>
+            <Button text="{i18n>close}" press=".editDialog.close"/>
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

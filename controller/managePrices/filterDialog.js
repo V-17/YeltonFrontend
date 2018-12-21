@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,219 +15,224 @@
  * limitations under the License.
  */
 
-var pricesFilterDialog = {
+sap.ui.define([
+    'sap/ui/model/json/JSONModel',
+    'sap/ui/model/Filter',
+    'sap/ui/model/FilterOperator',
+    'yelton/lib/dict'
+], function(JSONModel, Filter, FilterOperator, dict) {
+    "use strict";
+    return {
+        show: function() {
+            this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "yelton.view.managePrices.filterDialog", this);
+            this.getView().addDependent(this._oFilterDialog);
 
-    show: function()
-    {
-        this._oFilterDialog = sap.ui.xmlfragment("filterDialog", "yelton.view.managePrices.filterDialog", this);
-        this.getView().addDependent(this._oFilterDialog);
+            let currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
+            let that = this;
 
-        let currentFilters = this.byId("tablePrices").getBinding("items").aFilters;
-        let that = this;
+            currentFilters.forEach(function(item, i, arr) {
+                switch (item.sPath) {
+                    case "productID":
+                        sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue(that._filterProductName);
+                        break;
+                    case "categoryID":
+                        sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue(that._filterCategoryName);
+                        break;
+                    case "storeID":
+                        sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").setValue(that._filterStoreName);
+                        break;
+                }
+            });
 
-        currentFilters.forEach(function(item, i, arr) {
-            switch (item.sPath) {
-                case "productID":
-                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue(that._filterProductName);
-                    break;
-                case "categoryID":
-                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue(that._filterCategoryName);
-                    break;
-                case "storeID":
-                    sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").setValue(that._filterStoreName);
-                    break;
-            }
-        });
-
-        // загружаем список товаров (у которых есть хотя бы 1 покупка)
-        $.ajax({
+            // загружаем список товаров (у которых есть хотя бы 1 покупка)
+            $.ajax({
                 url: "backend/web/services/reports.php",
                 type: "GET",
                 data: {
                     "productsWithPrices": null
                 }
-            })
-            .done(function(answer)
-            {
-                that._oFilterDialog.setModel(new sap.ui.model.json.JSONModel(JSON.parse(answer)), "products");
-            })
-            .fail(function(answer)
-            {
+            }).done(function(answer) {
+                that._oFilterDialog.setModel(new JSONModel(JSON.parse(answer)), "products");
+            }).fail(function(answer) {
                 if (answer.status === 401) {
                     window.location.reload();
                 }
             });
 
-        that._oFilterDialog.open();
-    },
+            that._oFilterDialog.open();
+        },
 
-    // сброс фильтра
-    reset: function()
-    {
-        this.byId("buttonResetFilter").setVisible(false);
-        this.byId("tablePrices").getBinding("items").filter(null);
-        this._filterProductID = null;
-        this._filterProductClientID = null;
-        this._filterProductName = null;
-        this._filterCategoryID = null;
-        this._filterCategoryClientID = null;
-        this._filterCategoryName = null;
-        this._filterStoreID = null;
-        this._filterStoreClientID = null;
-        this._filterStoreName = null;
-    },
-
-    onProductSuggest: function(event)
-    {
-        let value = event.getParameter("suggestValue");
-        let filters = [];
-        if (value) {
-            filters = [new sap.ui.model.Filter([
-                new sap.ui.model.Filter("name", function(sText) {
-                    return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
-                }),
-                new sap.ui.model.Filter("categoryName", function(sDes) {
-                    return (sDes || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
-                })
-            ], false)];
-        }
-
-        sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct")
-            .getBinding("suggestionItems")
-            .filter(filters);
-        sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").suggest();
-    },
-
-    // при выборе товара
-    onProductSearch: function(event)
-    {
-        if (event.getParameter("suggestionItem")) {
-            sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue();
-            let item = event.getParameter("suggestionItem");
-            let key = item.getKey().split(":");
-            this._filterProductID = key[0];
-            this._filterProductClientID = key[1];
-            this._filterProductName = item.getText();
-        } else {
+        // сброс фильтра
+        reset: function()
+        {
+            this.byId("buttonResetFilter").setVisible(false);
+            this.byId("tablePrices").getBinding("items").filter(null);
             this._filterProductID = null;
             this._filterProductClientID = null;
             this._filterProductName = null;
-        }
-    },
-
-    onCategorySuggest: function(event)
-    {
-        let value = event.getParameter("suggestValue");
-        let filter;
-        if (value) {
-            filter = new sap.ui.model.Filter("name", function(sText) {
-                return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
-            });
-        }
-
-        sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory")
-            .getBinding("suggestionItems")
-            .filter(filter);
-        sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").suggest();
-    },
-
-    // при выборе категории
-    onCategorySearch: function(event)
-    {
-        if (event.getParameter("suggestionItem")) {
-            sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue();
-            let item = event.getParameter("suggestionItem");
-            let key = item.getKey().split(":");
-            this._filterCategoryID = key[0];
-            this._filterCategoryClientID = key[1];
-            this._filterCategoryName = item.getText();
-        } else {
             this._filterCategoryID = null;
             this._filterCategoryClientID = null;
             this._filterCategoryName = null;
-        }
-    },
-
-    onStoreSuggest: function(event)
-    {
-        let value = event.getParameter("suggestValue");
-        let filter;
-        if (value) {
-            filter = new sap.ui.model.Filter("name", function(sText) {
-                return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
-            });
-        }
-
-        sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore")
-            .getBinding("suggestionItems")
-            .filter(filter);
-        sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").suggest();
-    },
-
-    // при выборе магазина
-    onStoreSearch: function(e)
-    {
-        if (e.getParameter("suggestionItem")) {
-            let item = e.getParameter("suggestionItem");
-            let key = item.getKey().split(":");
-            this._filterStoreID = key[0];
-            this._filterStoreClientID = key[1];
-            this._filterStoreName = item.getText();
-        } else {
             this._filterStoreID = null;
             this._filterStoreClientID = null;
             this._filterStoreName = null;
-        }
-    },
+        },
 
-    // применение фильтра
-    apply: function()
-    {
-        if ((this._filterProductID && this._filterProductClientID) ||
-            (this._filterCategoryID && this._filterCategoryClientID) ||
-            (this._filterStoreID && this._filterStoreClientID)
-        ) {
-            let aFilters = [];
-
-            if (this._filterProductID && this._filterProductClientID) {
-                aFilters.push(new sap.ui.model.Filter("productID", sap.ui.model.FilterOperator.EQ, this._filterProductID));
-                aFilters.push(new sap.ui.model.Filter("productClientID", sap.ui.model.FilterOperator.EQ, this._filterProductClientID));
-            }
-            if (this._filterCategoryID && this._filterCategoryClientID) {
-                aFilters.push(new sap.ui.model.Filter("categoryID", sap.ui.model.FilterOperator.EQ, this._filterCategoryID));
-                aFilters.push(new sap.ui.model.Filter("categoryClientID", sap.ui.model.FilterOperator.EQ, this._filterCategoryClientID));
-            }
-            if (this._filterStoreID && this._filterStoreClientID) {
-                aFilters.push(new sap.ui.model.Filter("storeID", sap.ui.model.FilterOperator.EQ, this._filterStoreID));
-                aFilters.push(new sap.ui.model.Filter("storeClientID", sap.ui.model.FilterOperator.EQ, this._filterStoreClientID));
+        onProductSuggest: function(event)
+        {
+            let value = event.getParameter("suggestValue");
+            let filters = [];
+            if (value) {
+                filters = [new Filter([
+                    new Filter("name", function(sText) {
+                        return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                    }),
+                    new Filter("categoryName", function(sDes) {
+                        return (sDes || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                    })
+                ], false)];
             }
 
-            this.byId("tablePrices").getBinding("items").filter(aFilters);
-            this.byId("buttonResetFilter").setVisible(true);
-        } else {
-            pricesFilterDialog.reset.apply(this);
-        }
-        if (this._oFilterDialog) {
+            sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct")
+                .getBinding("suggestionItems")
+                .filter(filters);
+            sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").suggest();
+        },
+
+        // при выборе товара
+        onProductSearch: function(event)
+        {
+            if (event.getParameter("suggestionItem")) {
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").setValue();
+                let item = event.getParameter("suggestionItem");
+                let key = item.getKey().split(":");
+                this._filterProductID = key[0];
+                this._filterProductClientID = key[1];
+                this._filterProductName = item.getText();
+            } else {
+                this._filterProductID = null;
+                this._filterProductClientID = null;
+                this._filterProductName = null;
+            }
+        },
+
+        onCategorySuggest: function(event)
+        {
+            let value = event.getParameter("suggestValue");
+            let filter;
+            if (value) {
+                filter = new Filter("name", function(sText) {
+                    return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                });
+            }
+
+            sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory")
+                .getBinding("suggestionItems")
+                .filter(filter);
+            sap.ui.core.Fragment.byId("filterDialog", "searchFieldCategory").suggest();
+        },
+
+        // при выборе категории
+        onCategorySearch: function(event)
+        {
+            if (event.getParameter("suggestionItem")) {
+                sap.ui.core.Fragment.byId("filterDialog", "searchFieldProduct").setValue();
+                let item = event.getParameter("suggestionItem");
+                let key = item.getKey().split(":");
+                this._filterCategoryID = key[0];
+                this._filterCategoryClientID = key[1];
+                this._filterCategoryName = item.getText();
+            } else {
+                this._filterCategoryID = null;
+                this._filterCategoryClientID = null;
+                this._filterCategoryName = null;
+            }
+        },
+
+        onStoreSuggest: function(event)
+        {
+            let value = event.getParameter("suggestValue");
+            let filter;
+            if (value) {
+                filter = new Filter("name", function(sText) {
+                    return (sText || "").toUpperCase().indexOf(value.toUpperCase()) > -1;
+                });
+            }
+
+            sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore")
+                .getBinding("suggestionItems")
+                .filter(filter);
+            sap.ui.core.Fragment.byId("filterDialog", "searchFieldStore").suggest();
+        },
+
+        // при выборе магазина
+        onStoreSearch: function(e)
+        {
+            if (e.getParameter("suggestionItem")) {
+                let item = e.getParameter("suggestionItem");
+                let key = item.getKey().split(":");
+                this._filterStoreID = key[0];
+                this._filterStoreClientID = key[1];
+                this._filterStoreName = item.getText();
+            } else {
+                this._filterStoreID = null;
+                this._filterStoreClientID = null;
+                this._filterStoreName = null;
+            }
+        },
+
+        // применение фильтра
+        apply: function()
+        {
+            if ((this._filterProductID && this._filterProductClientID) ||
+                (this._filterCategoryID && this._filterCategoryClientID) ||
+                (this._filterStoreID && this._filterStoreClientID)
+            ) {
+                let aFilters = [];
+
+                if (this._filterProductID && this._filterProductClientID) {
+                    aFilters.push(new Filter("productID", FilterOperator.EQ, this._filterProductID));
+                    aFilters.push(new Filter("productClientID", FilterOperator.EQ, this._filterProductClientID));
+                }
+                if (this._filterCategoryID && this._filterCategoryClientID) {
+                    aFilters.push(new Filter("categoryID", FilterOperator.EQ, this._filterCategoryID));
+                    aFilters.push(new Filter("categoryClientID", FilterOperator.EQ, this._filterCategoryClientID));
+                }
+                if (this._filterStoreID && this._filterStoreClientID) {
+                    aFilters.push(new Filter("storeID", FilterOperator.EQ, this._filterStoreID));
+                    aFilters.push(new Filter("storeClientID", FilterOperator.EQ, this._filterStoreClientID));
+                }
+
+                // 21.12.18 FIXME: при первом заходе по прямой ссылке фильтр не работает - на этом этапе он еще не видит getBinding("items")
+                if (this.byId("tablePrices").getBinding("items")) {
+                    this.byId("tablePrices").getBinding("items").filter(aFilters);
+                }
+                this.byId("buttonResetFilter").setVisible(true);
+            } else {
+                this.filterDialog.reset();
+            }
+            if (this._oFilterDialog) {
+                this._oFilterDialog.destroy();
+            }
+        },
+
+        close: function()
+        {
             this._oFilterDialog.destroy();
+        },
+
+        /**
+         * Роутинг на фильтрацию по товару и магазину
+         */
+        onRouterFilterProductAndStore: function(oEvent)
+        {
+            this._filterProductID = oEvent.getParameter("arguments").productID;
+            this._filterProductClientID = oEvent.getParameter("arguments").productClientID;
+            this._filterStoreID = oEvent.getParameter("arguments").storeID;
+            this._filterStoreClientID = oEvent.getParameter("arguments").storeClientID;
+            this._filterProductName = sessionStorage.getItem("pricesFilterProductName");
+            this._filterStoreName = sessionStorage.getItem("pricesFilterStoreName");
+            this.filterDialog.apply.apply(this);
         }
-    },
-
-    close: function()
-    {
-        this._oFilterDialog.destroy();
-    },
-
-    /**
-     * Роутинг на фильтрацию по товару и магазину
-     */
-    onRouterFilterProductAndStore: function(oEvent)
-    {
-        this._filterProductID = oEvent.getParameter("arguments").productID;
-        this._filterProductClientID = oEvent.getParameter("arguments").productClientID;
-        this._filterStoreID = oEvent.getParameter("arguments").storeID;
-        this._filterStoreClientID = oEvent.getParameter("arguments").storeClientID;
-        this._filterProductName = sessionStorage.getItem("pricesFilterProductName");
-        this._filterStoreName = sessionStorage.getItem("pricesFilterStoreName");
-        pricesFilterDialog.apply.apply(this);
-    }
-};
+    };
+});

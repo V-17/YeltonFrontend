@@ -17,8 +17,9 @@
 
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], function(Controller, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    'yelton/lib/lib'
+], function(Controller, JSONModel, lib) {
     "use strict";
     return Controller.extend("yelton.controller.splitApp.settingsDialog", {
 
@@ -68,8 +69,6 @@ sap.ui.define([
 
         onChangeEmailPress: function()
         {
-            //FIXME: по нормальному нужно получать id
-            let splitAppID = "__xmlview0--splitApp";
             let textView = sap.ui.getCore().byId("textViewChangeEmail");
             let out = {
                 email: sap.ui.getCore().byId("inputNewEmail").getValue()
@@ -84,7 +83,7 @@ sap.ui.define([
                 .done(function() {
                     textView.setSemanticColor("Positive");
                     textView.setText("{i18n>emailChanged}");
-                    sap.ui.getCore().byId(splitAppID).getModel("user").loadData("backend/web/services/user.php");
+                    lib.getSplitApp().getModel("user").loadData("backend/web/services/user.php");
                 })
                 .fail(function(answer) {
                     if (answer.status === 401) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,122 +15,131 @@
  * limitations under the License.
  */
 
-var storesEditDialog = {
+sap.ui.define([
+    'sap/ui/model/json/JSONModel',
+    'yelton/lib/dict'
+], function(JSONModel, dict) {
+    "use strict";
 
-    showEditDialog: function()
-    {
-        let path = this.getView().byId("listStores").getSelectedContexts();
+    return {
 
-        if (path.length !== 0) {
-            let model = this.getView().getModel("stores").getProperty(path[0].sPath);
-            let jsonModel = new sap.ui.model.json.JSONModel(model);
+        showEditDialog: function()
+        {
+            let path = this.getView().byId("listStores").getSelectedContexts();
+
+            if (path.length !== 0) {
+                let model = this.getView().getModel("stores").getProperty(path[0].sPath);
+                let jsonModel = new sap.ui.model.json.JSONModel(model);
+                this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageStores.editDialog", this);
+                this.getView().addDependent(this._oEditDialog);
+                sap.ui.getCore().byId("inputName").setEditable(false);
+                sap.ui.getCore().byId("inputAddress").setEditable(false);
+                sap.ui.getCore().byId("switchStatus").setEnabled(false);
+                sap.ui.getCore().byId("buttonSave").setVisible(false);
+
+                this._oEditDialog.setModel(jsonModel);
+                this._oEditDialog.open();
+            } else {
+                sap.m.MessageToast.show("{i18n>selectStore}");
+            }
+        },
+
+        showCreateDialog: function()
+        {
+            // в начальной модели выставим статус true
+            let jsonModel = new sap.ui.model.json.JSONModel({
+                enabled: true
+            });
+
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageStores.editDialog", this);
             this.getView().addDependent(this._oEditDialog);
-            sap.ui.getCore().byId("inputName").setEditable(false);
-            sap.ui.getCore().byId("inputAddress").setEditable(false);
-            sap.ui.getCore().byId("switchStatus").setEnabled(false);
-            sap.ui.getCore().byId("buttonSave").setVisible(false);
-
+            sap.ui.getCore().byId("buttonEdit").setVisible(false);
             this._oEditDialog.setModel(jsonModel);
             this._oEditDialog.open();
-        } else {
-            sap.m.MessageToast.show("{i18n>selectStore}");
+        },
+
+        edit: function()
+        {
+            sap.ui.getCore().byId("inputName").setEditable(true);
+            sap.ui.getCore().byId("inputAddress").setEditable(true);
+            sap.ui.getCore().byId("switchStatus").setEnabled(true);
+            sap.ui.getCore().byId("buttonSave").setVisible(true);
+            sap.ui.getCore().byId("buttonDelete").setVisible(true);
+            sap.ui.getCore().byId("buttonEdit").setVisible(false);
+        },
+
+        save: function()
+        {
+            let id = this._oEditDialog.getModel().getProperty("/id");
+            let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+            let name = this._oEditDialog.getModel().getProperty("/name");
+            let address = this._oEditDialog.getModel().getProperty("/address");
+            let enabled = this._oEditDialog.getModel().getProperty("/enabled");
+
+            if (!name || !name.trim()) {
+                sap.ui.getCore().byId("inputName").setValueState("Error");
+                return;
+            }
+
+            let out;
+            // создаем или изменяем
+            // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
+            // сервис поймет, создавать ему или обновлять
+            if (id === undefined && clientID === undefined) {
+                out = {
+                    "name": name,
+                    "address": address,
+                    "enabled": enabled
+                };
+            } else {
+                out = {
+                    "id": id,
+                    "clientID": clientID,
+                    "name": name,
+                    "address": address,
+                    "enabled": enabled
+                };
+            }
+
+            let that = this;
+            $.ajax({
+                    url: "/backend/web/services/manageStores.php",
+                    type: "POST",
+                    data: out,
+                })
+                .done(function(data)
+                {
+                    if (!data) data = null; // for "204 - no content" answer
+                    dict.setStores(JSON.parse(data));
+                })
+                .fail(function(answer)
+                {
+                    switch (answer.status) {
+                        case 401:
+                            window.location.reload();
+                            break;
+                        case 500:
+                            sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
+                            break;
+                    }
+                })
+                .always(function() {
+                    if (id === undefined && clientID === undefined) {
+                        that._oEditDialog.destroy();
+                    } else {
+                        sap.ui.getCore().byId("inputName").setEditable(false);
+                        sap.ui.getCore().byId("inputAddress").setEditable(false);
+                        sap.ui.getCore().byId("switchStatus").setEnabled(false);
+                        sap.ui.getCore().byId("buttonSave").setVisible(false);
+                        sap.ui.getCore().byId("buttonDelete").setVisible(false);
+                        sap.ui.getCore().byId("buttonEdit").setVisible(true);
+                    }
+                });
+        },
+
+        close: function()
+        {
+            this._oEditDialog.destroy();
         }
-    },
-
-    showCreateDialog: function()
-    {
-        // в начальной модели выставим статус true
-        let jsonModel = new sap.ui.model.json.JSONModel({enabled: true});
-
-        this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageStores.editDialog", this);
-        this.getView().addDependent(this._oEditDialog);
-        sap.ui.getCore().byId("buttonEdit").setVisible(false);
-        this._oEditDialog.setModel(jsonModel);
-        this._oEditDialog.open();
-    },
-
-    edit: function()
-    {
-        sap.ui.getCore().byId("inputName").setEditable(true);
-        sap.ui.getCore().byId("inputAddress").setEditable(true);
-        sap.ui.getCore().byId("switchStatus").setEnabled(true);
-        sap.ui.getCore().byId("buttonSave").setVisible(true);
-        sap.ui.getCore().byId("buttonDelete").setVisible(true);
-        sap.ui.getCore().byId("buttonEdit").setVisible(false);
-    },
-
-    save: function()
-    {
-        let id = this._oEditDialog.getModel().getProperty("/id");
-        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        let name = this._oEditDialog.getModel().getProperty("/name");
-        let address = this._oEditDialog.getModel().getProperty("/address");
-        let enabled = this._oEditDialog.getModel().getProperty("/enabled");
-
-        if (!name || !name.trim()) {
-            sap.ui.getCore().byId("inputName").setValueState("Error");
-            return;
-        }
-
-        let out;
-        // создаем или изменяем
-        // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
-        // сервис поймет, создавать ему или обновлять
-        if (id === undefined && clientID === undefined) {
-            out = {
-                "name": name,
-                "address": address,
-                "enabled": enabled
-            };
-        } else {
-            out = {
-                "id": id,
-                "clientID": clientID,
-                "name": name,
-                "address": address,
-                "enabled": enabled
-            };
-        }
-
-        let that = this;
-        $.ajax({
-                url: "/backend/web/services/manageStores.php",
-                type: "POST",
-                data: out,
-            })
-            .done(function(data)
-            {
-                if (!data) data = null; // for "204 - no content" answer
-                new Dict().setStores(JSON.parse(data));
-            })
-            .fail(function(answer)
-            {
-                switch (answer.status) {
-                    case 401:
-                        window.location.reload();
-                        break;
-                    case 500:
-                        sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
-                        break;
-                }
-            })
-            .always(function() {
-                if (id === undefined && clientID === undefined) {
-                    that._oEditDialog.destroy();
-                } else {
-                    sap.ui.getCore().byId("inputName").setEditable(false);
-                    sap.ui.getCore().byId("inputAddress").setEditable(false);
-                    sap.ui.getCore().byId("switchStatus").setEnabled(false);
-                    sap.ui.getCore().byId("buttonSave").setVisible(false);
-                    sap.ui.getCore().byId("buttonDelete").setVisible(false);
-                    sap.ui.getCore().byId("buttonEdit").setVisible(true);
-                }
-            });
-    },
-
-    close: function()
-    {
-        this._oEditDialog.destroy();
-    }
-};
+    };
+});

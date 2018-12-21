@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,15 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/model/Filter"
-], function(Controller, JSONModel, Filter) {
+    "sap/ui/model/Filter",
+    'yelton/lib/lib'
+], function(Controller, JSONModel, Filter, lib) {
     "use strict";
     return Controller.extend("yelton.controller.reports.productLineChart", {
 
         onNavBackPress: function()
         {
-            let app = sap.ui.getCore().byId("__xmlview0--splitApp");
+            let app = lib.getSplitApp();
             app.backDetail();
         },
 
@@ -64,40 +65,36 @@ sap.ui.define([
 
                 let that = this;
                 $.ajax({
-                        url: "backend/web/services/reports.php",
-                        type: "GET",
-                        data: {
-                            "productDynamics": JSON.stringify(out)
-                        }
-                    })
-                    .done(function(answer)
-                    {
-                        answer = JSON.parse(answer);
+                    url: "backend/web/services/reports.php",
+                    type: "GET",
+                    data: {
+                        "productDynamics": JSON.stringify(out)
+                    }
+                }).done(function(answer) {
+                    answer = JSON.parse(answer);
 
-                        let aLabels = [];
-                        let aData = [];
-                        for (item of answer) {
-                            let oDate = new Date(item.date * 1000);
-                            let sYear = (oDate.getFullYear() + "").substring(2, 4);
-                            let sDay = ("0" + oDate.getDate()).slice(-2);
-                            let sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
-                            aLabels.push(sDay + "." + sMonth + "." + sYear);
-                            aData.push(item.price);
-                        }
+                    let aLabels = [];
+                    let aData = [];
+                    for (item of answer) {
+                        let oDate = new Date(item.date * 1000);
+                        let sYear = (oDate.getFullYear() + "").substring(2, 4);
+                        let sDay = ("0" + oDate.getDate()).slice(-2);
+                        let sMonth = ("0" + (oDate.getMonth() + 1)).slice(-2);
+                        aLabels.push(sDay + "." + sMonth + "." + sYear);
+                        aData.push(item.price);
+                    }
 
-                        chart.setVisible(true);
-                        chart.setLabels(aLabels);
-                        chart.setLine({
-                            //label: "Магнит", В будущем когда буду строить для разных магазинов, будет полезно
-                            data: aData
-                        });
-                    })
-                    .fail(function(answer)
-                    {
-                        if (answer.status === 401) {
-                            window.location.reload();
-                        }
+                    chart.setVisible(true);
+                    chart.setLabels(aLabels);
+                    chart.setLine({
+                        //label: "Магнит", В будущем когда буду строить для разных магазинов, будет полезно
+                        data: aData
                     });
+                }).fail(function(answer) {
+                    if (answer.status === 401) {
+                        window.location.reload();
+                    }
+                });
             } else {
                 chart.setVisible(false);
             }

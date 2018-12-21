@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,86 +15,86 @@
  * limitations under the License.
  */
 
-var categoriesEditDialog = {
+sap.ui.define([
+    'sap/ui/model/json/JSONModel',
+    'yelton/lib/dict'
+], function(JSONModel, dict) {
+    "use strict";
 
-    // нажатие кнопки Редактировать
-    showEditDialog: function()
-    {
-        let path = this.getView().byId("listCategories").getSelectedContexts();
+    return {
+        // нажатие кнопки Редактировать
+        showEditDialog: function()
+        {
+            let path = this.getView().byId("listCategories").getSelectedContexts();
 
-        if (path.length !== 0) {
-            let model = this.getView().getModel("categories").getProperty(path[0].sPath);
-            let jsonModel = new sap.ui.model.json.JSONModel(model);
+            if (path.length !== 0) {
+                let model = this.getView().getModel("categories").getProperty(path[0].sPath);
+                let jsonModel = new JSONModel(model);
+                this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
+                this.getView().addDependent(this._oEditDialog);
+                sap.ui.getCore().byId("buttonSave").setVisible(false);
+                sap.ui.getCore().byId("inputName").setEditable(false);
+                this._oEditDialog.setModel(jsonModel);
+                this._oEditDialog.open();
+            } else {
+                sap.m.MessageToast.show("{i18n>selectCategory}");
+            }
+        },
+
+        // нажатие кнопки create
+        showCreateDialog: function()
+        {
             this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
             this.getView().addDependent(this._oEditDialog);
-            sap.ui.getCore().byId("buttonSave").setVisible(false);
-            sap.ui.getCore().byId("inputName").setEditable(false);
-            this._oEditDialog.setModel(jsonModel);
+            sap.ui.getCore().byId("buttonEdit").setVisible(false);
+            this._oEditDialog.setModel(new JSONModel());
             this._oEditDialog.open();
-        } else {
-            sap.m.MessageToast.show("{i18n>selectCategory}");
-        }
-    },
+        },
 
-    // нажатие кнопки create
-    showCreateDialog: function()
-    {
-        let jsonModel = new sap.ui.model.json.JSONModel();
-        this._oEditDialog = sap.ui.xmlfragment("yelton.view.manageCategories.editDialog", this);
-        this.getView().addDependent(this._oEditDialog);
-        sap.ui.getCore().byId("buttonEdit").setVisible(false);
-        this._oEditDialog.setModel(jsonModel);
-        this._oEditDialog.open();
-    },
+        edit: function()
+        {
+            sap.ui.getCore().byId("buttonEdit").setVisible(false);
+            sap.ui.getCore().byId("buttonSave").setVisible(true);
+            sap.ui.getCore().byId("buttonDelete").setVisible(true);
+            sap.ui.getCore().byId("inputName").setEditable(true);
+        },
 
-    edit: function()
-    {
-        sap.ui.getCore().byId("buttonEdit").setVisible(false);
-        sap.ui.getCore().byId("buttonSave").setVisible(true);
-        sap.ui.getCore().byId("buttonDelete").setVisible(true);
-        sap.ui.getCore().byId("inputName").setEditable(true);
-    },
+        save: function()
+        {
+            let id = this._oEditDialog.getModel().getProperty("/id");
+            let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+            let name = this._oEditDialog.getModel().getProperty("/name");
 
-    save: function()
-    {
-        let id = this._oEditDialog.getModel().getProperty("/id");
-        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        let name = this._oEditDialog.getModel().getProperty("/name");
+            if (!name || !name.trim()) {
+                sap.ui.getCore().byId("inputName").setValueState("Error");
+                return;
+            }
 
-        if (!name || !name.trim()) {
-            sap.ui.getCore().byId("inputName").setValueState("Error");
-            return;
-        }
+            let out;
+            // создаем или изменяем
+            // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
+            // сервис поймет, создавать ему или обновлять
+            if (id === undefined && clientID === undefined) {
+                out = {
+                    name: name
+                };
+            } else {
+                out = {
+                    id: id,
+                    clientID: clientID,
+                    name: name
+                };
+            }
 
-        let out;
-        // создаем или изменяем
-        // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
-        // сервис поймет, создавать ему или обновлять
-        if (id === undefined && clientID === undefined) {
-            out = {
-                name: name
-            };
-        } else {
-            out = {
-                id: id,
-                clientID: clientID,
-                name: name
-            };
-        }
-
-        let that = this;
-        $.ajax({
+            let that = this;
+            $.ajax({
                 url: "/backend/web/services/manageCategories.php",
                 type: "POST",
                 data: out,
-            })
-            .done(function(data)
-            {
+            }).done(function(data) {
                 if (!data) data = null; // for "204 - no content" answer
-                new Dict().setCategories(JSON.parse(data));
-            })
-            .fail(function(answer)
-            {
+                dict.setCategories(JSON.parse(data));
+            }).fail(function(answer) {
                 switch (answer.status) {
                     case 401:
                         window.location.reload();
@@ -103,9 +103,7 @@ var categoriesEditDialog = {
                         sap.m.sap.m.MessageToast.show("{i18n>unexpectedError}");
                         break;
                 }
-            })
-            .always(function()
-            {
+            }).always(function() {
                 if (id === undefined && clientID === undefined) {
                     that._oEditDialog.destroy();
                 } else {
@@ -115,10 +113,11 @@ var categoriesEditDialog = {
                     sap.ui.getCore().byId("inputName").setEditable(false);
                 }
             });
-    },
+        },
 
-    close: function()
-    {
-        this._oEditDialog.destroy();
-    }
-};
+        close: function()
+        {
+            this._oEditDialog.destroy();
+        }
+    };
+});

@@ -9,10 +9,10 @@
             <Button
                 id="buttonResetFilter"
                 icon="sap-icon://decline"
-                press="pricesFilterDialog.reset"
+                press=".filterDialog.reset"
                 tooltip="{i18n>resetFilter}"
                 visible="false"/>
-            <Button icon="sap-icon://filter" press="pricesFilterDialog.show" tooltip="{i18n>filter}"/>
+            <Button icon="sap-icon://filter" press=".filterDialog.show" tooltip="{i18n>filter}"/>
             <SearchField liveChange="onFilterLiveSearch" width="30%" showSearchButton="false"/>
         </headerContent>
         <content>
@@ -24,7 +24,7 @@
                 growingScrollToLoad="true"
                 items="{prices>/}"
                 fixedLayout="false"
-                itemPress="pricesEditDialog.showEditDialog">
+                itemPress=".editDialog.showEditDialog">
                 <columns>
                     <Column/>
                     <Column/>
@@ -37,8 +37,7 @@
                             <ObjectIdentifier title="{prices>price} {prices>currName}" text="{prices>amount} {prices>unitName}"/>
                             <ObjectIdentifier
                                 title="{prices>storeName}"
-                                text="
-                                {
+                                text="{
                                     path: 'prices>date',
                                     type: 'sap.ui.model.type.Date',
                                     formatOptions: {
@@ -59,7 +58,7 @@
                 <Button
                     icon="sap-icon://add"
                     text="{i18n>add}"
-                    press="pricesEditDialog.showCreateDialog"
+                    press=".editDialog.showCreateDialog"
                     tooltip="{i18n>addNewPrice}"/>
             </Toolbar>
         </footer>

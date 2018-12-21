@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,324 +17,329 @@
 
 /*jshint evil:true*/
 
+sap.ui.define([
+    'sap/ui/model/json/JSONModel',
+    'yelton/lib/dict',
+    'yelton/lib/lib'
+], function(JSONModel, dict, lib) {
+    "use strict";
+    return {
+        showEditDialog: function()
+        {
+            let path = this.byId("tablePrices").getSelectedContexts();
 
-var pricesEditDialog = {
+            if (path.length !== 0) {
+                let oData = this.getView().getModel("prices").getProperty(path[0].sPath);
+                this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
+                this.getView().addDependent(this._oEditDialog);
+                sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
+                sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
+                sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
+                sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
+                sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
+                sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
+                let that = this;
 
-    showEditDialog: function()
-    {
-        let path = this.byId("tablePrices").getSelectedContexts();
+                // идем за полными данными по выбранной покупке
+                $.ajax({
+                        url: "backend/web/services/managePrices.php",
+                        type: "GET",
+                        data: {
+                            "id": oData.id,
+                            "clientID": oData.clientID
+                        }
+                    })
+                    .done(function(answer) {
+                        // получили полную инфу о товаре
+                        let oFullModel = new sap.ui.model.json.JSONModel(JSON.parse(answer));
+                        that._oEditDialog.setModel(oFullModel);
 
-        if (path.length !== 0) {
-            let oData = this.getView().getModel("prices").getProperty(path[0].sPath);
+                        // из товаров выбираем в списке нужный
+                        let productID = oFullModel.getProperty("/productID");
+                        let productClientID = oFullModel.getProperty("/productClientID");
+                        sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(productID + ":" + productClientID);
+
+                        // из магазинов, выбираем в списке нужный
+                        let storeID = oFullModel.getProperty("/storeID");
+                        let storeClientID = oFullModel.getProperty("/storeClientID");
+                        sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(storeID + ":" + storeClientID);
+
+                        // ставим дату
+                        // FIXME: по идее тоже через модель надо
+                        // просто лень сейчас разбираться с форматом
+                        // а может и не придётся разбираться ))
+                        // но все равно пока лень
+                        let date = oFullModel.getProperty("/date");
+                        sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(date);
+                    })
+                    .fail(function(answer) {
+                        if (answer.status === 401) {
+                            window.location.reload();
+                        }
+                    });
+
+                this._oEditDialog.open();
+            } else {
+                sap.m.MessageToast.show("{i18n>selectPrice}");
+            }
+        },
+
+        // нажатие кнопки create
+        showCreateDialog: function()
+        {
+            let jsonModel = new sap.ui.model.json.JSONModel();
+
             this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
             this.getView().addDependent(this._oEditDialog);
-            sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
-            sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
-            sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
-            sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
-            sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
-            sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
-            let that = this;
+            sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
+            this._oEditDialog.setModel(jsonModel);
 
-            // идем за полными данными по выбранной покупке
-            $.ajax({
-                    url: "backend/web/services/managePrices.php",
-                    type: "GET",
-                    data: {
-                        "id": oData.id,
-                        "clientID": oData.clientID
-                    }
-                })
-                .done(function(answer) {
-                    // получили полную инфу о товаре
-                    let oFullModel = new sap.ui.model.json.JSONModel(JSON.parse(answer));
-                    that._oEditDialog.setModel(oFullModel);
+            // Оставим только активные (не архивные) магазины
+            sap.ui.core.Fragment.byId("editDialog", "selectStore")
+                .getBinding("items").filter(
+                    new sap.ui.model.Filter("enabled", sap.ui.model.FilterOperator.EQ, true)
+                );
 
-                    // из товаров выбираем в списке нужный
-                    let productID = oFullModel.getProperty("/productID");
-                    let productClientID = oFullModel.getProperty("/productClientID");
-                    sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setSelectedKey(productID + ":" + productClientID);
-
-                    // из магазинов, выбираем в списке нужный
-                    let storeID = oFullModel.getProperty("/storeID");
-                    let storeClientID = oFullModel.getProperty("/storeClientID");
-                    sap.ui.core.Fragment.byId("editDialog", "selectStore").setSelectedKey(storeID + ":" + storeClientID);
-
-                    // ставим дату
-                    // FIXME: по идее тоже через модель надо
-                    // просто лень сейчас разбираться с форматом
-                    // а может и не придётся разбираться ))
-                    // но все равно пока лень
-                    let date = oFullModel.getProperty("/date");
-                    sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(date);
-                })
-                .fail(function(answer) {
-                    if (answer.status === 401) {
-                        window.location.reload();
-                    }
-                });
+            // ставим текущую дату
+            let dd = new Date().getDate();
+            let mm = new Date().getMonth() + 1;
+            let yyyy = new Date().getFullYear();
+            sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(dd + "." + mm + "." + yyyy);
 
             this._oEditDialog.open();
-        } else {
-            sap.m.MessageToast.show("{i18n>selectPrice}");
-        }
-    },
+        },
 
-    // нажатие кнопки create
-    showCreateDialog: function()
-    {
-        let jsonModel = new sap.ui.model.json.JSONModel();
+        onProductChange: function(event)
+        {
+            // сбрасываем статус
+            sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setValueState("None");
+        },
 
-        this._oEditDialog = sap.ui.xmlfragment("editDialog", "yelton.view.managePrices.editDialog", this);
-        this.getView().addDependent(this._oEditDialog);
-        sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
-        this._oEditDialog.setModel(jsonModel);
+        onInputPriceLiveChange: function(oEvent)
+        {
+            let inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
+            let price = oEvent.getParameters().value;
+            let lastSymbol = price[price.length - 1];
 
-        // Оставим только активные (не архивные) магазины
-        sap.ui.core.Fragment.byId("editDialog", "selectStore")
-            .getBinding("items").filter(
-                new sap.ui.model.Filter("enabled", sap.ui.model.FilterOperator.EQ, true)
-            );
-
-        // ставим текущую дату
-        let dd = new Date().getDate();
-        let mm = new Date().getMonth() + 1;
-        let yyyy = new Date().getFullYear();
-        sap.ui.core.Fragment.byId("editDialog", "datePicker").setValue(dd + "." + mm + "." + yyyy);
-
-        this._oEditDialog.open();
-    },
-
-    onProductChange: function(event)
-    {
-        // сбрасываем статус
-        sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setValueState("None");
-    },
-
-    onInputPriceLiveChange: function(oEvent)
-    {
-        let inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
-        let price = oEvent.getParameters().value;
-        let lastSymbol = price[price.length - 1];
-
-        // всегда скидываем статус
-        inputPrice.setValueState("None");
-
-        if (!/[\+\-\/\*\,\.\(\)0-9]/.test(lastSymbol)) {
-            inputPrice.setValue(price.substr(0, price.length - 1));
-            return;
-        }
-
-        let priceCalc;
-        try {
-            price = price.replace(",", ".");
-            priceCalc = parseFloat(eval(price));
-        } catch (err) {
-            priceCalc = NaN;
-        }
-
-        if (!isNaN(priceCalc)) {
-            if (priceCalc != price) {
-                let text = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
-                text.setText("=" + priceCalc);
-            }
-        } else {
-            sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation").setText("");
-        }
-    },
-
-    onInputAmountLiveChange: function(oEvent)
-    {
-        let inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
-        let amount = oEvent.getParameters().value;
-        let lastSymbol = amount[amount.length - 1];
-
-        // всегда скидываем статус
-        inputAmount.setValueState("None");
-
-        if (!/[\+\-\/\*\,\.\(\)0-9]/.test(lastSymbol)) {
-            inputAmount.setValue(amount.substr(0, amount.length - 1));
-            return;
-        }
-
-        let amountCalc;
-        try {
-            amount = amount.replace(",", ".");
-            amountCalc = parseFloat(eval(amount));
-        } catch (err) {
-            amountCalc = NaN;
-        }
-
-        if (!isNaN(amountCalc)) {
-            if (amountCalc != amount) {
-                let text = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
-                text.setText("=" + amountCalc);
-            }
-        } else {
-            sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation").setText("");
-        }
-    },
-
-    edit: function()
-    {
-        sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(true);
-        sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(true);
-        sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(true);
-        sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(true);
-        sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(true);
-        sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(true);
-        sap.ui.core.Fragment.byId("editDialog", "buttonDelete").setVisible(true);
-        sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
-    },
-
-    /**
-     * Сохранение покупки.
-     *
-     * Проверка правильности заполнения и отправка POST запроса
-     */
-    save: function()
-    {
-        let id = this._oEditDialog.getModel().getProperty("/id");
-        let clientID = this._oEditDialog.getModel().getProperty("/clientID");
-        let textAmountCalc = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
-        let inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
-        let comboBoxProduct = sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct");
-        let amount;
-        if (textAmountCalc.getText().length > 0) {
-            amount = textAmountCalc.getText().substr(1);
-        } else {
-            amount = this._oEditDialog.getModel().getProperty("/amount");
-        }
-        let textPriceCount = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
-        let inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
-        let price;
-        if (textPriceCount.getText().length > 0) {
-            price = textPriceCount.getText().substr(1);
-        } else {
-            price = this._oEditDialog.getModel().getProperty("/price");
-        }
-
-        let selectedStore = sap.ui.core.Fragment.byId("editDialog", "selectStore").getSelectedKey().split(":");
-        let storeID = selectedStore[0];
-        let storeClientID = selectedStore[1];
-
-        // тут только дата, а нам бы еще время взять
-        // чтобы сортировалось в порядке добавления
-        let date = sap.ui.core.Fragment.byId("editDialog", "datePicker").getValue();
-        let hh = new Date().getHours();
-        let mm = new Date().getMinutes();
-        let ss = new Date().getSeconds();
-        date = date + " " + hh + ":" + mm + ":" + ss;
-
-        // проверки
-        let canContinue = true;
-        let selectedProduct = comboBoxProduct.getSelectedKey().split(":");
-        let productID = selectedProduct[0];
-        let productClientID = selectedProduct[1];
-        if (!productID || !productClientID) {
-            comboBoxProduct.setValueState("Error");
-            canContinue = false;
-        } else {
-            comboBoxProduct.setValueState("None");
-        }
-        if (!isNumeric(price)) {
-            inputPrice.setValueStateText("{i18n>enterNumberOrOperaion}");
-            inputPrice.setValueState("Error");
-            canContinue = false;
-        } else if (price <= 0 || price > 9999999) {
-            inputPrice.setValueStateText("{i18n>enterNumber}");
-            inputPrice.setValueState("Error");
-            canContinue = false;
-        } else {
+            // всегда скидываем статус
             inputPrice.setValueState("None");
-        }
-        if (!isNumeric(amount)) {
-            inputAmount.setValueStateText("{i18n>enterNumberOrOperaion}");
-            inputAmount.setValueState("Error");
-            canContinue = false;
-        } else if (amount <= 0 || amount > 9999999) {
-            inputAmount.setValueStateText("{i18n>enterNumber}");
-            inputAmount.setValueState("Error");
-            canContinue = false;
-        } else {
+
+            if (!/[\+\-\/\*\,\.\(\)0-9]/.test(lastSymbol)) {
+                inputPrice.setValue(price.substr(0, price.length - 1));
+                return;
+            }
+
+            let priceCalc;
+            try {
+                price = price.replace(",", ".");
+                priceCalc = parseFloat(eval(price));
+            } catch (err) {
+                priceCalc = NaN;
+            }
+
+            if (!isNaN(priceCalc)) {
+                if (priceCalc != price) {
+                    let text = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
+                    text.setText("=" + priceCalc);
+                }
+            } else {
+                sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation").setText("");
+            }
+        },
+
+        onInputAmountLiveChange: function(oEvent)
+        {
+            let inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
+            let amount = oEvent.getParameters().value;
+            let lastSymbol = amount[amount.length - 1];
+
+            // всегда скидываем статус
             inputAmount.setValueState("None");
-        }
-        if (!canContinue) {
-            return;
-        }
 
-        let out;
-        // создаем или изменяем
-        // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
-        // сервис поймет, создавать ему или обновлять
-        if (id === undefined && clientID === undefined) {
-            // создаем
-            out = {
-                productID: productID,
-                productClientID: productClientID,
-                storeID: storeID,
-                storeClientID: storeClientID,
-                amount: amount,
-                price: price,
-                date: date,
-                currencyID: 1
-            };
-        } else {
-            // изменяем
-            out = {
-                id: id,
-                clientID: clientID,
-                productID: productID,
-                productClientID: productClientID,
-                storeID: storeID,
-                storeClientID: storeClientID,
-                amount: amount,
-                price: price,
-                date: date,
-                currencyID: 1
-            };
-        }
+            if (!/[\+\-\/\*\,\.\(\)0-9]/.test(lastSymbol)) {
+                inputAmount.setValue(amount.substr(0, amount.length - 1));
+                return;
+            }
 
-        let that = this;
-        $.ajax({
-                url: "/backend/web/services/managePrices.php",
-                type: "POST",
-                data: out,
-            })
-            .done(function(data)
-            {
-                if (!data) data = null; // for "204 - no content" answer
-                new Dict().setPrices(JSON.parse(data));
-            })
-            .fail(function(answer)
-            {
-                switch (answer.status) {
-                    case 401:
-                        window.location.reload();
-                        break;
-                    case 500:
-                        sap.m.MessageToast.show("{i18n>unexpectedError}");
-                        break;
+            let amountCalc;
+            try {
+                amount = amount.replace(",", ".");
+                amountCalc = parseFloat(eval(amount));
+            } catch (err) {
+                amountCalc = NaN;
+            }
+
+            if (!isNaN(amountCalc)) {
+                if (amountCalc != amount) {
+                    let text = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
+                    text.setText("=" + amountCalc);
                 }
-            })
-            .always(function() {
-                if (id === undefined && clientID === undefined) {
-                    that._oEditDialog.destroy();
-                } else {
-                    sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
-                    sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
-                    sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
-                    sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
-                    sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
-                    sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
-                    sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(true);
-                    sap.ui.core.Fragment.byId("editDialog", "buttonDelete").setVisible(false);
-                }
-            });
-    },
+            } else {
+                sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation").setText("");
+            }
+        },
 
-    close: function()
-    {
-        this._oEditDialog.destroy();
-    }
-};
+        edit: function()
+        {
+            sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(true);
+            sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(true);
+            sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(true);
+            sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(true);
+            sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(true);
+            sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(true);
+            sap.ui.core.Fragment.byId("editDialog", "buttonDelete").setVisible(true);
+            sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(false);
+        },
+
+        /**
+         * Сохранение покупки.
+         *
+         * Проверка правильности заполнения и отправка POST запроса
+         */
+        save: function()
+        {
+            let id = this._oEditDialog.getModel().getProperty("/id");
+            let clientID = this._oEditDialog.getModel().getProperty("/clientID");
+            let textAmountCalc = sap.ui.core.Fragment.byId("editDialog", "textAmountCalculation");
+            let inputAmount = sap.ui.core.Fragment.byId("editDialog", "inputAmount");
+            let comboBoxProduct = sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct");
+            let amount;
+            if (textAmountCalc.getText().length > 0) {
+                amount = textAmountCalc.getText().substr(1);
+            } else {
+                amount = this._oEditDialog.getModel().getProperty("/amount");
+            }
+            let textPriceCount = sap.ui.core.Fragment.byId("editDialog", "textPriceCalculation");
+            let inputPrice = sap.ui.core.Fragment.byId("editDialog", "inputPrice");
+            let price;
+            if (textPriceCount.getText().length > 0) {
+                price = textPriceCount.getText().substr(1);
+            } else {
+                price = this._oEditDialog.getModel().getProperty("/price");
+            }
+
+            let selectedStore = sap.ui.core.Fragment.byId("editDialog", "selectStore").getSelectedKey().split(":");
+            let storeID = selectedStore[0];
+            let storeClientID = selectedStore[1];
+
+            // тут только дата, а нам бы еще время взять
+            // чтобы сортировалось в порядке добавления
+            let date = sap.ui.core.Fragment.byId("editDialog", "datePicker").getValue();
+            let hh = new Date().getHours();
+            let mm = new Date().getMinutes();
+            let ss = new Date().getSeconds();
+            date = date + " " + hh + ":" + mm + ":" + ss;
+
+            // проверки
+            let canContinue = true;
+            let selectedProduct = comboBoxProduct.getSelectedKey().split(":");
+            let productID = selectedProduct[0];
+            let productClientID = selectedProduct[1];
+            if (!productID || !productClientID) {
+                comboBoxProduct.setValueState("Error");
+                canContinue = false;
+            } else {
+                comboBoxProduct.setValueState("None");
+            }
+            if (!lib.isNumeric(price)) {
+                inputPrice.setValueStateText("{i18n>enterNumberOrOperaion}");
+                inputPrice.setValueState("Error");
+                canContinue = false;
+            } else if (price <= 0 || price > 9999999) {
+                inputPrice.setValueStateText("{i18n>enterNumber}");
+                inputPrice.setValueState("Error");
+                canContinue = false;
+            } else {
+                inputPrice.setValueState("None");
+            }
+            if (!lib.isNumeric(amount)) {
+                inputAmount.setValueStateText("{i18n>enterNumberOrOperaion}");
+                inputAmount.setValueState("Error");
+                canContinue = false;
+            } else if (amount <= 0 || amount > 9999999) {
+                inputAmount.setValueStateText("{i18n>enterNumber}");
+                inputAmount.setValueState("Error");
+                canContinue = false;
+            } else {
+                inputAmount.setValueState("None");
+            }
+            if (!canContinue) {
+                return;
+            }
+
+            let out;
+            // создаем или изменяем
+            // в зависимости от того, что мы передадим POST (будут там айдишники или нет)
+            // сервис поймет, создавать ему или обновлять
+            if (id === undefined && clientID === undefined) {
+                // создаем
+                out = {
+                    productID: productID,
+                    productClientID: productClientID,
+                    storeID: storeID,
+                    storeClientID: storeClientID,
+                    amount: amount,
+                    price: price,
+                    date: date,
+                    currencyID: 1
+                };
+            } else {
+                // изменяем
+                out = {
+                    id: id,
+                    clientID: clientID,
+                    productID: productID,
+                    productClientID: productClientID,
+                    storeID: storeID,
+                    storeClientID: storeClientID,
+                    amount: amount,
+                    price: price,
+                    date: date,
+                    currencyID: 1
+                };
+            }
+
+            let that = this;
+            $.ajax({
+                    url: "/backend/web/services/managePrices.php",
+                    type: "POST",
+                    data: out,
+                })
+                .done(function(data)
+                {
+                    if (!data) data = null; // for "204 - no content" answer
+                    dict().setPrices(JSON.parse(data));
+                })
+                .fail(function(answer)
+                {
+                    switch (answer.status) {
+                        case 401:
+                            window.location.reload();
+                            break;
+                        case 500:
+                            sap.m.MessageToast.show("{i18n>unexpectedError}");
+                            break;
+                    }
+                })
+                .always(function() {
+                    if (id === undefined && clientID === undefined) {
+                        that._oEditDialog.destroy();
+                    } else {
+                        sap.ui.core.Fragment.byId("editDialog", "comboBoxProduct").setEnabled(false);
+                        sap.ui.core.Fragment.byId("editDialog", "selectStore").setEnabled(false);
+                        sap.ui.core.Fragment.byId("editDialog", "datePicker").setEditable(false);
+                        sap.ui.core.Fragment.byId("editDialog", "inputPrice").setEditable(false);
+                        sap.ui.core.Fragment.byId("editDialog", "inputAmount").setEditable(false);
+                        sap.ui.core.Fragment.byId("editDialog", "buttonSave").setVisible(false);
+                        sap.ui.core.Fragment.byId("editDialog", "buttonEdit").setVisible(true);
+                        sap.ui.core.Fragment.byId("editDialog", "buttonDelete").setVisible(false);
+                    }
+                });
+        },
+
+        close: function()
+        {
+            this._oEditDialog.destroy();
+        }
+    };
+});

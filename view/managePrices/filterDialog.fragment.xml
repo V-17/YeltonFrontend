@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="{i18n>filter}" afterClose="pricesFilterDialog.close" initialFocus="buttonOK">
+    <Dialog title="{i18n>filter}" afterClose=".filterDialog.close" initialFocus="buttonOK">
         <content>
             <VBox>
                 <Label text="{i18n>product}"/>
@@ -7,8 +7,8 @@
                     id="searchFieldProduct"
                     enableSuggestions="true"
                     showSearchButton="false"
-                    suggest="pricesFilterDialog.onProductSuggest"
-                    search="pricesFilterDialog.onProductSearch"
+                    suggest=".filterDialog.onProductSuggest"
+                    search=".filterDialog.onProductSearch"
                     suggestionItems="{
                         path: 'products>/',
                         sorter: {
@@ -25,8 +25,8 @@
                     id="searchFieldCategory"
                     enableSuggestions="true"
                     showSearchButton="false"
-                    suggest="pricesFilterDialog.onCategorySuggest"
-                    search="pricesFilterDialog.onCategorySearch"
+                    suggest=".filterDialog.onCategorySuggest"
+                    search=".filterDialog.onCategorySearch"
                     suggestionItems="{
                         path: 'categories>/',
                         sorter: {
@@ -43,8 +43,8 @@
                     id="searchFieldStore"
                     enableSuggestions="true"
                     showSearchButton="false"
-                    suggest="pricesFilterDialog.onStoreSuggest"
-                    search="pricesFilterDialog.onStoreSearch"
+                    suggest=".filterDialog.onStoreSuggest"
+                    search=".filterDialog.onStoreSearch"
                     suggestionItems="{
                         path: 'stores>/',
                         sorter: {
@@ -58,10 +58,10 @@
             </VBox>
         </content>
         <beginButton>
-            <Button id="buttonOK" text="{i18n>apply}" type="Accept" press="pricesFilterDialog.apply"/>
+            <Button id="buttonOK" text="{i18n>apply}" type="Accept" press=".filterDialog.apply"/>
         </beginButton>
         <endButton>
-            <Button text="{i18n>close}" press="pricesFilterDialog.close"/>
+            <Button text="{i18n>close}" press=".filterDialog.close"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

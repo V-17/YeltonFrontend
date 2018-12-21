@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,29 +15,35 @@
  * limitations under the License.
  */
 
-var settings = {
+sap.ui.define([
+    'sap/ui/model/json/JSONModel'
+], function(JSONModel) {
+    "use strict";
 
-    showPopover: function()
-    {
-        if (!this._oPopover) {
-            this._oPopover = sap.ui.xmlfragment("yelton.view.splitApp.settingsPopover", this);
+    return {
+
+        showPopover: function()
+        {
+            if (!this._oPopover) {
+                this._oPopover = sap.ui.xmlfragment("yelton.view.splitApp.settingsPopover", this);
+            }
+            this.getView().addDependent(this._oPopover);
+            this._oPopover.openBy(this.byId("buttonSettings"));
+        },
+
+        showSettings: function()
+        {
+            let oCtrl = sap.ui.controller("yelton.controller.splitApp.settingsDialog");
+            let settignsDialog = sap.ui.xmlfragment("yelton.view.splitApp.settingsDialog", oCtrl);
+            // onInit там не работает, поэтому придется грузить модель тут
+            this.getView().addDependent(settignsDialog);
+            settignsDialog.open();
+        },
+
+        logout: function()
+        {
+            $.post("backend/web/services/signOut.php");
+            window.location.reload();
         }
-        this.getView().addDependent(this._oPopover);
-        this._oPopover.openBy(this.byId("buttonSettings"));
-    },
-
-    showSettings: function()
-    {
-        let oCtrl = sap.ui.controller("yelton.controller.splitApp.settingsDialog");
-        let settignsDialog = sap.ui.xmlfragment("yelton.view.splitApp.settingsDialog", oCtrl);
-        // onInit там не работает, поэтому придется грузить модель тут
-        this.getView().addDependent(settignsDialog);
-        settignsDialog.open();
-    },
-
-    logout: function()
-    {
-        $.post("backend/web/services/signOut.php");
-        window.location.reload();
-    }
-};
+    };
+});

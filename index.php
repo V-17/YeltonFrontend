@@ -29,9 +29,9 @@
                 "yelton.controller": "./controller",
                 "yelton": "./",
                 "yelton.control": "./control",
-                "yelton.i18n": "./i18n"
+                "yelton.i18n": "./i18n",
+                "yelton.lib": "./lib"
             }'></script>
-        <script src="lib/YeltonLib.js"></script>
 
         <?php
             include $_SERVER ['DOCUMENT_ROOT'].'/backend/'.'web/services/internal/sessions.php';
@@ -42,7 +42,10 @@
                 <script>
                     sap.ui.getCore().attachInit(function() {
                         new sap.ui.core.ComponentContainer({
-                            name : "yelton"
+                            name : "yelton",
+                            settings: {
+                                id: "component"
+                            }
                         }).placeAt("content");
                         document.title="Yelton";
                     });

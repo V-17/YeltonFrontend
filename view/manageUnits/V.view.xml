@@ -17,7 +17,7 @@
                 growing="true"
                 growingThreshold="50"
                 growingScrollToLoad="true"
-                itemPress="unitsEditDialog.showEditDialog">
+                itemPress=".editDialog.showEditDialog">
                 <items>
                     <StandardListItem type="Active" title="{units>fullName}"/>
                 </items>
@@ -29,7 +29,7 @@
                 <Button
                     icon="sap-icon://add"
                     text="{i18n>create}"
-                    press="unitsEditDialog.showCreateDialog"
+                    press=".editDialog.showCreateDialog"
                     tooltip="Создать новую единицу измерения"/>
             </Toolbar>
         </footer>

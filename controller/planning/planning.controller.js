@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-], function(Controller, JSONModel) {
+   'yelton/lib/lib'
+], function(Controller, JSONModel, lib) {
     "use strict";
     return Controller.extend("yelton.controller.planning.planning", {
 
@@ -31,14 +32,14 @@ sap.ui.define([
 
         onRouterInit: function(oEvent)
         {
-            sap.ui.getCore().byId("__xmlview0--listMenuBottom").setSelectedItemById("__item6");
+            lib.getMainMenu().bottom.setSelectedItemById("__item6");
         },
 
         onRouterShoppingList: function(oEvent)
         {
-            sap.ui.getCore().byId("__xmlview0--listMenuBottom").setSelectedItemById("__item6");
+            this.onRouterInit(oEvent);
 
-            let app = sap.ui.getCore().byId("__xmlview0--splitApp");
+            let app = lib.getRootView().byId('splitApp');
             if (!this._viewShoppingList) {
                 this._viewShoppingList = sap.ui.view({
                     id: "pagePlanningShoppingList",

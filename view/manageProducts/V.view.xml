@@ -11,7 +11,7 @@
                 growingThreshold="50"
                 growingScrollToLoad="true"
                 mode="SingleSelectMaster"
-                itemPress="productsEditDialog.showEditDialog"
+                itemPress=".editDialog.showEditDialog"
                 items="{
                     path : 'products>/',
                     sorter : [{
@@ -32,7 +32,7 @@
                 <Button
                     icon="sap-icon://add"
                     text="{i18n>create}"
-                    press="productsEditDialog.showCreateDialog"
+                    press=".editDialog.showCreateDialog"
                     tooltip="{i18n>createNewProduct}"/>
             </Toolbar>
         </footer>

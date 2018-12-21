@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,47 +15,48 @@
  * limitations under the License.
  */
 
-jQuery.sap.require("yelton.controller.manageCategories.editDialog");
-jQuery.sap.require("yelton.controller.manageCategories.deleteDialog");
-
 sap.ui.define([
-        "sap/ui/core/mvc/Controller",
-        "sap/ui/model/json/JSONModel",
-        "sap/ui/model/Filter",
-        "sap/ui/model/FilterOperator"
-    ],
-    function(Controller, JSONModel, Filter, FilterOperator) {
-        "use strict";
-        return Controller.extend("yelton.controller.manageCategories.C", {
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    'yelton/lib/lib',
+    './editDialog',
+    './deleteDialog'
+], function(Controller, JSONModel, Filter, FilterOperator, lib, editDialog,deleteDialog) {
+    "use strict";
+    return Controller.extend("yelton.controller.manageCategories.C", {
+        editDialog: editDialog,
+        deleteDialog: deleteDialog,
 
-            onInit: function()
-            {
-                let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.getRoute("categories").attachPatternMatched(this.onRouter, this);
-            },
+        onInit: function()
+        {
+            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.getRoute("categories").attachPatternMatched(this.onRouter, this);
+        },
 
-            onRouter: function(oEvent)
-            {
-                // FIXME: id
-                sap.ui.getCore().byId("__xmlview0--listMainMenu").setSelectedItemById("__item1");
-            },
+        onRouter: function(oEvent)
+        {
+            // FIXME: id
+            lib.getMainMenu().top.setSelectedItemById("__item1");
+        },
 
-            // Поиск
-            onFilterLiveSearch: function(oEvent)
-            {
-                let sQuery = oEvent.getParameter("newValue");
-                let table = this.getView().byId("listCategories");
-                table.getBinding("items").filter(
-                    new Filter("name", FilterOperator.Contains, sQuery)
-                );
-            },
+        // Поиск
+        onFilterLiveSearch: function(oEvent)
+        {
+            let sQuery = oEvent.getParameter("newValue");
+            let table = this.getView().byId("listCategories");
+            table.getBinding("items").filter(
+                new Filter("name", FilterOperator.Contains, sQuery)
+            );
+        },
 
-            /**
-             * При любом изменении значения поля, сбрасываем ему valueState
-             */
-            _onInputNameLiveChange: function()
-            {
-                sap.ui.getCore().byId("inputName").setValueState("None");
-            }
-        });
+        /**
+         * При любом изменении значения поля, сбрасываем ему valueState
+         */
+        _onInputNameLiveChange: function()
+        {
+            sap.ui.getCore().byId("inputName").setValueState("None");
+        }
     });
+});
