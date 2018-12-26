@@ -26,19 +26,11 @@ sap.ui.define([
         onInit: function()
         {
             let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.getRoute("planning").attachPatternMatched(this.onRouterInit, this);
             oRouter.getRoute("planningShoppingList").attachPatternMatched(this.onRouterShoppingList, this);
-        },
-
-        onRouterInit: function(oEvent)
-        {
-            lib.getMainMenu().bottom.setSelectedItemById("__item6");
         },
 
         onRouterShoppingList: function(oEvent)
         {
-            this.onRouterInit(oEvent);
-
             let app = lib.getRootView().byId('splitApp');
             if (!this._viewShoppingList) {
                 this._viewShoppingList = sap.ui.view({

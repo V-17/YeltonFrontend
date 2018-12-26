@@ -18,70 +18,81 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
+    'sap/m/StandardListItem',
+    'sap/m/GroupHeaderListItem',
     'yelton/controller/splitApp/settingsPopover',
     'yelton/lib/dict',
     'yelton/lib/lib'
-], function(Controller, JSONModel, settings, dict, lib) {
+], function(Controller, JSONModel, StandardListItem, GroupHeaderListItem, settings, dict, lib) {
     "use strict";
+
+    const _mainMenuModel = new JSONModel();
+    _mainMenuModel.loadData('controller/splitApp/mainMenu.json', null, false);
+
+    function _selectItem(oEvent) {
+        let sName = oEvent.getParameters().name;
+        if (sName === 'init') sName = 'prices'; // замена
+        _mainMenuModel.getData().forEach(function(item) {
+            item.selected = (item.key === sName);
+        });
+        _mainMenuModel.refresh();
+    }
+
     return Controller.extend("yelton.controller.splitApp.C", {
         settings: settings,
 
-        onInit: function()
-        {
+        onInit: function() {
+            this.getView().setModel(_mainMenuModel, 'mainMenu');
+
             dict
                 .refreshPrices()
                 .refreshCategories()
                 .refreshProducts()
                 .refreshStores()
                 .refreshUnits();
-        },
 
-        onNavToDetail: function(oEvent)
-        {
-            let id = this.getView().byId("listMainMenu").getSelectedItem().sId;
-            lib.getMainMenu().bottom.removeSelections();
+            // при роутинге выбираем нужный пункт меню
             let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
-            //FIXME: можно же как то с нормальными ID сделать это
-            switch (id) {
-                case "__item0":
-                    oRouter.navTo("prices");
-                    break;
-                case "__item1":
-                    oRouter.navTo("categories");
-                    break;
-                case "__item2":
-                    oRouter.navTo("products");
-                    break;
-                case "__item3":
-                    oRouter.navTo("stores");
-                    break;
-                case "__item4":
-                    oRouter.navTo("units");
-                    break;
-            }
+            oRouter.getRoute("init").attachPatternMatched(_selectItem, this);
+            oRouter.getRoute("prices").attachPatternMatched(_selectItem, this);
+            oRouter.getRoute("categories").attachPatternMatched(_selectItem, this);
+            oRouter.getRoute("products").attachPatternMatched(_selectItem, this);
+            oRouter.getRoute("stores").attachPatternMatched(_selectItem, this);
+            oRouter.getRoute("units").attachPatternMatched(_selectItem, this);
+            oRouter.getRoute("reports").attachPatternMatched(_selectItem, this);
+            oRouter.getRoute("planning").attachPatternMatched(_selectItem, this);
         },
 
-        onNavToReports: function()
-        {
-            //FIXME: можно же как то с нормальными ID сделать это
-            let id = this.getView().byId("listMenuBottom").getSelectedItem().sId;
-            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            this.getView().byId("listMainMenu").removeSelections();
-
-            switch (id) {
-                case "__item5":
-                    oRouter.navTo("reports");
-                    break;
-                case "__item6":
-                    oRouter.navTo("planning");
-                    break;
-            }
+        onNavTo: function(oEvent) {
+            sap.ui.core.UIComponent.getRouterFor(this).navTo(
+                oEvent.getParameters().listItem.getBindingContext('mainMenu').getObject().key
+            );
         },
 
-        onSettingsButtonPress: function()
-        {
+        onSettingsButtonPress: function() {
             settings.showPopover.apply(this);
+        },
+
+        /**
+         * Фабрика для таблиц: tableRow, tableCol
+         */
+        mainMenuFactory: function(sId, oContext) {
+            let out;
+            switch (oContext.getObject().type) {
+                case 'top':
+                case 'bottom':
+                    out = new StandardListItem({
+                        title: '{mainMenu>name}',
+                        type: 'Active',
+                        icon: '{mainMenu>icon}',
+                        selected: '{mainMenu>selected}'
+                    });
+                    break;
+                case 'separator':
+                    out = new GroupHeaderListItem().addStyleClass('sapUiSizeCompact');
+                    break;
+            }
+            return out;
         },
     });
 });

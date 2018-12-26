@@ -31,14 +31,6 @@ sap.ui.define([
 
         onInit: function()
         {
-            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.getRoute("units").attachPatternMatched(this.onRouter, this);
-        },
-
-        onRouter: function(oEvent)
-        {
-            // FIXME: id
-            lib.getMainMenu().top.setSelectedItemById("__item4");
         },
 
         // Поиск

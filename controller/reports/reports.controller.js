@@ -25,13 +25,6 @@ sap.ui.define([
 
         onInit: function()
         {
-            let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.getRoute("reports").attachPatternMatched(this.onRouter, this);
-        },
-
-        onRouter: function(oEvent)
-        {
-            lib.getMainMenu().bottom.setSelectedItemById("__item5");
         },
 
         onTileBestPriceClick: function()
