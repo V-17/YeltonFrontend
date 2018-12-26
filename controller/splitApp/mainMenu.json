@@ -1,0 +1,38 @@
+[{
+    "key": "prices",
+    "name": "Покупки",
+    "icon": "sap-icon://wallet",
+    "type": "top"
+}, {
+    "key": "categories",
+    "name": "Категории",
+    "icon": "sap-icon://tag",
+    "type": "top"
+}, {
+    "key": "products",
+    "name": "Товары",
+    "icon": "sap-icon://bar-code",
+    "type": "top"
+}, {
+    "key": "stores",
+    "name": "Магазины",
+    "icon": "sap-icon://retail-store",
+    "type": "top"
+}, {
+    "key": "units",
+    "name": "Меры",
+    "icon": "sap-icon://measuring-point",
+    "type": "top"
+}, {
+    "type": "separator"
+}, {
+    "key": "reports",
+    "name": "Отчеты",
+    "icon": "sap-icon://pie-chart",
+    "type": "bottom"
+}, {
+    "key": "planning",
+    "name": "Планирование",
+    "icon": "sap-icon://date-time",
+    "type": "bottom"
+}]

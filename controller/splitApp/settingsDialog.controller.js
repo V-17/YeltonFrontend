@@ -166,6 +166,19 @@ sap.ui.define([
             });
             //this.getView().addDependent(dialog);
             dialog.open();
+        },
+
+        /**
+         * Запуск обучалки
+         */
+        tutoralStart: function() {
+            let that = this;
+            sap.ui.require(['yelton/lib/tutorial'], function(tutorial) {
+                tutorial.start({
+                    showStartDialog: false
+                });
+            });
         }
+
     });
 });

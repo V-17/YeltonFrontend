@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 - 2017 Yelton authors:
+ * Copyright 2016 - 2018 Yelton authors:
  * - Marat "Morion" Talipov
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,23 +17,42 @@
 
 sap.ui.define([
     "sap/ui/core/UIComponent",
-    "sap/ui/model/resource/ResourceModel"
-], function(UIComponent, ResourceModel) {
+    "sap/ui/model/resource/ResourceModel",
+    'sap/ui/model/json/JSONModel'
+], function(UIComponent, ResourceModel, JSONModel) {
     "use strict";
     return UIComponent.extend("yelton.Component", {
         metadata: {
             manifest: "json"
         },
-        init: function()
-        {
-            UIComponent.prototype.init.apply(this, arguments);
 
+        init: function() {
+            UIComponent.prototype.init.apply(this, arguments);
             this.getRouter().initialize();
 
-            var i18nModel = new ResourceModel({
+            // i18n
+            this.setModel(new ResourceModel({
                 bundleName: "yelton.i18n.i18n"
+            }), "i18n");
+
+            // user
+            let that = this;
+            $.get({
+                url: 'backend/web/services/user.php',
+            }).done(function(answer) {
+                let oData = JSON.parse(answer);
+                that.setModel(new JSONModel(oData), 'user');
+
+                // при необходимости запустим обучалку
+                if (!oData.userInfo.tutorialDone) {
+                    sap.ui.require(['yelton/lib/tutorial'], function(tutorial) {
+                        tutorial.start({
+                            showStartDialog: true
+                        });
+                    });
+                }
             });
-            this.setModel(i18nModel, "i18n");
         }
+
     });
 });

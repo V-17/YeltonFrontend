@@ -25,6 +25,10 @@
                                 <commons:TextView id="textViewChangePassword"/>
                             </VBox>
                         </Panel>
+                        <Panel headerText="Обучение" expandable="true" expanded="false" backgroundDesign="Transparent">
+                            <Button text="Пройти обучение заново" width="100%" press="tutoralStart"/>
+                        </Panel>
+
                     </IconTabFilter>
                     <IconTabFilter key="tabDevices" text="{i18n>DEVICES}">
                         <List id="tableDevices" items="{user>/deviceInfo}" mode="Delete" delete="onDeleteDevice" noDataText="{i18n>noMobileDevices}">
